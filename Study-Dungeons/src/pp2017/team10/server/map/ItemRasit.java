@@ -2,10 +2,6 @@
 
 public class ItemRasit {
 
-	/**
-	 * @author Güven, Rasit Matnr: 6019617
-	 */
-	
 	public int itemID;
 	public int itemXPos;
 	public int itemYPos;
