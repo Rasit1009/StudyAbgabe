@@ -10,7 +10,6 @@ import java.awt.event.KeyListener;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import StudyDungeons1.Gamefield;
 
 public class MapFrame extends JFrame implements ActionListener {
 
@@ -21,7 +20,7 @@ public class MapFrame extends JFrame implements ActionListener {
 	// int player_posy=300;
 
 	// Objekt der Gamefield Klasse wurde erstellt
-	private Gamefield gf;
+	private GameField gf;
 
 	// Auf diese Boolean Werte wird im Keyhandler spaeter zugegriffen
 	private boolean key_up = false;
@@ -35,14 +34,14 @@ public class MapFrame extends JFrame implements ActionListener {
 	public MapFrame() {
 
 		// Name des Fensters
-		super("FantasticFour");
-		gf = new Gamefield();
+		super("Study Dungeons");
+		gf = new GameField();
 		// Position und Groesse des Spielfeldes wird konfiguriert
 		gf.setBounds(0, 0, 800, 640);
 		// Spielfeld wird dem Frame ssbergeben
 		add(gf);
 		// Keylistener wird dem Frame hinzugefssgt
-		addKeyListener(new KeyHandler());
+	//	addKeyListener(new KeyHandler());
 
 	}
 
@@ -79,10 +78,10 @@ public class MapFrame extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 	}
 
-	private class KeyHandler implements KeyListener {
+//	private class KeyHandler implements KeyListener {
 
 		// Tasten und deren Funktionen werden das erste mal konfiguriert
-		public void keyPressed(KeyEvent e) {
+	/*	public void keyPressed(KeyEvent e) {
 			// System.out.println(e.getKeyCode());
 			if (e.getKeyCode() == KeyEvent.VK_W) {
 				gf.map.map[gf.player_posx][gf.player_posy].setGround(0);
@@ -108,9 +107,9 @@ public class MapFrame extends JFrame implements ActionListener {
 				gf.map.map[gf.player_posx][gf.player_posy].setGround(5);
 				key_right = true;
 			}
-			repaintGamefield();
+			repaintGamefield();    
 
-		}
+		}                     */
 
 		public void keyReleased(KeyEvent e) {
 			if (e.getKeyCode() == KeyEvent.VK_W)
@@ -128,4 +127,4 @@ public class MapFrame extends JFrame implements ActionListener {
 
 	}
 
-}
+//}
