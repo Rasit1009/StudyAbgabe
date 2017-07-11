@@ -8,9 +8,6 @@ import java.awt.image.BufferedImage;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import StudyDungeons1.Map2;
-import StudyDungeons1.MapImage;
-
 
 public class Gamefield extends JLabel{
 	
