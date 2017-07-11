@@ -2,6 +2,9 @@ package pp2017.team10.server.map;
 
 import java.util.Random;
 
+import pp2017.team10.shared.Map;
+import pp2017.team10.shared.Tiles;
+
 /*
  * @author Burcu Akcay
  * 

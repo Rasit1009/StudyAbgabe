@@ -1,9 +1,9 @@
-package pp2017.team10.server.map;
+package pp2017.team10.shared;
 
 import java.util.LinkedList;
 
 /*
- * @author Burcu Akcay
+ * @author Burcu Akcay, @author Rasit Güven
  * 
  * Die Datenstruktur für unsere Items werden hier erstellt
  * 
@@ -11,11 +11,14 @@ import java.util.LinkedList;
 
 public class Item {
 
-	int itemID;
-	String itemName;
-	int itemEffect;
-	int health = 70;
-	int key;
+	public int itemID;
+	public String itemName;
+	public int itemEffect;
+	public int health = 70;
+	public int key;
+	public int itemXPos;
+	public int itemYPos;
+	public int[][] itemPos;
 
 	public Item(int id, String name) {
 		this.itemID = id;
@@ -51,6 +54,11 @@ public class Item {
 
 	public void setItemID(int itemID) { // setzt die itemID
 		this.itemID = itemID;
+	}
+	
+	public int setItemPos(int itemID) {
+		this.itemID = itemPos[itemXPos][itemYPos];
+		return itemID;
 	}
 
 	public String getItemName() { // gibt den itemNamen zurück

@@ -1,4 +1,4 @@
-package pp2017.team10.server.map;
+package pp2017.team10.shared;
 
 public class Tiles {
 

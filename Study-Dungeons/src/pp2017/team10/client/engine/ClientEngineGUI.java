@@ -1,7 +1,7 @@
 package pp2017.team10.client.engine;
 
-import pp2017.team10.server.map.ItemRasit;
 import pp2017.team10.shared.Character;
+import pp2017.team10.shared.Item;
 import pp2017.team10.shared.Messages;
 
 /**
@@ -19,7 +19,7 @@ public class ClientEngineGUI {
 	public int posy;
 	public boolean isPossible;
 	public Character character = new Character(2, 1);
-	public ItemRasit item = new ItemRasit();
+	public Item item = new Item();
 	public int charPos;
 	public boolean isAvailable;
 	public int[][] Map;
@@ -163,7 +163,7 @@ public class ClientEngineGUI {
 
 	public void setItemOnMap(int[][] Map) {
 		getCharInfo();
-		Map[posx + 1][posy + 1] = item.setItem(1);
+		Map[posx + 1][posy + 1] = item.setItemPos(1);
 		itemAvailable(posx, posy, Map);
 	}
 
