@@ -17,7 +17,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 import java.awt.Color;
 
@@ -48,7 +47,6 @@ public class MainMenu extends JFrame implements ActionListener {
 		text1 = new JLabel("Study Dungeons");
 		text1.setForeground(Color.YELLOW);
 		text1.setBounds(208, 0, 653, 96);
-		Font schrift = new Font("Serif", Font.BOLD + Font.ITALIC, 50);
 		text1.setFont(new Font("Serif", Font.BOLD | Font.ITALIC, 75));
 		getContentPane().add(text1);
 
@@ -94,7 +92,7 @@ public class MainMenu extends JFrame implements ActionListener {
 
 		welcome = new JLabel();
 		welcome.setLayout(null);
-		welcome.setIcon(new ImageIcon(getClass().getResource("/MainmenuTest.jpg")));
+		welcome.setIcon(new ImageIcon(getClass().getResource("src/MainmenuTest.jpg")));
 		welcome.setBounds(0, 0, 1000, 500);
 		getContentPane().add(welcome);
 
