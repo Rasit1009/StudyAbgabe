@@ -55,7 +55,6 @@ public class MessageRequest {
 	 */
 
 	public void handleStart(Messages msg) {
-
 		System.out.println("This is a Start message");
 		msg.sendRequest(msg);
 	}

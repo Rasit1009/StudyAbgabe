@@ -21,7 +21,7 @@ public class Character {
 	public int getPosX() {
 		return posx;
 	}
-
+ 
 	public int getPosY() {
 		return posy;
 	}
