@@ -28,6 +28,9 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.Timer;
 
+import pp2017.team10.client.engine.ClientEngineGUI;
+import pp2017.team10.shared.Character;
+
 
 /**
  *
@@ -45,12 +48,13 @@ public class spielwelt extends javax.swing.JFrame {
     public boolean showChat = true;
     private int playerPosX;
     private int playerPosY;
-    private int world[][] = new int[50][50];
+    public int world[][] = new int[50][50];
     public JLabel playerOnField = new JLabel();
     private int delay = 8;
     private JTextArea chat1;
     private JTextField Msg;
     private JLayeredPane jlp = new JLayeredPane();
+    
     /**
      * Creates new form spielwelt
      */
@@ -68,7 +72,14 @@ public class spielwelt extends javax.swing.JFrame {
     }
     
     public void movePlayer(String direction) throws InterruptedException{
-          if(direction.equals("right")){
+    	System.out.println(playerPosX/(screenWidth/50)+  "," + playerPosY/(screenWidth/50));    	
+    	ClientEngineGUI n = new ClientEngineGUI();
+    	n.consistency(world, direction, playerPosX/(screenWidth/50), playerPosY/(screenWidth/50));
+    	System.out.println(n.isPossible);
+    	
+    	
+//    	if (n.isPossible == true){	
+          if(direction.equals("right")){  
           ActionListener taskPerformer = new ActionListener() {
               int count=0;
               public void actionPerformed(ActionEvent evt) {
@@ -128,7 +139,7 @@ public class spielwelt extends javax.swing.JFrame {
           };
           new Timer(delay, taskPerformer).start();
           }
-          
+    	
     }
     
     public spielwelt() throws IOException {

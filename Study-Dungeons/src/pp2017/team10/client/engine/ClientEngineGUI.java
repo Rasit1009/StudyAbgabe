@@ -22,7 +22,6 @@ public class ClientEngineGUI {
 	public int posx;
 	public int posy;
 	public boolean isPossible;
-	public Character character = new Character(2, 1);
 	public Item item = new Item();
 	public int charPos;
 	public boolean isAvailable;
@@ -41,8 +40,8 @@ public class ClientEngineGUI {
 
 	public void getCharInfo() {
 
-		posx = character.getPosX();
-		posy = character.getPosY();
+//		posx = character.getPosX();
+//		posy = character.getPosY();
 	}
 
 	/*
@@ -75,8 +74,8 @@ public class ClientEngineGUI {
 		} else {
 			isPossible = false;
 		}
-		posx = character.setNewXPos(posx);
-		posy = character.setNewYPos(posy);
+//		posx = character.setNewXPos(posx);
+//		posy = character.setNewYPos(posy);
 
 		if (isPossible == true) {
 			System.out.println("New Position is posx: [" + posx + "] + posy: [" + posy + "]");
@@ -91,11 +90,10 @@ public class ClientEngineGUI {
 	 * also checks if the new Array position is the ground we are allowed to
 	 * move on but the interface is not implemented yet.
 	 */
-	public boolean consistency(int[][] Map, String direction) {
+	public boolean consistency(int[][] Map, String direction, int posx, int posy) {
 
-		getCharInfo();
-		int xMap = Map.length;
-		int yMap = Map[0].length;
+		int Maplength = Map.length;
+		
 
 		/*
 		 * "if tile is instance of ground then check if the new Position is
@@ -105,39 +103,39 @@ public class ClientEngineGUI {
 		// if(charPos[posx][posy] is instanceof ground){
 
 		switch (direction) {
-		case "UP":
-			if (posy <= yMap) {
-				System.out.println("you can move");
+		case "up":
+			if (posy >= 0 && Map[posx][posy--] != 1) {
+				System.out.println("you can move up");
 				isPossible = true;
 			} else {
-				System.out.println("you cannot move. Map border");
+				System.out.println("you cannot move up. Map border");
 				isPossible = false;
 			}
 			break;
-		case "DOWN":
-			if (posy > 0) {
-				System.out.println("you can move");
-				isPossible = true;
+		case "down":
+			if (posy < Maplength && Map[posx][posy++] != 1) {
+				System.out.println("you can move down");
+			isPossible = true;
 			} else {
-				System.out.println("you cannot move. Map border");
+				System.out.println("you cannot move down. Map border");
 				isPossible = false;
 			}
 			break;
-		case "LEFT":
-			if (posx > 0) {
-				System.out.println("you can move");
+		case "right":
+			if (posx < Maplength && Map[posx++][posy] != 1) {
+				System.out.println("you can move right");
 				isPossible = true;
 			} else {
-				System.out.println("you cannot move. Map border");
+				System.out.println("you cannot move right. Map border");
 				isPossible = false;
 			}
 			break;
-		case "RIGHT":
-			if (posx <= xMap) {
-				System.out.println("you can move");
+		case "left":
+			if (posx > 0 && Map[posx--][posy] != 1) {
+				System.out.println("you can move lwft");
 				isPossible = true;
 			} else {
-				System.out.println("you cannot move. Map border");
+				System.out.println("you cannot move left. Map border");
 				isPossible = false;
 			}
 			break;
