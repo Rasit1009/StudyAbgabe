@@ -15,8 +15,7 @@ public class Character {
 
 	public Character(int[][] world, int posx, int posy) {
 	this.posx = posx;
-	this.posy = posy;
-	world[posx][posy] = 2;		
+	this.posy = posy;	
 	
 	}
 

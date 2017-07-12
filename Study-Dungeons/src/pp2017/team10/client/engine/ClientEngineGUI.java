@@ -26,7 +26,7 @@ public class ClientEngineGUI {
 	public int charPos;
 	public boolean isAvailable;
 	public int[][] Map;
-
+	public Character character;
 
 
 	public static void main(String[]args) throws IOException{
@@ -40,8 +40,8 @@ public class ClientEngineGUI {
 
 	public void getCharInfo() {
 
-//		posx = character.getPosX();
-//		posy = character.getPosY();
+		posx = character.getPosX();
+		posy = character.getPosY();
 	}
 
 	/*
@@ -50,9 +50,9 @@ public class ClientEngineGUI {
 	 * Position and print them on the console.
 	 */
 
-	public void movement(String direction) {
+	public void movement(String direction, int posx, int posy) {
 
-		getCharInfo();
+//		getCharInfo();
 
 		if (isPossible == true) {
 			switch (direction) {
@@ -74,8 +74,6 @@ public class ClientEngineGUI {
 		} else {
 			isPossible = false;
 		}
-//		posx = character.setNewXPos(posx);
-//		posy = character.setNewYPos(posy);
 
 		if (isPossible == true) {
 			System.out.println("New Position is posx: [" + posx + "] + posy: [" + posy + "]");
@@ -140,7 +138,7 @@ public class ClientEngineGUI {
 			}
 			break;
 		}
-
+		movement(direction, posx, posy);
 		return isPossible;
 	}
 

@@ -75,8 +75,7 @@ public class spielwelt extends javax.swing.JFrame {
     	System.out.println(playerPosX/(screenWidth/50)+  "," + playerPosY/(screenWidth/50));    	
     	ClientEngineGUI n = new ClientEngineGUI();
     	n.consistency(world, direction, playerPosX/(screenWidth/50), playerPosY/(screenWidth/50));
-    	System.out.println(n.isPossible);
-    	
+    	System.out.println(n.isPossible);   	
     	
 //    	if (n.isPossible == true){	
           if(direction.equals("right")){  
@@ -150,7 +149,7 @@ public class spielwelt extends javax.swing.JFrame {
             world[i][i] = 1;
         }
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        
+   
         int screen = (int) screenSize.getHeight() - 100;
         screenHeight = (screen - screen%50);
         screenWidth = screenHeight - 100;
@@ -166,6 +165,7 @@ public class spielwelt extends javax.swing.JFrame {
             @Override
             public void keyPressed(KeyEvent e) {
                 try {
+
                         if(e.getKeyCode()==37 && playerPosX != 0){
                     movePlayer("left");
                 }
@@ -240,7 +240,7 @@ public class spielwelt extends javax.swing.JFrame {
         playerPosX = 0;
         playerPosY = 0;
         playerOnField.setLocation(playerPosX, playerPosY);
-        
+    	System.out.println(playerPosX/(screenWidth/50)+  "," + playerPosY/(screenWidth/50)); 
         
         chatButton.addKeyListener(kl);
         mainPanel.setSize(screenWidth, screenHeight);

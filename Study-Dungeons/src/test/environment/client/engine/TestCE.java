@@ -1,6 +1,7 @@
 package test.environment.client.engine;
 
 import pp2017.team10.client.engine.ClientEngineGUI;
+import pp2017.team10.shared.Character;
 
 /**
  * In this test environment we are testing the different methods from our the
@@ -20,17 +21,18 @@ public class TestCE {
 	public static String down = "DOWN";
 	public static String right = "RIGHT";
 	public static String left = "LEFT";
-	public static int posx;
-	public static int posy;
+	public static int posx = 2;
+	public static int posy = 1;
 
 	public static void main(String[] args) {
 		ClientEngineGUI neu = new ClientEngineGUI();
-		neu.setItemOnMap(possibleMap);
+		Character c = new Character(possibleMap, posx, posy);
+//		neu.setItemOnMap(possibleMap);
 		
-/*		neu.consistency(possibleMap, up);
-		neu.movement(up);
+//		neu.consistency(possibleMap, up);
+//		neu.movement(up);
 
-		neu.consistency(possibleMap, down);
+/*		neu.consistency(possibleMap, down);
 		neu.movement(down);
 
 		neu.consistency(possibleMap, down);
