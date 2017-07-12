@@ -1,11 +1,13 @@
 package pp2017.team10.client.gui;
 
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -51,9 +53,9 @@ public class spielwelt extends javax.swing.JFrame {
     public int world[][] = new int[50][50];
     public JLabel playerOnField = new JLabel();
     private int delay = 8;
-    private JTextArea chat1;
-    private JTextField Msg;
+    public JLabel playerOnMinimap = new JLabel();
     private JLayeredPane jlp = new JLayeredPane();
+    private JPanel minimapPanel;
     
     /**
      * Creates new form spielwelt
@@ -79,67 +81,78 @@ public class spielwelt extends javax.swing.JFrame {
     	
     	
 //    	if (n.isPossible == true){	
-          if(direction.equals("right")){  
-          ActionListener taskPerformer = new ActionListener() {
-              int count=0;
-              public void actionPerformed(ActionEvent evt) {
-                   if(count>((screenWidth/50)%1000)-2) {//we did the task 10 times
-                         ((Timer)evt.getSource()).stop();
-                    }
-                    if(playerPosX < screenWidth-(screenWidth/50))
-                        playerPosX++;
-                    playerOnField.setLocation(playerPosX, playerPosY);
-                    count++;
-              }
-          };
-          new Timer(delay, taskPerformer).start();
-          }
-          if(direction.equals("up")){
-          ActionListener taskPerformer = new ActionListener() {
-              int count=0;
-              public void actionPerformed(ActionEvent evt) {
-                   if(count>((screenWidth/50)%1000)-2) {//we did the task 10 times
-                         ((Timer)evt.getSource()).stop();
-                    }
-                    if(playerPosY > 0)
-                        playerPosY--;
-                    playerOnField.setLocation(playerPosX, playerPosY);
-                    count++;
-              }
-          };
-          new Timer(delay, taskPerformer).start();
-          }
-          if(direction.equals("left")){
-          ActionListener taskPerformer = new ActionListener() {
-              int count=0;
-              public void actionPerformed(ActionEvent evt) {
-                   if(count>((screenWidth/50)%1000)-2) {//we did the task 10 times
-                         ((Timer)evt.getSource()).stop();
-                    }
-                    if(playerPosX > 0)
-                        playerPosX--;
-                    playerOnField.setLocation(playerPosX, playerPosY);
-                    count++;
-              }
-          };
-          new Timer(delay, taskPerformer).start();
-          }
-          if(direction.equals("down")){
-          ActionListener taskPerformer = new ActionListener() {
-              int count=0;
-              public void actionPerformed(ActionEvent evt) {
-                   if(count>((screenWidth/50)%1000)-2) {//we did the task 10 times
-                         ((Timer)evt.getSource()).stop();
-                    }
-                    if(playerPosY < (screenWidth-(screenWidth/50)))
-                        playerPosY++;
-                    playerOnField.setLocation(playerPosX, playerPosY);
-                    count++;
-              }
-          };
-          new Timer(delay, taskPerformer).start();
-          }
-    	
+            if(direction.equals("right")){
+            ActionListener taskPerformer = new ActionListener() {
+                int count=0;
+                public void actionPerformed(ActionEvent evt) {
+                     if(count>((screenWidth/50)%1000)-2) {//we did the task 10 times
+                         movePlayerMinimap();  
+                           ((Timer)evt.getSource()).stop();
+                      }
+                      if(playerPosX < screenWidth-(screenWidth/50))
+                          playerPosX++;
+                      playerOnField.setLocation(playerPosX, playerPosY);
+                      count++;
+                }
+            };
+            new Timer(delay, taskPerformer).start();
+            }
+            if(direction.equals("up")){
+            ActionListener taskPerformer = new ActionListener() {
+                int count=0;
+                public void actionPerformed(ActionEvent evt) {
+                     if(count>((screenWidth/50)%1000)-2) {//we did the task 10 times
+                         movePlayerMinimap();  
+                           ((Timer)evt.getSource()).stop();
+                      }
+                      if(playerPosY > 0)
+                          playerPosY--;
+                      playerOnField.setLocation(playerPosX, playerPosY);
+                      count++;
+                }
+            };
+            new Timer(delay, taskPerformer).start();
+            }
+            if(direction.equals("left")){
+            ActionListener taskPerformer = new ActionListener() {
+                int count=0;
+                public void actionPerformed(ActionEvent evt) {
+                     
+                    if(count>((screenWidth/50)%1000)-2) {//we did the task 10 times
+                        movePlayerMinimap();   
+                        ((Timer)evt.getSource()).stop();
+                      }
+                      if(playerPosX > 0)
+                          playerPosX--;
+                      playerOnField.setLocation(playerPosX, playerPosY);
+                      count++;
+                }
+            };
+            new Timer(delay, taskPerformer).start();
+            }
+            if(direction.equals("down")){
+            ActionListener taskPerformer = new ActionListener() {
+                int count=0;
+                public void actionPerformed(ActionEvent evt) {
+                     if(count>((screenWidth/50)%1000)-2) {//we did the task 10 times
+                         movePlayerMinimap();
+                           ((Timer)evt.getSource()).stop();
+                      }
+                      if(playerPosY < (screenWidth-(screenWidth/50)))
+                          playerPosY++;
+                      playerOnField.setLocation(playerPosX, playerPosY);
+                      count++;
+                }
+            };
+            new Timer(delay, taskPerformer).start();
+            }
+            
+      }
+    
+    public void movePlayerMinimap(){
+        int posX = playerOnField.getLocation().x/(screenWidth/50)*4;
+        int posY = playerOnField.getLocation().y/(screenWidth/50)*4;
+        playerOnMinimap.setLocation(posX, posY);
     }
     
     public spielwelt() throws IOException {
@@ -190,11 +203,11 @@ public class spielwelt extends javax.swing.JFrame {
                 playerOnField.setOpaque(false);
                 jlp.repaint();
                 showChat();
-                if(e.getKeyCode()== 67){
+                if(e.getKeyChar()== 'c'  || e.getKeyChar() == 'C'){
                     chatInput.setEnabled(true);
                     chatInput.requestFocus();
                 }
-                if(e.getKeyChar() == 'x'){
+                if(e.getKeyChar() == 'x' || e.getKeyChar() == 'X'){
                     if(chatButton.getText() == "Chat verbergen"){
                         chatWindow.setVisible(false);
                         chatButton.setText("Chat anzeigen");
@@ -206,6 +219,12 @@ public class spielwelt extends javax.swing.JFrame {
                         chatButton.setText("Chat verbergen");
                         chatWindow.setVisible(true);
                     }
+                }
+                if(e.getKeyChar() == 'm' || e.getKeyChar() == 'M') {
+                	if(minimapPanel.isVisible())
+                		minimapPanel.setVisible(false);
+                	else
+                		minimapPanel.setVisible(true);
                 }
             }
 
@@ -222,6 +241,35 @@ public class spielwelt extends javax.swing.JFrame {
         chatInput.setEnabled(false);
         chatInput.addActionListener(new tHandler());
         
+        minimapPanel = new JPanel();
+        minimapPanel.setSize(200,200);
+        minimapPanel.setLocation(screenWidth-220, 20);
+        JLayeredPane minimap = new JLayeredPane();
+        minimap.setLocation(0, 0);
+        minimap.setSize(200,200);
+        minimapPanel.setLayout(null);
+        minimapPanel.setOpaque(false);
+        minimap.setOpaque(true);
+        minimapPanel.add(minimap);
+        JPanel minimapBackground;
+        for(int j = 0; j < 50; j++){    
+            for(int i = 0; i < 50; i++){
+                minimapBackground = new JPanel();
+                minimapBackground.setSize(4, 4);
+                switch (world[i][j]){
+                    case 0: minimapBackground.setBackground(Color.YELLOW);
+                            break;
+                    case 1: minimapBackground.setBackground(Color.black);
+                }
+                minimap.add(minimapBackground, 1);
+                minimapBackground.setLocation(i*4, j*4);
+            }
+        }
+        playerOnMinimap.setBackground(Color.red);
+        playerOnMinimap.setLocation(0, 0);
+        playerOnMinimap.setSize(4, 4);
+        playerOnMinimap.setOpaque(true);
+        minimap.add(playerOnMinimap, 0);
         
         this.setSize(screenWidth + 6, screenHeight + 28);
         this.setLocationRelativeTo(null);
@@ -235,6 +283,7 @@ public class spielwelt extends javax.swing.JFrame {
         
         
         jlp.setSize(screenWidth, screenWidth);
+        jlp.add(minimapPanel, 2);
         worldPanel.add(jlp);
         
         playerPosX = 0;
@@ -265,7 +314,7 @@ public class spielwelt extends javax.swing.JFrame {
                 groundImageLabel.setLocation(i*screenWidth/50, j*screenWidth/50);
             }
         }
-        jlp.add(playerOnField, 0);
+        jlp.add(playerOnField, 3);
         healthBar.setMaximum(100);
         healthBar.setValue(50);
     }
