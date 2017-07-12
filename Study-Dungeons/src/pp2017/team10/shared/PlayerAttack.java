@@ -1,18 +1,20 @@
 package pp2017.team10.shared;
 
+import pp2017.team10.shared.Messages;
+
 public class PlayerAttack extends Messages {
 
 	/**
-	 * @author Güven, Rasit Matnr: 6019617
+	 * Author: Felix Schifferdecker, 5585147
 	 */
 	private static final long serialVersionUID = 5006047215823560813L;
 
-	public int pID;
+	public String user;
 	public int attack;
 	public int damage;
 	
-	public PlayerAttack(int pID, int attack, int damage){
-		this.pID = pID;
+	public PlayerAttack(String pID, int attack, int damage){
+		this.user = pID;
 		this.attack = attack;
 		this.damage = damage;
 	}

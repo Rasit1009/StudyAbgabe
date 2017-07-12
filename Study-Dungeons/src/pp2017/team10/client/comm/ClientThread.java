@@ -5,6 +5,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -26,8 +28,9 @@ public class ClientThread extends Thread {
 		// System.out.println("tet1");
 
 		System.out.println("Client Thread wurde gestartet");
-		DataInputStream dataIn = new DataInputStream(clientSocket.getInputStream());
-		DataOutputStream dataOut = new DataOutputStream(clientSocket.getOutputStream());
+		ObjectInputStream dataIn = new ObjectInputStream(clientSocket.getInputStream());
+		ObjectOutputStream dataOut = new ObjectOutputStream(clientSocket.getOutputStream());
+		
 
 		String antwort = dataIn.readUTF();
 

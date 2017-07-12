@@ -1,20 +1,22 @@
 package pp2017.team10.shared;
 
+import pp2017.team10.shared.Messages;
+
 public class Login extends Messages {
 
 	/**
-	 * @author Güven, Rasit Matnr: 6019617
+	 * Author: Felix Schifferdecker, 5585147
 	 */
 	private static final long serialVersionUID = -8177275538000046658L;
 
 	public String user;
 	public String pass;
-	public boolean exists;
 	
-	public Login(String user, String pass, boolean exists){
+	public Login(String user, String pass){
 		this.user = user;
 		this.pass = pass;
-		this.exists = exists;
 	}
+	
+	
 	
 }

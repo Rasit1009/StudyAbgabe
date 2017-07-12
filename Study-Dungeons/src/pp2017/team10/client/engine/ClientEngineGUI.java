@@ -4,6 +4,10 @@ import pp2017.team10.shared.Character;
 import pp2017.team10.shared.Item;
 import pp2017.team10.shared.Messages;
 
+import java.io.IOException;
+
+import pp2017.team10.client.gui.spielwelt;
+
 /**
  * 
  * This class is mainly used to move the player and check the consistency. it
@@ -24,6 +28,13 @@ public class ClientEngineGUI {
 	public boolean isAvailable;
 	public int[][] Map;
 
+
+
+	public static void main(String[]args) throws IOException{
+		spielwelt spiel = new spielwelt();
+		spiel.show();
+	}
+	
 	public ClientEngineGUI() {
 
 	}
