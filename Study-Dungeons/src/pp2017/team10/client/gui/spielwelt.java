@@ -56,6 +56,7 @@ public class spielwelt extends javax.swing.JFrame {
     public JLabel playerOnMinimap = new JLabel();
     private JLayeredPane jlp = new JLayeredPane();
     private JPanel minimapPanel;
+    public ClientEngineGUI ceg = new ClientEngineGUI();
     
     /**
      * Creates new form spielwelt
@@ -73,20 +74,16 @@ public class spielwelt extends javax.swing.JFrame {
         return img;
     }
     
-    public void movePlayer(String direction) throws InterruptedException{
-    	System.out.println(playerPosX/(screenWidth/50)+  "," + playerPosY/(screenWidth/50));    	
-    	ClientEngineGUI n = new ClientEngineGUI();
-    	n.consistency(world, direction, playerPosX/(screenWidth/50), playerPosY/(screenWidth/50));
-    	System.out.println(n.isPossible);
+    public void movePlayer(String direction, int posX, int posY) throws InterruptedException{
+    	//System.out.println(playerPosX/(screenWidth/50)+  "," + playerPosY/(screenWidth/50));
     	
     	
 //    	if (n.isPossible == true){	
-            if(direction.equals("right")){
+            if(direction.equals("right") && world[posX][posY] != 1){
             ActionListener taskPerformer = new ActionListener() {
                 int count=0;
                 public void actionPerformed(ActionEvent evt) {
                      if(count>((screenWidth/50)%1000)-2) {//we did the task 10 times
-                         movePlayerMinimap();  
                            ((Timer)evt.getSource()).stop();
                       }
                       if(playerPosX < screenWidth-(screenWidth/50))
@@ -97,12 +94,11 @@ public class spielwelt extends javax.swing.JFrame {
             };
             new Timer(delay, taskPerformer).start();
             }
-            if(direction.equals("up")){
+            if(direction.equals("up") && world[posX][posY] != 1){
             ActionListener taskPerformer = new ActionListener() {
                 int count=0;
                 public void actionPerformed(ActionEvent evt) {
                      if(count>((screenWidth/50)%1000)-2) {//we did the task 10 times
-                         movePlayerMinimap();  
                            ((Timer)evt.getSource()).stop();
                       }
                       if(playerPosY > 0)
@@ -113,13 +109,12 @@ public class spielwelt extends javax.swing.JFrame {
             };
             new Timer(delay, taskPerformer).start();
             }
-            if(direction.equals("left")){
+            if(direction.equals("left") && world[posX][posY] != 1){
             ActionListener taskPerformer = new ActionListener() {
                 int count=0;
                 public void actionPerformed(ActionEvent evt) {
                      
                     if(count>((screenWidth/50)%1000)-2) {//we did the task 10 times
-                        movePlayerMinimap();   
                         ((Timer)evt.getSource()).stop();
                       }
                       if(playerPosX > 0)
@@ -130,12 +125,11 @@ public class spielwelt extends javax.swing.JFrame {
             };
             new Timer(delay, taskPerformer).start();
             }
-            if(direction.equals("down")){
+            if(direction.equals("down") && world[posX][posY] != 1){
             ActionListener taskPerformer = new ActionListener() {
                 int count=0;
                 public void actionPerformed(ActionEvent evt) {
                      if(count>((screenWidth/50)%1000)-2) {//we did the task 10 times
-                         movePlayerMinimap();
                            ((Timer)evt.getSource()).stop();
                       }
                       if(playerPosY < (screenWidth-(screenWidth/50)))
@@ -149,10 +143,10 @@ public class spielwelt extends javax.swing.JFrame {
             
       }
     
-    public void movePlayerMinimap(){
-        int posX = playerOnField.getLocation().x/(screenWidth/50)*4;
-        int posY = playerOnField.getLocation().y/(screenWidth/50)*4;
-        playerOnMinimap.setLocation(posX, posY);
+    public void movePlayerMinimap(int posX, int posY){
+    	int playerX = posX * 4;
+    	int playerY = posY * 4;
+        playerOnMinimap.setLocation(playerX, playerY);
     }
     
     public spielwelt() throws IOException {
@@ -172,29 +166,36 @@ public class spielwelt extends javax.swing.JFrame {
         mainPanelSize = new Dimension(screenWidth, screenHeight);
         initComponents();
         
+        chatButton.setSize(screenWidth/5, 37);
+        chatButton.setLocation(0, 0);
+        
         KeyListener kl = new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {}
 
             @Override
             public void keyPressed(KeyEvent e) {
+            	int playerX = playerPosX/(screenWidth/50);
+            	int playerY = playerPosY/(screenWidth/50);
                 try {
-                        if(e.getKeyCode()==37 && playerPosX != 0){
-                    movePlayer("left");
+                        if(e.getKeyCode()==37 && playerPosX != 0 && --playerX>=0 && world[playerX][playerY] != 1){
+                        	movePlayerMinimap(playerX, playerY);
+                        	ceg.consistency(world, "left", ++playerX, playerY);
                 }
                 else
-                    if(e.getKeyCode()==38 && playerPosY != 0){
-                        movePlayer("up");
+                    if(e.getKeyCode()==38 && playerPosY != 0 && --playerY>=0 && world[playerX][playerY] != 1){
+                    	movePlayerMinimap(playerX, playerY);
+                    	ceg.consistency(world, "up", playerX, ++playerY);
                     }
                     else
-                        if(e.getKeyCode()==39 && playerPosX != screenWidth){
-                    
-                        movePlayer("right");
-                    
+                        if(e.getKeyCode()==39 && playerPosX != screenWidth && ++playerX<50 && world[playerX][playerY] != 1){
+                        	movePlayerMinimap(playerX, playerY);
+                        	ceg.consistency(world, "right", --playerX, playerY);
                         }
                         else
-                            if(e.getKeyCode()==40 && playerPosY != screenWidth){
-                                movePlayer("down");
+                            if(e.getKeyCode()==40 && playerPosY != screenWidth && ++playerY<50 && world[playerX][playerY] != 1){
+                            	movePlayerMinimap(playerX, playerY);
+                            	ceg.consistency(world, "down", playerX, --playerY);
                             }
                 
                 } catch (InterruptedException ex) {
@@ -228,10 +229,47 @@ public class spielwelt extends javax.swing.JFrame {
                 }
             }
 
-            @Override
+            @Override 
             public void keyReleased(KeyEvent e) {}
         };
         
+        BufferedImage bi = null;
+        try{
+            bi = ImageIO.read(getClass().getResource("bluePotion.png"));
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        Image dimg = bi.getScaledInstance(25, 25,Image.SCALE_SMOOTH);
+        ImageIcon img = new ImageIcon(dimg);
+        bluePotionLabel.setIcon(img);
+        bluePotionLabel.setText("");
+        
+        bi = null;
+        try{
+            bi = ImageIO.read(getClass().getResource("greenPotion.png"));
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        dimg = bi.getScaledInstance(25, 25,Image.SCALE_SMOOTH);
+        img = new ImageIcon(dimg);
+        
+        greenPotionLabel.setIcon(img);
+        greenPotionLabel.setText("");
+        
+        bi = null;
+        try{
+            bi = ImageIO.read(getClass().getResource("redPotion.png"));
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        dimg = bi.getScaledInstance(25, 25,Image.SCALE_SMOOTH);
+        img = new ImageIcon(dimg);
+        
+        redPotionLabel.setIcon(img);
+        redPotionLabel.setText("");
+        redPotionCount.setText("0");
+        greenPotionCount.setText("0");
+        bluePotionCount.setText("0");
         
         chatWindow.setOpaque(false);
         chatWindow.addKeyListener(kl);
@@ -335,7 +373,12 @@ public class spielwelt extends javax.swing.JFrame {
         itemPanel = new javax.swing.JPanel();
         itemLabel = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();bluePotionLabel = new javax.swing.JLabel();
+        redPotionLabel = new javax.swing.JLabel();
+        greenPotionLabel = new javax.swing.JLabel();
+        bluePotionCount = new javax.swing.JLabel();
+        greenPotionCount = new javax.swing.JLabel();
+        redPotionCount = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Study Dungeons");
@@ -417,26 +460,61 @@ public class spielwelt extends javax.swing.JFrame {
         healthBar.setName("healthBar"); // NOI18N
 
         itemPanel.setName("itemPanel"); // NOI18N
+        bluePotionLabel.setText("jLabel3");
+        bluePotionLabel.setPreferredSize(new java.awt.Dimension(25, 25));
 
-        itemLabel.setText("jLabel3");
+        redPotionLabel.setText("jLabel3");
+        redPotionLabel.setPreferredSize(new java.awt.Dimension(25, 25));
+
+        greenPotionLabel.setText("jLabel3");
+        greenPotionLabel.setPreferredSize(new java.awt.Dimension(25, 25));
+        
+        bluePotionCount.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        bluePotionCount.setText("j");
+
+        greenPotionCount.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        greenPotionCount.setText("j");
+
+        redPotionCount.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        redPotionCount.setText("j");
 
         javax.swing.GroupLayout itemPanelLayout = new javax.swing.GroupLayout(itemPanel);
         itemPanel.setLayout(itemPanelLayout);
         itemPanelLayout.setHorizontalGroup(
             itemPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(itemPanelLayout.createSequentialGroup()
-                .addComponent(itemLabel)
-                .addGap(0, 181, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(itemPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(bluePotionLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                    .addComponent(bluePotionCount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(itemPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(greenPotionCount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(greenPotionLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(itemPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(redPotionLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(redPotionCount, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
         itemPanelLayout.setVerticalGroup(
             itemPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(itemPanelLayout.createSequentialGroup()
-                .addComponent(itemLabel)
-                .addGap(0, 46, Short.MAX_VALUE))
+                .addGroup(itemPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(itemPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(redPotionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(greenPotionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(bluePotionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(itemPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(redPotionCount)
+                    .addComponent(greenPotionCount)
+                    .addComponent(bluePotionCount))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel1.setFont(new java.awt.Font("Raven Song", 1, 14)); // NOI18N
-        jLabel1.setText("Items");
+        jLabel1.setText("Elixiere");
         jLabel1.setName("itemLabel"); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Raven Song", 1, 18)); // NOI18N
@@ -605,6 +683,13 @@ public class spielwelt extends javax.swing.JFrame {
     private javax.swing.JPanel mainItemPanel;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JPanel worldPanel;
+    private javax.swing.JLabel bluePotionCount;
+    private javax.swing.JLabel bluePotionLabel;
+    private javax.swing.JLabel greenPotionCount;
+    private javax.swing.JLabel greenPotionLabel;
+    private javax.swing.JLabel healthLabel;
+    private javax.swing.JLabel redPotionCount;
+    private javax.swing.JLabel redPotionLabel;
     // End of variables declaration                   
 }
 

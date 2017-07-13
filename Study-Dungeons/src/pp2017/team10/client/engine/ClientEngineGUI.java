@@ -26,11 +26,12 @@ public class ClientEngineGUI {
 	public int charPos;
 	public boolean isAvailable;
 	public int[][] Map;
+	public static spielwelt spiel;
 
 
 
 	public static void main(String[]args) throws IOException{
-		spielwelt spiel = new spielwelt();
+		spiel = new spielwelt();
 		spiel.show();
 	}
 	
@@ -90,11 +91,9 @@ public class ClientEngineGUI {
 	 * also checks if the new Array position is the ground we are allowed to
 	 * move on but the interface is not implemented yet.
 	 */
-	public boolean consistency(int[][] Map, String direction, int posx, int posy) {
+	public void consistency(int[][] Map, String direction, int posx, int posy) throws InterruptedException {
 
 		int Maplength = Map.length;
-		
-
 		/*
 		 * "if tile is instance of ground then check if the new Position is
 		 * within the map. else return false and do not allow move. Surround
@@ -104,44 +103,50 @@ public class ClientEngineGUI {
 
 		switch (direction) {
 		case "up":
-			if (posy >= 0 && Map[posx][posy--] != 1) {
-				System.out.println("you can move up");
+			if (posy >= 0 && Map[posx][--posy] != 1) {
+				//System.out.println("you can move up");
+				spiel.movePlayer("up", posx, posy);
+				//spiel.movePlayerMinimap(posx, posy);
 				isPossible = true;
 			} else {
-				System.out.println("you cannot move up. Map border");
+				//System.out.println("you cannot move up. Map border");
 				isPossible = false;
 			}
 			break;
 		case "down":
-			if (posy < Maplength && Map[posx][posy++] != 1) {
-				System.out.println("you can move down");
+			if (posy < Maplength && Map[posx][++posy] != 1) {
+				//System.out.println("you can move down");
+				spiel.movePlayer("down", posx, posy);
+				//spiel.movePlayerMinimap(posx, posy);
 			isPossible = true;
 			} else {
-				System.out.println("you cannot move down. Map border");
+				//System.out.println((posx<Maplength) + ", " + posx + ", " + Map[++posx][posy]);
 				isPossible = false;
 			}
 			break;
 		case "right":
-			if (posx < Maplength && Map[posx++][posy] != 1) {
-				System.out.println("you can move right");
+			if (posx < Maplength && Map[++posx][posy] != 1) {
+				//System.out.println("you can move right");
+				spiel.movePlayer("right", posx, posy);
+				//spiel.movePlayerMinimap(posx, posy);
 				isPossible = true;
 			} else {
-				System.out.println("you cannot move right. Map border");
+				//System.out.println((posx<Maplength) + ", " + posx + ", " + Map[++posx][posy]);
 				isPossible = false;
 			}
 			break;
 		case "left":
-			if (posx > 0 && Map[posx--][posy] != 1) {
-				System.out.println("you can move lwft");
+			if (posx > 0 && Map[--posx][posy] != 1) {
+				//System.out.println("you can move left");
+				spiel.movePlayer("left", posx, posy);
+				//spiel.movePlayerMinimap(posx, posy);
 				isPossible = true;
 			} else {
-				System.out.println("you cannot move left. Map border");
+				//System.out.println("you cannot move left. Map border");
 				isPossible = false;
 			}
 			break;
 		}
-
-		return isPossible;
 	}
 
 	/*
