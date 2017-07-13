@@ -27,16 +27,17 @@ public class ClientEngineGUI {
 	public boolean isAvailable;
 	public int[][] Map;
 	public static spielwelt spiel;
-
+	
 
 
 	public static void main(String[]args) throws IOException{
-		spiel = new spielwelt();
-		spiel.show();
+//		spiel = new spielwelt();
+//		spiel.show();
 	}
 	
-	public ClientEngineGUI() {
-
+	public void startUp() throws IOException {
+		spiel = new spielwelt();
+		spiel.show();
 	}
 
 	public void getCharInfo() {

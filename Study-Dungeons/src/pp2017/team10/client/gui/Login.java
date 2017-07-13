@@ -2,9 +2,12 @@ package pp2017.team10.client.gui;
 
 import javax.swing.*;
 
+import pp2017.team10.client.engine.ClientEngineGUI;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class Login extends JFrame implements ActionListener {
 	JLabel logo, user, pw, choice;
@@ -18,7 +21,7 @@ public class Login extends JFrame implements ActionListener {
 
 		super("Study Dungeons");
 		this.setSize(300, 350);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
 
@@ -32,11 +35,6 @@ public class Login extends JFrame implements ActionListener {
 	public void placeLogin2Objects(JPanel panel) {
 
 		panel.setLayout(null);
-
-		logo = new JLabel();
-		logo.setIcon(new ImageIcon(getClass().getResource("/logo.jpg")));
-		logo.setBounds(0, 0, 300, 120);
-		panel.add(logo);
 
 		user = new JLabel("User:");
 		user.setBounds(10, 121, 100, 50);
@@ -58,7 +56,7 @@ public class Login extends JFrame implements ActionListener {
 		choice.setBounds(10, 221, 100, 35);
 		panel.add(choice);
 
-		String[] choiceList = { "Burcu", "Tobuias", "Felix", "Rasit" };
+		String[] choiceList = { "Anna", "Burcu", "Felix", "Rasit" };
 		choice1 = new JComboBox(choiceList);
 		choice1.setBounds(111, 221, 174, 30);
 		panel.add(choice1);
@@ -73,6 +71,10 @@ public class Login extends JFrame implements ActionListener {
 		cancel.addActionListener(this);
 		panel.add(cancel);
 
+		logo = new JLabel();
+		logo.setIcon(new ImageIcon(getClass().getResource("/logo.jpg")));
+		logo.setBounds(0, 0, 300, 350);
+		panel.add(logo);
 	}
 
 	@Override
@@ -80,10 +82,24 @@ public class Login extends JFrame implements ActionListener {
 		if (e.getSource() == cancel) {
 			System.exit(0);
 		} else if (e.getSource() == ok) {
-			new SDFrame();
+			// if(/*successfullLogin()==*/ true){
+			try {
+				ClientEngineGUI c = new ClientEngineGUI();
+				c.startUp();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			// }
+			// new SDFrame();
 			this.dispose();
 		}
 
+	}
+
+	private boolean successfullLogin() {
+		// TODO Auto-generated method stub
+		return true;
 	}
 
 	public static void main(String[] args) {
