@@ -14,6 +14,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import pp2017.team10.shared.Messages;
+import pp2017.team10.server.map.LevelGenerator;
 import pp2017.team10.shared.ChatMessage;
 import pp2017.team10.shared.Cheat;
 import pp2017.team10.shared.DoorUsage;
@@ -26,6 +27,7 @@ import pp2017.team10.shared.Move;
 import pp2017.team10.shared.NewPlayer;
 import pp2017.team10.shared.PlayerAttack;
 import pp2017.team10.shared.PlayerDead;
+import pp2017.team10.shared.Map;
 
 /**
  * Author: Felix Schifferdecker, 5585147
@@ -52,6 +54,7 @@ public class GameServer {
 	private int[][] world = new int[50][50];
 	private boolean[][] darkside;
 	private int currentLvl;
+	private LevelGenerator lg = new LevelGenerator();
 	
 	private Queue <Messages> messageQueue = new LinkedList<Messages>();
 	private ArrayList<UserLogedIn> userList = new ArrayList<UserLogedIn>();
@@ -64,9 +67,55 @@ public class GameServer {
 		return this.messageQueue;
 	}
 	
-	//Methode um die ausgehenden Nachrichten zu l�schen bzw. neu zu definieren
+	//Methode um die ausgehenden Nachrichten zu loeschen bzw. neu zu definieren
 	public void setMessageQueue(Messages m){
 		messageQueue.offer(m);
+	}
+	
+	public void mapToArray(){
+		Map wiso = lg.buildWiso();
+		for(int i = 0; i < 50; i++) {
+			for(int j = 0; j < 50; j++) {
+				if(wiso.getTile(i, j).isWall())
+					world[i][j] = 2;
+				else
+				if(wiso.getTile(i, j).isItem())
+					world[i][j] = 20;
+				else
+				if(wiso.getTile(i, j).isMonster())
+					world[i][j] = 150;
+				else
+				if(wiso.getTile(i, j).isPlayer())
+					world[i][j] = 100;
+				else
+				if(wiso.getTile(i, j).isDoor())
+					world[i][j] = 6;
+				else
+				if(wiso.getTile(i, j).isExit())
+					world[i][j] = 7;
+				else
+				if(wiso.getTile(i, j).isFloor())
+					world[i][j] = 5;
+				else
+				if(wiso.getTile(i, j).isStone())
+					world[i][j] = 4;
+				else
+				if(wiso.getTile(i, j).isMarble())
+					world[i][j] = 3;
+				else
+				if(wiso.getTile(i, j).isEntrance())
+					world[i][j] = 1;
+				else
+				if(wiso.getTile(i, j).isColumn())
+					world[i][j] = 8;
+				else
+				if(wiso.getTile(i, j).isKey())
+					world[i][j] = 9;
+				System.out.print(world[i][j] + ", ");
+				}
+			System.out.println();
+			}
+		
 	}
 	
 	
@@ -131,9 +180,8 @@ public class GameServer {
 	public void handleChatMessage(ChatMessage m) throws IOException{
 		for(UserLogedIn u : userList)
 			if(!m.user.equals(u.getUser())){
-				ChatMessage msg = new ChatMessage(m.content, u.getUser());
+				ChatMessage msg = new ChatMessage(m.content, u.getUser(), m.sender);
 				messageQueue.offer(msg);
-				System.out.println("Nachricht: " + m.content + " an " + u.getUser());
 			}
 	}
 	
@@ -152,7 +200,7 @@ public class GameServer {
 		
 	}
 	
-	//�berpr�ft, ob der Nutzer den Schl�ssel f�r die T�r hat, falls ja wird getLevel(currentlvl++) aufgerufen
+	//Ueberprueft, ob der Nutzer den Schluessel fuer die Tuer hat, falls ja wird getLevel(currentlvl++) aufgerufen
 	public void handleDoorUsage(DoorUsage m) throws IOException{
 		boolean userKey = false;
 		for(UserLogedIn u : userList)
@@ -161,7 +209,7 @@ public class GameServer {
 				userKey = true;
 			}
 		if(userKey){
-			System.out.println("Die T�r ist auf");
+			System.out.println("Die Tuer ist auf");
 			currentLvl++;
 			System.out.println("To the next Level");
 			//getLevel muss von Levelgenerator zur Verf�gung gestellt werden um neues Level zu laden

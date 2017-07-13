@@ -2,6 +2,7 @@ package pp2017.team10.server.engine;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -30,7 +31,7 @@ public class Database {
 	 * Das gleiche passiert mit der Highscore
 	 * */
 	public Database() throws IOException{
-		
+
 		FileReader frHighscore = new FileReader("Highscores.txt");
 		BufferedReader brHighscore = new BufferedReader(frHighscore);
 		String readLineHighscore = brHighscore.readLine();

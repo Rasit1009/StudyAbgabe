@@ -11,15 +11,16 @@ public class ChatMessage extends Messages {
 	public String content;
 	public String user;
 	public String recipient;
+	public String sender;
 	
-	public ChatMessage(String content, String sender, String recipient){
+	public ChatMessage(String content, String sender){
 		this.content = content;
 		this.user = sender;
-		this.recipient = recipient;
 	}
 	
-	public ChatMessage(String content, String reciever){
+	public ChatMessage(String content, String reciever, String sender){
 		this.content = content;
 		this.recipient = reciever;
+		this.sender = sender;
 	}
 }
