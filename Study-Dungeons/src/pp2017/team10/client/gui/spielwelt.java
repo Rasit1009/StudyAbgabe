@@ -155,7 +155,10 @@ public class spielwelt extends javax.swing.JFrame {
                 world[i][j] = 0;
             }
             world[i][i] = 1;
-        }
+        } 
+        world[2][20] = 2;
+        	
+        	
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         
         int screen = (int) screenSize.getHeight() - 100;
@@ -226,6 +229,9 @@ public class spielwelt extends javax.swing.JFrame {
                 		minimapPanel.setVisible(false);
                 	else
                 		minimapPanel.setVisible(true);
+                 
+                }if(e.getKeyChar()== 'v' || e.getKeyChar() == 'V'){
+                	ceg.itemAvailable(playerX, playerY, world);
                 }
             }
 
@@ -315,6 +321,7 @@ public class spielwelt extends javax.swing.JFrame {
         ImageIcon playerIcon = getImage("frame-2.png");
         ImageIcon groundIcon = getImage("boden.jpg");
         ImageIcon wallIcon = getImage("stone.png");
+        ImageIcon itemIcon = getImage("greenPotion.png"); 
         
         playerOnField.setSize(screenWidth/50, screenWidth/50);
         playerOnField.setIcon(playerIcon);
@@ -347,6 +354,8 @@ public class spielwelt extends javax.swing.JFrame {
                     case 0: groundImageLabel.setIcon(groundIcon);
                             break;
                     case 1: groundImageLabel.setIcon(wallIcon);
+                    		break;
+                    case 2: groundImageLabel.setIcon(itemIcon);
                 }
                 jlp.add(groundImageLabel, 1);
                 groundImageLabel.setLocation(i*screenWidth/50, j*screenWidth/50);

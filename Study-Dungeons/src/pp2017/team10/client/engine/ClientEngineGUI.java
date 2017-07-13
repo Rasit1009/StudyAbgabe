@@ -106,6 +106,7 @@ public class ClientEngineGUI {
 			if (posy >= 0 && Map[posx][--posy] != 1) {
 				//System.out.println("you can move up");
 				spiel.movePlayer("up", posx, posy);
+//				itemAvailable(posx, posy, Map);
 				//spiel.movePlayerMinimap(posx, posy);
 				isPossible = true;
 			} else {
@@ -117,6 +118,7 @@ public class ClientEngineGUI {
 			if (posy < Maplength && Map[posx][++posy] != 1) {
 				//System.out.println("you can move down");
 				spiel.movePlayer("down", posx, posy);
+//				itemAvailable(posx, posy, Map);
 				//spiel.movePlayerMinimap(posx, posy);
 			isPossible = true;
 			} else {
@@ -128,6 +130,7 @@ public class ClientEngineGUI {
 			if (posx < Maplength && Map[++posx][posy] != 1) {
 				//System.out.println("you can move right");
 				spiel.movePlayer("right", posx, posy);
+//				itemAvailable(posx, posy, Map);
 				//spiel.movePlayerMinimap(posx, posy);
 				isPossible = true;
 			} else {
@@ -139,6 +142,7 @@ public class ClientEngineGUI {
 			if (posx > 0 && Map[--posx][posy] != 1) {
 				//System.out.println("you can move left");
 				spiel.movePlayer("left", posx, posy);
+//				itemAvailable(posx, posy, Map);
 				//spiel.movePlayerMinimap(posx, posy);
 				isPossible = true;
 			} else {
@@ -147,6 +151,7 @@ public class ClientEngineGUI {
 			}
 			break;
 		}
+		
 	}
 
 	/*
@@ -182,22 +187,43 @@ public class ClientEngineGUI {
 	}
 
 	public boolean itemAvailable(int x, int y, int[][] Map) {
-		this.Map = Map;
-		x = posx;
-		y = posy;
+//		this.Map = Map;
+//		x = posx;
+//		y = posy;
+		
+		boolean isPossible = false;
 
+		int itemPosX, itemPosY;
+		
+/*		if(x == 0 && y == 0){
+			for(int i = x; i<=x+1; i++)
+				for(int j = y; y<=y+1;j++){
+					if (Map[i][j] != 0) { // if the field is not empty
+						isAvailable = true; // set the sign that there is an Item
+						System.out.println("Item is on Position posx: [" + i + "] posy: [" + j + "]"
+								+ " Player can pick it up, it is in his surrounding");
+					} else {
+						isAvailable = false;
+					}
+				}
+		} else if( x== 0 && y)*/
+	try{	
 		for (int i = x - 1; i <= x + 1; i++) {
 			for (int j = y - 1; j <= y + 1; j++) {
-				if (Map[i][j] != 0) { // if the field is not empty
-					isAvailable = true; // set the sign that there is an Item
+				if (Map[i][j] == 2) { // if the field is not empty
+					isPossible = true; // set the sign that there is an Item
 					System.out.println("Item is on Position posx: [" + i + "] posy: [" + j + "]"
 							+ " Player can pick it up, it is in his surrounding");
-				} else {
-					isAvailable = false;
-				}
+					
+				} 
 			}
-		}
-
-		return isAvailable;
+		} 
+		System.out.println(isPossible);
+		
+	} catch  (ArrayIndexOutOfBoundsException exception){
+		System.out.println("not allowed");
+		
+	}
+		return isPossible;
 	}
 }
