@@ -2,6 +2,7 @@ package pp2017.team10.client.engine;
 
 import pp2017.team10.shared.Character;
 import pp2017.team10.shared.Item;
+import pp2017.team10.shared.ItemUsage;
 import pp2017.team10.shared.Messages;
 
 import java.io.IOException;
@@ -27,6 +28,7 @@ public class ClientEngineGUI {
 	public boolean isAvailable;
 	public int[][] Map;
 	public static spielwelt spiel;
+
 
 
 
@@ -195,35 +197,26 @@ public class ClientEngineGUI {
 
 		int itemPosX, itemPosY;
 		
-/*		if(x == 0 && y == 0){
-			for(int i = x; i<=x+1; i++)
-				for(int j = y; y<=y+1;j++){
-					if (Map[i][j] != 0) { // if the field is not empty
-						isAvailable = true; // set the sign that there is an Item
-						System.out.println("Item is on Position posx: [" + i + "] posy: [" + j + "]"
-								+ " Player can pick it up, it is in his surrounding");
-					} else {
-						isAvailable = false;
-					}
-				}
-		} else if( x== 0 && y)*/
 	try{	
-		for (int i = x - 1; i <= x + 1; i++) {
+		 for (int i = x - 1; i <= x + 1; i++) {
 			for (int j = y - 1; j <= y + 1; j++) {
 				if (Map[i][j] == 2) { // if the field is not empty
 					isPossible = true; // set the sign that there is an Item
+					System.out.println(isPossible);
 					System.out.println("Item is on Position posx: [" + i + "] posy: [" + j + "]"
 							+ " Player can pick it up, it is in his surrounding");
-					
+					ItemUsage useItem = new ItemUsage(i, j, isAvailable);
+					handleRequests(useItem);					
 				} 
-			}
+			} 
 		} 
-		System.out.println(isPossible);
+		
 		
 	} catch  (ArrayIndexOutOfBoundsException exception){
 		System.out.println("not allowed");
 		
 	}
+		
 		return isPossible;
 	}
 }

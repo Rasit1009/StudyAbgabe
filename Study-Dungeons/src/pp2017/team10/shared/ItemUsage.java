@@ -1,24 +1,31 @@
 package pp2017.team10.shared;
 
-import pp2017.team10.client.engine.ClientEngineGUI;
 
 public class ItemUsage extends Messages {
 
 	/**
-	 * @author Güven, Rasit Matnr: 6019617
+	 * Author: Felix Schifferdecker, 5585147
 	 */
 	private static final long serialVersionUID = -4490895966355240307L;
 
 	public int itemID;
-	public int pID;
+	public String user;
 	public int posx;
 	public int posy;
-	public boolean isAvailabe;
+	public boolean pickup;
 
-	public ItemUsage(int itemID, int pID, boolean isAvailable){
+	public ItemUsage(int itemID, String user, boolean pickup){
 	this.itemID = itemID;
-	this.pID = pID;
+	this.user = user;
+	this.pickup = pickup;
 	}
+	
+	public ItemUsage(int posx, int posy, boolean pickup){
+		this.posx = posx;
+		this.posy = posy;
+		this.pickup = pickup;
+	}
+	
 	
 
 }

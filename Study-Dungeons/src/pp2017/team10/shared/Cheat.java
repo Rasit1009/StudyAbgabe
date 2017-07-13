@@ -1,21 +1,16 @@
 package pp2017.team10.shared;
 
 /**
- * In the following class we are going to define our cheats, which are activated
- * by typing the right String into the Chat Window.
- * 
- * @author Güven, Rasit Matnr: 6019617
+ * Author: Felix Schifferdecker, 5585147
  */
 public class Cheat extends Messages {
 
 public String content;
-public int pID;
 	
 	private static final long serialVersionUID = -7123423244900792410L;
 
-	public Cheat(String content, int pID) {
+	public Cheat(String content) {
 		this.content = content;
-		this.pID = pID;
 	}
 
 	/*

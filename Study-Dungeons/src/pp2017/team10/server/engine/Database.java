@@ -9,13 +9,26 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+/*
+ * Hilfsklasse um eine vorl�ufige Datenbank f�r Nutzer und die Highscore zu erstellen
+ * Wird sp�ter zu SQL-light umgewandelt vom Levelgenerator
+ * 
+ * */
 
+/**
+ * Author: Felix Schifferdecker, 5585147
+ */
 
 public class Database {
 	
 	ArrayList<Highscore> highscore = new ArrayList<Highscore>();
 	ArrayList<User> userdata = new ArrayList<User>();
 	
+	
+	/*
+	 * Sobald Klasse gestartet wird werden die Nutzerdaten ausgelesen
+	 * Das gleiche passiert mit der Highscore
+	 * */
 	public Database() throws IOException{
 		
 		FileReader frHighscore = new FileReader("Highscores.txt");
@@ -73,10 +86,13 @@ public class Database {
 		frUser.close();
 	}
 	
+	
+	//Get-Funktion f�r Highscore
 	public ArrayList<Highscore> getHighscore(){
 		return highscore;
 	}
 	
+	//Add-Funktion f�r Highscore
 	public void addHighscore(Highscore highscoreadd){
 		highscore.add(highscoreadd);
 		
@@ -88,7 +104,6 @@ public class Database {
 
 				@Override
 				public int compare(Highscore o1, Highscore o2) {
-					// TODO Auto-generated method stub
 					return Integer.compare(o1.pos, o2.pos);
 				}
 			});	
@@ -124,13 +139,15 @@ public class Database {
 		}
 	}
 	
-	public String addUser(String username, String password){
+	//User wird hinzugef�gt falls noch nicht vorhanden
+	public boolean addUser(String username, String password){
 		for(User u : userdata){
 			if(u.getUser().equals(username))
-				return "This name is already taken!";
+				return false;
 		}
 		
 		Password p = new Password();
+		//Password wird gehasht zur Sicherheit
 		String pw = p.hashing(password);
 		
 		userdata.add(new User(username, pw));
@@ -144,10 +161,10 @@ public class Database {
 			bwAdd.close();
 			fwAdd.close();
 
-			return "The User was added succesfully.";
+			return true;
 		}	catch(IOException e){
 			System.out.println("Datei existiert nicht.");
-			return null;
+			return false;
 		}
 	}
 }

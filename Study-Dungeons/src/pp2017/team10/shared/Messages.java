@@ -8,15 +8,12 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-import pp2017.team10.client.engine.ClientEngineGUI;
-
 public class Messages implements Serializable {
 	public String filename;
 	public Messages msg;
-	public ClientEngineGUI ceg;
 
 	/**
-	 * @author Güven, Rasit Matnr: 6019617
+	 * Author: Felix Schifferdecker, 5585147
 	 */
 	private static final long serialVersionUID = 1171553980546243488L;
 
@@ -37,7 +34,6 @@ public class Messages implements Serializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		receiveResponse(msg);
 	}
 
 	/*
