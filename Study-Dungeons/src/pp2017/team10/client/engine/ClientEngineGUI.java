@@ -4,6 +4,7 @@ import pp2017.team10.shared.Character;
 import pp2017.team10.shared.Item;
 import pp2017.team10.shared.ItemUsage;
 import pp2017.team10.shared.Messages;
+import pp2017.team10.shared.Move;
 
 import java.io.IOException;
 
@@ -154,6 +155,8 @@ public class ClientEngineGUI {
 			break;
 		}
 		
+		Move moveMsg = new Move(posx, posy, direction);
+		handleRequests(moveMsg);
 	}
 
 	/*

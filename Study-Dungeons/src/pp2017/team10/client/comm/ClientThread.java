@@ -22,7 +22,7 @@ public class ClientThread extends Thread {
 	public boolean clientisconnected;
 	private String ende = "logout";
 
-	public ClientThread(Socket clientSocket) throws IOException {
+	public ClientThread(Socket clientSocket, String user) throws IOException {
 		this.clientSocket = clientSocket;
 		// this.nummer=nummer;
 		// System.out.println("tet1");
@@ -39,7 +39,6 @@ public class ClientThread extends Thread {
 		 * Ein Data-Stream zum Server wird erzeugt ueber diesen werden die
 		 * Leveldaten empfangen.
 		 */
-
 	}
 
 	public void run() {

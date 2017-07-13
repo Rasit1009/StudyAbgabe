@@ -32,6 +32,7 @@ import javax.swing.Timer;
 
 import pp2017.team10.client.engine.ClientEngineGUI;
 import pp2017.team10.shared.Character;
+import pp2017.team10.shared.ChatMessage;
 
 
 /**
@@ -57,6 +58,8 @@ public class spielwelt extends javax.swing.JFrame {
     private JLayeredPane jlp = new JLayeredPane();
     private JPanel minimapPanel;
     public ClientEngineGUI ceg = new ClientEngineGUI();
+    public String receiver;
+    public String recipient;
     
     /**
      * Creates new form spielwelt
@@ -665,6 +668,7 @@ public class spielwelt extends javax.swing.JFrame {
                 }
             }
         });
+        
     }
     public class tHandler implements ActionListener {
 
@@ -672,7 +676,11 @@ public class spielwelt extends javax.swing.JFrame {
 		public void actionPerformed(ActionEvent e) {
 			chatText.append(chatInput.getText() + "\n");
 			chatInput.setText("");
+			
+			ChatMessage chat = new ChatMessage(chatInput.getText(),receiver,recipient);
+			ceg.handleRequests(chat);
                         chatInput.setEnabled(false);
+                        
 
 		}
 

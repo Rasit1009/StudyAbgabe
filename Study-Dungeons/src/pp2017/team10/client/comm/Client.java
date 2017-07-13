@@ -27,7 +27,7 @@ public class Client extends Thread {
 			/*
 			 * Client-Thread wird gestartet
 			 */
-			ClientThread sendClient = new ClientThread(clientSocket);
+			ClientThread sendClient = new ClientThread(clientSocket, "Rasit");
 			sendClient.start();
 
 		} catch (UnknownHostException e) {

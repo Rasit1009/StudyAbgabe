@@ -7,10 +7,13 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Messages implements Serializable {
 	public String filename;
 	public Messages msg;
+	private Queue <Messages> messageQueue = new LinkedList<Messages>();
 
 	/**
 	 * Author: Felix Schifferdecker, 5585147
@@ -25,8 +28,9 @@ public class Messages implements Serializable {
 	 */
 
 	public void sendRequest(Messages msg) {
+		
 		this.msg = msg;
-		try (FileOutputStream lo = new FileOutputStream("actionInfo.ser");
+		try (FileOutputStream lo = new FileOutputStream(msg + ".ser");
 				ObjectOutputStream ol = new ObjectOutputStream(lo)) {
 			ol.writeObject(msg);
 		} catch (FileNotFoundException e) {
@@ -34,6 +38,7 @@ public class Messages implements Serializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
 	}
 
 	/*
@@ -41,7 +46,7 @@ public class Messages implements Serializable {
 	 * our message is permitted.
 	 */
 	public void receiveResponse(Messages msg) {
-		try (FileInputStream li = new FileInputStream("actionInfo.ser");
+		try (FileInputStream li = new FileInputStream( msg + ".ser");
 				ObjectInputStream il = new ObjectInputStream(li)) {
 			final Messages input = (Messages) il.readObject();
 			assert (input.getName().equals(msg));
@@ -104,6 +109,11 @@ public class Messages implements Serializable {
 
 		return address;
 
+	}
+	
+	
+	public void addToQueue(Messages msg){
+		messageQueue.offer(msg);
 	}
 
 }
