@@ -163,7 +163,7 @@ public class ClientEngineGUI {
 
 		MessageResponse rsp = new MessageResponse(msg);
 	}
-
+	
 	/*
 	 * the functionality of this metho is to check if our player has any items
 	 * in his surrounding to pick up.

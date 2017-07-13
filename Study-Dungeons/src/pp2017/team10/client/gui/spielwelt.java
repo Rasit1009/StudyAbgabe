@@ -387,7 +387,7 @@ public class spielwelt extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(700, 800));
         setResizable(false);
         setSize(new java.awt.Dimension(700, 800));
-
+        
         mainPanel.setBackground(new java.awt.Color(102, 255, 51));
         mainPanel.setName("mainPanel"); // NOI18N
 
