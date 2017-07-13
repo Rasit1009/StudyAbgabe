@@ -77,9 +77,27 @@ public class spielwelt extends javax.swing.JFrame {
 		return img;
 	}
 
+
 	public void movePlayer(String direction, int posX, int posY) throws InterruptedException {
 		// System.out.println(playerPosX/(screenWidth/50)+ "," +
 		// playerPosY/(screenWidth/50));
+
+                    }
+                    else{
+                        chatButton.setText("Chat verbergen");
+                        chatWindow.setVisible(true);
+                    }
+                }
+                if(e.getKeyChar() == 'm' || e.getKeyChar() == 'M') {//minimap anzeigen/schließen
+                	if(minimapPanel.isVisible())
+                		minimapPanel.setVisible(false);
+                	else
+                		minimapPanel.setVisible(true);
+                 
+                }if(e.getKeyChar()== 'v' || e.getKeyChar() == 'V'){ //Item aufheben
+                	ceg.itemAvailable(playerX, playerY, world);
+                }
+            }
 
 		// if (n.isPossible == true){
 		if (direction.equals("right") && world[posX][posY] != 1) {
