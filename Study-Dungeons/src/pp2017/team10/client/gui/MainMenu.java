@@ -92,7 +92,7 @@ public class MainMenu extends JFrame implements ActionListener {
 
 		welcome = new JLabel();
 		welcome.setLayout(null);
-		welcome.setIcon(new ImageIcon(getClass().getResource("src/MainmenuTest.jpg")));
+		welcome.setIcon(new ImageIcon(getClass().getResource("/MainmenuTest.jpg")));
 		welcome.setBounds(0, 0, 1000, 500);
 		getContentPane().add(welcome);
 

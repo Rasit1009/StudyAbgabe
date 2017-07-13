@@ -24,6 +24,9 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -57,6 +60,7 @@ public class spielwelt extends javax.swing.JFrame {
     private JLayeredPane jlp = new JLayeredPane();
     private JPanel minimapPanel;
     public ClientEngineGUI ceg = new ClientEngineGUI();
+    public JMenuItem mntmExit;
     
     /**
      * Creates new form spielwelt
@@ -309,7 +313,7 @@ public class spielwelt extends javax.swing.JFrame {
         playerOnMinimap.setOpaque(true);
         minimap.add(playerOnMinimap, 0);
         
-        this.setSize(screenWidth + 6, screenHeight + 28);
+        this.setSize(screenWidth + 6, screenHeight + 50);
         this.setLocationRelativeTo(null);
         
         ImageIcon playerIcon = getImage("frame-2.png");
@@ -332,6 +336,7 @@ public class spielwelt extends javax.swing.JFrame {
         chatButton.addKeyListener(kl);
         mainPanel.setSize(screenWidth, screenHeight);
         mainPanel.setPreferredSize(mainPanelSize);
+        mainPanel.setLocation(0,  10);
         worldPanel.setLocation(screenWidth, screenWidth);
         worldPanel.setPreferredSize(worldPanelSize);
         mainItemPanel.setSize(screenWidth, 100);
@@ -355,6 +360,36 @@ public class spielwelt extends javax.swing.JFrame {
         jlp.add(playerOnField, 3);
         healthBar.setMaximum(100);
         healthBar.setValue(50);
+        
+        
+        JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		menuBar.setSize(screenWidth, 10);
+		menuBar.setLocation(0,0);
+//		this.add(menuBar);
+
+		JMenu mnOptions = new JMenu("Options");
+		menuBar.add(mnOptions);
+
+		JMenuItem mntmRestart = new JMenuItem("Restart");
+		mnOptions.add(mntmRestart);
+
+		JMenuItem mntmHighscore = new JMenuItem("Highscore");
+		mnOptions.add(mntmHighscore);
+
+		mntmExit = new JMenuItem("Exit");
+		mntmExit.addActionListener(new bHandler());
+		mnOptions.add(mntmExit);
+
+		JMenu mnHelp = new JMenu("Help");
+		menuBar.add(mnHelp);
+
+		JMenuItem mntmCheatcodes = new JMenuItem("CheatCodes");
+		mnHelp.add(mntmCheatcodes);
+
+		JMenuItem mntmControls = new JMenuItem("Controls");
+		mnHelp.add(mntmControls);
+		this.setVisible(true);
     }
     
     @SuppressWarnings("unchecked")
@@ -657,6 +692,25 @@ public class spielwelt extends javax.swing.JFrame {
             }
         });
     }
+    public class bHandler implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (e.getSource() == mntmExit) {
+				new Logout();
+			}
+			/*if (e.getSource() == inventory1) {
+				if (inventar.isVisible() == true) {
+					inventar.setVisible(false);
+				} else if (inventar.isVisible() == false) {
+					inventar.setVisible(true);*/
+				}
+			}
+    
+    
+    
+    
+    
     public class tHandler implements ActionListener {
 
 		@Override
