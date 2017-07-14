@@ -46,7 +46,7 @@ public class SendQueue extends Thread {
 	}
 
 	// Getter Setter
-	public void setSchlange(Queue<Messages> schlange) {
+	public void setQueue(Queue<Messages> schlange) {
 		sendQueue = schlange;
 	}
 
