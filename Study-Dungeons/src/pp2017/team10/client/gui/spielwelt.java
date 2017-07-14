@@ -30,7 +30,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.Timer;
 
-import pp2017.team10.client.engine.ClientEngineGUI;
+import pp2017.team10.client.engine.ClientEngine;
 import pp2017.team10.shared.Character;
 import pp2017.team10.shared.ChatMessage;
 
@@ -57,7 +57,7 @@ public class spielwelt extends javax.swing.JFrame {
     public JLabel playerOnMinimap = new JLabel();
     private JLayeredPane jlp = new JLayeredPane();
     private JPanel minimapPanel;
-    public ClientEngineGUI ceg = new ClientEngineGUI();
+    public ClientEngine ceg = new ClientEngine();
     public String receiver;
     public String recipient;
     

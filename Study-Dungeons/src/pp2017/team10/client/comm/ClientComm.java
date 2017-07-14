@@ -23,8 +23,8 @@ public class ClientComm  {
 	boolean serverlauft=true;
 	private Messages nach;
 	private Queue<Messages> zwischenSchlange=new LinkedList<Messages>();
- private ClientEngineGUI ce = new ClientEngineGUI();
-	public SendeVonServer sVs;
+ private ClientEngine ce = new ClientEngine();
+	public SendfromServer sVs;
 	    //Konstruktor der Client erzeugt
    		public ClientComm(String server, int port) {
 	      //Client(String server,int port,Message nach);
@@ -63,7 +63,7 @@ public class ClientComm  {
 	    		}
 
 	        //erzeugt Klasse SendeVonServer und startet sie
-	    		sVs = new SendeVonServer(eingabe,ce);
+	    		sVs = new SendfromServer(eingabe,ce);
 	       sVs.start(); 
 	       
 	       laeuft=true;
@@ -121,10 +121,10 @@ public class ClientComm  {
 		}
 	    
 	    //Setter Getter
-		public ClientEngineGUI getce(){
+		public ClientEngine getce(){
 			return ce;
 		}
-		public SendeVonServer getSvS(){
+		public SendfromServer getSvS(){
 			return sVs;
 		}
 		public void setserverlauft(boolean b){

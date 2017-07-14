@@ -1,13 +1,24 @@
 package pp2017.team10.client.engine;
 
 import pp2017.team10.shared.Character;
+import pp2017.team10.shared.ChatMessage;
+import pp2017.team10.shared.Cheat;
+import pp2017.team10.shared.DoorUsage;
 import pp2017.team10.shared.Item;
 import pp2017.team10.shared.ItemUsage;
+import pp2017.team10.shared.Login;
+import pp2017.team10.shared.Logout;
 import pp2017.team10.shared.Messages;
+import pp2017.team10.shared.MonsterAttack;
 import pp2017.team10.shared.Move;
+import pp2017.team10.shared.NewPlayer;
+import pp2017.team10.shared.PlayerAttack;
+import pp2017.team10.shared.PlayerDead;
 
 import java.io.IOException;
+import java.util.Queue;
 
+import pp2017.team10.client.comm.SendQueue;
 import pp2017.team10.client.gui.spielwelt;
 
 /**
@@ -20,7 +31,7 @@ import pp2017.team10.client.gui.spielwelt;
  *
  */
 
-public class ClientEngineGUI {
+public class ClientEngine {
 	public int posx;
 	public int posy;
 	public boolean isPossible;
@@ -29,6 +40,7 @@ public class ClientEngineGUI {
 	public boolean isAvailable;
 	public int[][] Map;
 	public static spielwelt spiel;
+	public SendQueue send;
 
 
 
@@ -38,7 +50,7 @@ public class ClientEngineGUI {
 		spiel.show();
 	}
 	
-	public ClientEngineGUI() {
+	public ClientEngine() {
 
 	}
 
@@ -221,5 +233,69 @@ public class ClientEngineGUI {
 	}
 		
 		return isPossible;
+	}
+	
+	public Queue<Messages> getQueue(){
+		return send.sendQueue;
+	}
+
+	public Messages deleteQueue() {
+	
+		return send.sendQueue.poll();
+	}
+	
+	public void handleMessage(Queue<Messages> messages){
+		try{
+			while(!messages.isEmpty()){
+				Messages m = messages.poll();
+				
+				if(m instanceof ChatMessage){
+					System.out.println("This is a ChatMessage");
+					handleRequests((ChatMessage) m);
+				}
+				else if(m instanceof Cheat){
+					System.out.println("This is a CheatMessage");
+					handleRequests((Cheat) m);
+				}
+				else if(m instanceof DoorUsage){
+					System.out.println("This is a DoorUsageMessage");
+					handleRequests((DoorUsage) m);
+				}
+				else if(m instanceof ItemUsage){
+					System.out.println("This is a ItemUsageMessage");
+					handleRequests((ItemUsage) m);
+				}
+				else if(m instanceof Login){
+					System.out.println("This is a LoginMessage");
+					handleRequests((Login) m);
+				}
+				else if(m instanceof Move){
+					System.out.println("This is a MoveMessage");
+					handleRequests((Move) m);
+				}
+				else if(m instanceof PlayerAttack){
+					System.out.println("This is a PlayerAttackMessage");
+					handleRequests((PlayerAttack) m);
+				}
+				else if(m instanceof Logout){
+					System.out.println("This is a LogoutMessage");
+					handleRequests((Logout) m);
+				}
+				else if(m instanceof MonsterAttack){
+					System.out.println("This is a MonsterAttackMessage");
+					handleRequests((MonsterAttack) m);
+				}
+				else if(m instanceof NewPlayer){
+					System.out.println("This is a NewPlayerMessage");
+					handleRequests((NewPlayer) m);
+				}
+				else if(m instanceof PlayerDead){
+					System.out.println("This is a PlayerDeadMessage");
+					handleRequests((PlayerDead) m);
+				}
+			}
+		}catch(Exception e){
+			
+		}
 	}
 }
