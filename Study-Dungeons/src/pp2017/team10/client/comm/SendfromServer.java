@@ -12,16 +12,16 @@ import pp2017.team10.shared.*;
 import pp2017.team10.client.engine.*;
 
 public class SendfromServer extends Thread {
-	private ObjectInputStream sEingabe;
-	private Messages nach;
+	private ObjectInputStream sInput;
+	private Messages to;
 	public Queue<Messages> receiveQueueClient = new LinkedList<Messages>();
-	private boolean an = true;
+	private boolean on = true;
 	// CE ce = new CE();
 	ClientEngine ce;
 
 	// Konstruktor
 	public SendfromServer(ObjectInputStream ois, ClientEngine ce) {
-		this.sEingabe = ois;
+		this.sInput = ois;
 		this.ce = ce;
 		// empfangsSchlangeClient.add(new ItemMessage(1,1));
 	}
@@ -31,26 +31,26 @@ public class SendfromServer extends Thread {
 	 */
 	public void run() {
 
-		while (an) {
+		while (on) {
 
 			try {
-				nach = (Messages) sEingabe.readObject();
+				to = (Messages) sInput.readObject();
 				System.out.println("");
-				receiveQueueClient.add(nach);
+				receiveQueueClient.add(to);
 				// addElementeSC(nach);
 				System.out.println(receiveQueueClient.size());
 
 				ce.handleMessage(receiveQueueClient);
-				System.out.println("gehandlet");
+				System.out.println("handled");
 				while (!receiveQueueClient.isEmpty()) {
 					receiveQueueClient.poll();
 				}
 			} catch (IOException e) {
-				System.out.println("Server hat die Verbindung getrennt: " + e);
-				an = false;
+				System.out.println("Server disabled Connection " + e);
+				on = false;
 				break;
 			} catch (ClassNotFoundException e2) {
-				System.out.println("Fehler");
+				System.out.println("Error");
 			}
 
 		}
@@ -61,12 +61,12 @@ public class SendfromServer extends Thread {
 		return ce;
 	}
 
-	public void setempfangsSchlangeClient(Queue<Messages> schlange) {
-		receiveQueueClient = schlange;
+	public void setgetQueueClient(Queue<Messages> queue) {
+		receiveQueueClient = queue;
 	}
 
-	public void addElementsSC(Messages nach) {
-		receiveQueueClient.offer(nach);
+	public void addElementsSC(Messages to) {
+		receiveQueueClient.offer(to);
 	}
 
 	public void removeElementsSC() {

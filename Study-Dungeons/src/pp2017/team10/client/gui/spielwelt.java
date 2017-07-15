@@ -32,6 +32,7 @@ import javax.swing.Timer;
 import pp2017.team10.client.engine.ClientEngine;
 import pp2017.team10.shared.Character;
 import pp2017.team10.shared.ChatMessage;
+import pp2017.team10.shared.ItemUsage;
 
 /**
  *

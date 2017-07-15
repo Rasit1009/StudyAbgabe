@@ -38,7 +38,7 @@ public class SendQueue extends Thread {
 			if (!ce.getQueue().isEmpty()) {
 				while (!ce.getQueue().isEmpty()) {
 
-					ct.sendeNach(ce.deleteQueue());
+					ct.sendTo(ce.deleteQueue());
 				}
 				// lauf=false;
 			}
