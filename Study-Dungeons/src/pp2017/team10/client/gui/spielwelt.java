@@ -332,9 +332,9 @@ public class spielwelt extends javax.swing.JFrame {
 		this.setSize(screenWidth + 6, screenHeight + 28);
 		this.setLocationRelativeTo(null);
 
-		ImageIcon playerIcon = getImage("frame-2.png");
-		ImageIcon groundIcon = getImage("boden.jpg");
-		ImageIcon wallIcon = getImage("stone.png");
+		ImageIcon playerIcon = getImage("spieler.png");
+		ImageIcon groundIcon = getImage("green.png");
+		ImageIcon wallIcon = getImage("wall4.png");
 		ImageIcon itemIcon = getImage("greenPotion.png");
 
 		playerOnField.setSize(screenWidth / 50, screenWidth / 50);
