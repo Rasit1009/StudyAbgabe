@@ -23,6 +23,7 @@ import pp2017.team10.shared.Messages;
 public class MessageRequest {
 
 	public String content;
+	public Messages msg;
 
 	public MessageRequest(Messages msg) {
 		receiveRequest(msg);
@@ -92,11 +93,12 @@ public class MessageRequest {
 
 	public void handleLevelSwitch(Messages msg) {
 
-		System.out.println("This is a Level message");
+		System.out.println("This is a Level message");	
 		msg.sendRequest(msg);
 	}
 
 	public void handleChat(Messages msg) {
+		
 		System.out.println("This is a Chat Message");
 		msg.sendRequest(msg);
 	}

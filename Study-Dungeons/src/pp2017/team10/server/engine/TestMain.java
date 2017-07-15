@@ -2,6 +2,7 @@ package pp2017.team10.server.engine; //Tobias Reimann, MatrNr:5419662
 
 import java.util.ArrayList;
 import java.util.Random;
+import pp2017.team10.shared.*;
 
 public class TestMain {
 

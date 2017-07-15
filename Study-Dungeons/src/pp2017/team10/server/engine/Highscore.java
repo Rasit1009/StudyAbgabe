@@ -1,5 +1,13 @@
 package pp2017.team10.server.engine;
 
+/**
+ * Author: Felix Schifferdecker, 5585147
+ */
+
+/*
+ * Klasse um die Highscore zu definieren
+ */
+
 public class Highscore {
 	public int pos;
 	public String user;

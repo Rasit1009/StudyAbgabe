@@ -35,9 +35,8 @@ public class TestGUI {
 	
 	public static void main(String[] args) {
 		ClientEngineGUI neu = new ClientEngineGUI();
-		
-
-		DoorUsage DoorMsg = new DoorUsage(doors);
+	
+	/*	DoorUsage DoorMsg = new DoorUsage(doors);
 		neu.handleRequests(DoorMsg);
 
 		ItemUsage ItemMsg = new ItemUsage(pID, itemID,true);
@@ -55,7 +54,7 @@ public class TestGUI {
 		
 		Cheat cheat = new Cheat(content,pID);
 		cheat.handleCheat(content);
-		
+		*/
 
 		/*
 		 * https://www.mkyong.com/java/how-to-read-an-object-from-file-in-java/

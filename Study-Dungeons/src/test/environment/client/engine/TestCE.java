@@ -27,7 +27,7 @@ public class TestCE {
 		ClientEngineGUI neu = new ClientEngineGUI();
 		neu.setItemOnMap(possibleMap);
 		
-		neu.consistency(possibleMap, up);
+/*		neu.consistency(possibleMap, up);
 		neu.movement(up);
 
 		neu.consistency(possibleMap, down);
@@ -41,6 +41,6 @@ public class TestCE {
 
 		neu.consistency(possibleMap, right);
 		neu.movement(right);
-
+*/
 	}
 }

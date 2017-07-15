@@ -10,12 +10,14 @@ public class Character {
 
 	public int posx;
 	public int posy;
-	public int[][] charPos;
+	public int[][] world;
+	
 
-	public Character(int posx, int posy) {
+	public Character(int[][] world, int posx, int posy) {
 	this.posx = posx;
 	this.posy = posy;
-		
+	world[posx][posy] = 2;		
+	
 	}
 
 	public int getPosX() {
@@ -26,14 +28,14 @@ public class Character {
 		return posy;
 	}
 
-	public int setNewXPos(int posx) {
+	public int setXPos(int posx) {
 
 		this.posx = posx;
 		return posx;
 
 	}
 
-	public int setNewYPos(int posy) {
+	public int setYPos(int posy) {
 		this.posy = posy;
 		return posy;
 	}

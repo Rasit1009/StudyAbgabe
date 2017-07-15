@@ -70,7 +70,6 @@ public class ServerThread extends Thread {
 				// TODO Auto-generated catch block
 
 			}
-			clientisconnected = false;
 			// e.printStackTrace();
 		}
 

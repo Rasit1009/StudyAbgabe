@@ -2,7 +2,13 @@ package pp2017.team10.client.engine;
 
 import pp2017.team10.shared.Character;
 import pp2017.team10.shared.Item;
+import pp2017.team10.shared.ItemUsage;
 import pp2017.team10.shared.Messages;
+import pp2017.team10.shared.Move;
+
+import java.io.IOException;
+
+import pp2017.team10.client.gui.spielwelt;
 
 /**
  * 
@@ -18,20 +24,28 @@ public class ClientEngineGUI {
 	public int posx;
 	public int posy;
 	public boolean isPossible;
-	public Character character = new Character(2, 1);
 	public Item item = new Item();
 	public int charPos;
 	public boolean isAvailable;
 	public int[][] Map;
+	public static spielwelt spiel;
 
+
+
+
+	public static void main(String[]args) throws IOException{
+		spiel = new spielwelt();
+		spiel.show();
+	}
+	
 	public ClientEngineGUI() {
 
 	}
 
 	public void getCharInfo() {
 
-		posx = character.getPosX();
-		posy = character.getPosY();
+//		posx = character.getPosX();
+//		posy = character.getPosY();
 	}
 
 	/*
@@ -64,8 +78,8 @@ public class ClientEngineGUI {
 		} else {
 			isPossible = false;
 		}
-		posx = character.setNewXPos(posx);
-		posy = character.setNewYPos(posy);
+//		posx = character.setNewXPos(posx);
+//		posy = character.setNewYPos(posy);
 
 		if (isPossible == true) {
 			System.out.println("New Position is posx: [" + posx + "] + posy: [" + posy + "]");
@@ -80,12 +94,9 @@ public class ClientEngineGUI {
 	 * also checks if the new Array position is the ground we are allowed to
 	 * move on but the interface is not implemented yet.
 	 */
-	public boolean consistency(int[][] Map, String direction) {
+	public void consistency(int[][] Map, String direction, int posx, int posy) throws InterruptedException {
 
-		getCharInfo();
-		int xMap = Map.length;
-		int yMap = Map[0].length;
-
+		int Maplength = Map.length;
 		/*
 		 * "if tile is instance of ground then check if the new Position is
 		 * within the map. else return false and do not allow move. Surround
@@ -94,45 +105,58 @@ public class ClientEngineGUI {
 		// if(charPos[posx][posy] is instanceof ground){
 
 		switch (direction) {
-		case "UP":
-			if (posy <= yMap) {
-				System.out.println("you can move");
+		case "up":
+			if (posy >= 0 && Map[posx][--posy] != 1) {
+				//System.out.println("you can move up");
+				spiel.movePlayer("up", posx, posy);
+//				itemAvailable(posx, posy, Map);
+				//spiel.movePlayerMinimap(posx, posy);
 				isPossible = true;
 			} else {
-				System.out.println("you cannot move. Map border");
+				//System.out.println("you cannot move up. Map border");
 				isPossible = false;
 			}
 			break;
-		case "DOWN":
-			if (posy > 0) {
-				System.out.println("you can move");
-				isPossible = true;
+		case "down":
+			if (posy < Maplength && Map[posx][++posy] != 1) {
+				//System.out.println("you can move down");
+				spiel.movePlayer("down", posx, posy);
+//				itemAvailable(posx, posy, Map);
+				//spiel.movePlayerMinimap(posx, posy);
+			isPossible = true;
 			} else {
-				System.out.println("you cannot move. Map border");
+				//System.out.println((posx<Maplength) + ", " + posx + ", " + Map[++posx][posy]);
 				isPossible = false;
 			}
 			break;
-		case "LEFT":
-			if (posx > 0) {
-				System.out.println("you can move");
+		case "right":
+			if (posx < Maplength && Map[++posx][posy] != 1) {
+				//System.out.println("you can move right");
+				spiel.movePlayer("right", posx, posy);
+//				itemAvailable(posx, posy, Map);
+				//spiel.movePlayerMinimap(posx, posy);
 				isPossible = true;
 			} else {
-				System.out.println("you cannot move. Map border");
+				//System.out.println((posx<Maplength) + ", " + posx + ", " + Map[++posx][posy]);
 				isPossible = false;
 			}
 			break;
-		case "RIGHT":
-			if (posx <= xMap) {
-				System.out.println("you can move");
+		case "left":
+			if (posx > 0 && Map[--posx][posy] != 1) {
+				//System.out.println("you can move left");
+				spiel.movePlayer("left", posx, posy);
+//				itemAvailable(posx, posy, Map);
+				//spiel.movePlayerMinimap(posx, posy);
 				isPossible = true;
 			} else {
-				System.out.println("you cannot move. Map border");
+				//System.out.println("you cannot move left. Map border");
 				isPossible = false;
 			}
 			break;
 		}
-
-		return isPossible;
+		
+		Move moveMsg = new Move(posx, posy, direction);
+		handleRequests(moveMsg);
 	}
 
 	/*
@@ -149,7 +173,7 @@ public class ClientEngineGUI {
 
 		MessageResponse rsp = new MessageResponse(msg);
 	}
-
+	
 	/*
 	 * the functionality of this metho is to check if our player has any items
 	 * in his surrounding to pick up.
@@ -168,22 +192,34 @@ public class ClientEngineGUI {
 	}
 
 	public boolean itemAvailable(int x, int y, int[][] Map) {
-		this.Map = Map;
-		x = posx;
-		y = posy;
+//		this.Map = Map;
+//		x = posx;
+//		y = posy;
+		
+		boolean isPossible = false;
 
-		for (int i = x - 1; i <= x + 1; i++) {
+		int itemPosX, itemPosY;
+		
+	try{	
+		 for (int i = x - 1; i <= x + 1; i++) {
 			for (int j = y - 1; j <= y + 1; j++) {
-				if (Map[i][j] != 0) { // if the field is not empty
-					isAvailable = true; // set the sign that there is an Item
+				if (Map[i][j] == 2) { // if the field is not empty
+					isPossible = true; // set the sign that there is an Item
+					System.out.println(isPossible);
 					System.out.println("Item is on Position posx: [" + i + "] posy: [" + j + "]"
 							+ " Player can pick it up, it is in his surrounding");
-				} else {
-					isAvailable = false;
-				}
-			}
-		}
-
-		return isAvailable;
+					ItemUsage useItem = new ItemUsage(i, j, isAvailable);
+					handleRequests(useItem);					
+				} 
+			} 
+		} 
+		
+		
+	} catch  (ArrayIndexOutOfBoundsException exception){
+		System.out.println("not allowed");
+		
+	}
+		
+		return isPossible;
 	}
 }

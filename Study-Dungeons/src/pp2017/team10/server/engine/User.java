@@ -1,5 +1,9 @@
 package pp2017.team10.server.engine;
 
+/**
+ * Author: Felix Schifferdecker, 5585147
+ */
+//Klasse um den User zu definieren
 public class User {
 	public String user;
 	public String password;

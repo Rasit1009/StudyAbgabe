@@ -7,16 +7,16 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-
-import pp2017.team10.client.engine.ClientEngineGUI;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Messages implements Serializable {
 	public String filename;
 	public Messages msg;
-	public ClientEngineGUI ceg;
+	private Queue <Messages> messageQueue = new LinkedList<Messages>();
 
 	/**
-	 * @author Güven, Rasit Matnr: 6019617
+	 * Author: Felix Schifferdecker, 5585147
 	 */
 	private static final long serialVersionUID = 1171553980546243488L;
 
@@ -28,8 +28,9 @@ public class Messages implements Serializable {
 	 */
 
 	public void sendRequest(Messages msg) {
+		
 		this.msg = msg;
-		try (FileOutputStream lo = new FileOutputStream("actionInfo.ser");
+		try (FileOutputStream lo = new FileOutputStream(msg + ".ser");
 				ObjectOutputStream ol = new ObjectOutputStream(lo)) {
 			ol.writeObject(msg);
 		} catch (FileNotFoundException e) {
@@ -37,7 +38,7 @@ public class Messages implements Serializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		receiveResponse(msg);
+		
 	}
 
 	/*
@@ -45,7 +46,7 @@ public class Messages implements Serializable {
 	 * our message is permitted.
 	 */
 	public void receiveResponse(Messages msg) {
-		try (FileInputStream li = new FileInputStream("actionInfo.ser");
+		try (FileInputStream li = new FileInputStream( msg + ".ser");
 				ObjectInputStream il = new ObjectInputStream(li)) {
 			final Messages input = (Messages) il.readObject();
 			assert (input.getName().equals(msg));
@@ -108,6 +109,11 @@ public class Messages implements Serializable {
 
 		return address;
 
+	}
+	
+	
+	public void addToQueue(Messages msg){
+		messageQueue.offer(msg);
 	}
 
 }
