@@ -1,6 +1,6 @@
 package test.environment.client.engine;
 
-import pp2017.team10.client.engine.ClientEngineGUI;
+import pp2017.team10.client.engine.ClientEngine;
 
 /**
  * In this test environment we are testing the different methods from our the
@@ -24,7 +24,7 @@ public class TestCE {
 	public static int posy;
 
 	public static void main(String[] args) {
-		ClientEngineGUI neu = new ClientEngineGUI();
+		ClientEngine neu = new ClientEngine();
 		neu.setItemOnMap(possibleMap);
 		
 /*		neu.consistency(possibleMap, up);
