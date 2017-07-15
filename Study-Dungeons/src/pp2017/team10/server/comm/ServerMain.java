@@ -6,8 +6,6 @@ package pp2017.team10.server.comm;
  */
 public class ServerMain {
 
-	
-
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 

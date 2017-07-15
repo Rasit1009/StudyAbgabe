@@ -518,39 +518,39 @@ public class LevelGenerator {
 	}
 
 	public void printUniversity() {
-//
-//		for (int i = 0; i < university.length - 1; i++) {
-//			for (int j = 0; j < university[j].length - 1; j++) {
-//				if (university[i][j].isWall()) {
-//					System.out.print("X");
-//				} else if (university[i][j].isItem()) {
-//					System.out.print("<");
-//				} else if (university[i][j].isMonster()) {
-//					System.out.print("M");
-//				} else if (university[i][j].isPlayer()) {
-//					System.out.print("P");
-//				} else if (university[i][j].isDoor()) {
-//					System.out.print("D");
-//				} else if (university[i][j].isExit()) {
-//					System.out.print("@");
-//				} else if (university[i][j].isFloor()) {
-//					System.out.print(".");
-//				} else if (university[i][j].isStone()) {
-//					System.out.print("+");
-//				} else if (university[i][j].isMarble()) {
-//					System.out.print("~");
-//				} else if (university[i][j].isEntrance()) {
-//					System.out.print("E");
-//				} else if (university[i][j].isColumn()) {
-//					System.out.print("F");
-//				} else if (university[i][j].isKey()) {
-//					System.out.print("K");
-//				} else {
-//					System.out.print(" ");
-//				}
-//			}
-//			System.out.println();
-//		}
+		//
+		// for (int i = 0; i < university.length - 1; i++) {
+		// for (int j = 0; j < university[j].length - 1; j++) {
+		// if (university[i][j].isWall()) {
+		// System.out.print("X");
+		// } else if (university[i][j].isItem()) {
+		// System.out.print("<");
+		// } else if (university[i][j].isMonster()) {
+		// System.out.print("M");
+		// } else if (university[i][j].isPlayer()) {
+		// System.out.print("P");
+		// } else if (university[i][j].isDoor()) {
+		// System.out.print("D");
+		// } else if (university[i][j].isExit()) {
+		// System.out.print("@");
+		// } else if (university[i][j].isFloor()) {
+		// System.out.print(".");
+		// } else if (university[i][j].isStone()) {
+		// System.out.print("+");
+		// } else if (university[i][j].isMarble()) {
+		// System.out.print("~");
+		// } else if (university[i][j].isEntrance()) {
+		// System.out.print("E");
+		// } else if (university[i][j].isColumn()) {
+		// System.out.print("F");
+		// } else if (university[i][j].isKey()) {
+		// System.out.print("K");
+		// } else {
+		// System.out.print(" ");
+		// }
+		// }
+		// System.out.println();
+		// }
 	}
 
 }

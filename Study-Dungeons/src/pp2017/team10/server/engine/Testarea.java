@@ -7,14 +7,14 @@ public class Testarea {
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		
+
 		Database db = new Database();
 		db.addUser("halle", "vespaPX90");
-		for(User u : db.userdata){
+		for (User u : db.userdata) {
 			System.out.println(u.user);
 			System.out.println(u.password);
 		}
-		
+
 	}
 
 }

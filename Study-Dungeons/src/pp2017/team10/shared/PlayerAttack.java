@@ -12,8 +12,8 @@ public class PlayerAttack extends Messages {
 	public String user;
 	public int attack;
 	public int damage;
-	
-	public PlayerAttack(String pID, int attack, int damage){
+
+	public PlayerAttack(String pID, int attack, int damage) {
 		this.user = pID;
 		this.attack = attack;
 		this.damage = damage;

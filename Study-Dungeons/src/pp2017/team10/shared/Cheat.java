@@ -5,8 +5,8 @@ package pp2017.team10.shared;
  */
 public class Cheat extends Messages {
 
-public String content;
-	
+	public String content;
+
 	private static final long serialVersionUID = -7123423244900792410L;
 
 	public Cheat(String content) {
@@ -34,7 +34,7 @@ public String content;
 	 * integrating. For test purposes simply put a system.out.println into every
 	 * method. After integrating we are creating objects out of the Messages and
 	 * send them to the server. the server will be executing the cheat and the
-	 * client engine will hand the information to the GUI. 
+	 * client engine will hand the information to the GUI.
 	 */
 
 	private void activateTeleportCheat() {
@@ -54,5 +54,3 @@ public String content;
 	}
 
 }
-
-

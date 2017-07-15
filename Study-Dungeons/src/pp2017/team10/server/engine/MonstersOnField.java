@@ -13,31 +13,36 @@ public class MonstersOnField {
 	private int monsterPosX;
 	private int monsterPosY;
 	private int damage;
-	
-	public MonstersOnField(int health, int monsterID, int monsterPosX, int monsterPosY, int damage){
+
+	public MonstersOnField(int health, int monsterID, int monsterPosX, int monsterPosY, int damage) {
 		this.health = health;
 		this.monsterID = monsterID;
 		this.monsterPosX = monsterPosX;
 		this.monsterPosY = monsterPosY;
 		this.damage = damage;
 	}
-	
-	public int getHealth(){
+
+	public int getHealth() {
 		return health;
 	}
-	public int getMonsterID(){
+
+	public int getMonsterID() {
 		return monsterID;
 	}
-	public int getMonserPosX(){
+
+	public int getMonserPosX() {
 		return monsterPosX;
 	}
-	public int getMonsterPosY(){
+
+	public int getMonsterPosY() {
 		return monsterPosY;
 	}
-	public int getDamage(){
+
+	public int getDamage() {
 		return damage;
 	}
-	public void setHealth(int health){
+
+	public void setHealth(int health) {
 		this.health = health;
 	}
 }

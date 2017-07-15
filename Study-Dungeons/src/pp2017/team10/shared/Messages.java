@@ -19,10 +19,10 @@ public class Messages implements Serializable {
 	 * Author: Felix Schifferdecker, 5585147
 	 */
 	private static final long serialVersionUID = 1171553980546243488L;
-	
-	  public Messages getName() { 
-		  return msg; 
-		  }
+
+	public Messages getName() {
+		return msg;
+	}
 
 	/*
 	 * This method is responsible for sending Requests to the Server. we are
@@ -55,10 +55,10 @@ public class Messages implements Serializable {
 	 * 
 	 * e.printStackTrace(); } }
 	 * 
-	 * */
+	 */
 
-	  
-	 /* source:
+	/*
+	 * source:
 	 * https://www.mkyong.com/java/how-to-read-an-object-from-file-in-java/ this
 	 * method is only used for test purposes. it tests if the file is written
 	 * correctly into an Object. In the console we can see that it addresses the
