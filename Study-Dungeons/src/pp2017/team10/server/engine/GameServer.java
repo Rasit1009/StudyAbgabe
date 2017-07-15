@@ -40,7 +40,7 @@ import pp2017.team10.shared.Map;
  * User ein und aus und legt neue User �ber die Database-Klasse an
  */
 
-public class GameServer {
+public class GameServer { 
 
 	/*
 	 * Beim Aufruf des GameServers wird eine neue Instanz der Datenbank erstellt
