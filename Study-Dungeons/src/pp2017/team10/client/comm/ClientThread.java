@@ -22,7 +22,7 @@ public class ClientThread extends Thread {
 	public boolean clientisconnected;
 	private String ende = "logout";
 
-	public ClientThread(Socket clientSocket, String user) throws IOException {
+	public ClientThread(Socket clientSocket) throws IOException {
 		this.clientSocket = clientSocket;
 		// this.nummer=nummer;
 		// System.out.println("tet1");
