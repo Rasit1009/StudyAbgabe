@@ -12,7 +12,7 @@ import java.util.Queue;
 import pp2017.team10.shared.*;
 import pp2017.team10.server.engine.*;
 
-class ClientThread extends Thread {
+public class ClientThread extends Thread {
 	private Socket socket;
 	private ObjectInputStream sInput;
 	private ObjectOutputStream sOutput;

@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import pp2017.team10.client.comm.ClientComm;
 import pp2017.team10.client.comm.SendQueue;
 import pp2017.team10.client.gui.spielwelt;
 
@@ -46,8 +47,16 @@ public class ClientEngine {
 	public SendQueue send;
 
 	public static void main(String[] args) throws IOException {
+		ClientComm c = new ClientComm("localhost", 1500);
+		if (!c.start())
+			return;
+		SendQueue ss = new SendQueue(c, c.getce());
+		ss.start();
+		c.getSvS().getCE();
+
 		spiel = new spielwelt();
 		spiel.show();
+
 	}
 
 	public ClientEngine() {
