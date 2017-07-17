@@ -308,7 +308,7 @@ public class Monster {
 		return inSight;
 	}
 
-	public int directToPlayer(int playerposx, int playerposy) { // gibt die
+	/*public int directToPlayer(int playerposx, int playerposy) { // gibt die
 																// Richtung an,
 																// in der das
 																// Monster den
@@ -340,7 +340,7 @@ public class Monster {
 			dir = 1;
 		}
 		return dir;
-	}
+	}*/
 
 	public ArrayList<Node> readMap(int[][] map) { // Die Karte
 																	// wird
