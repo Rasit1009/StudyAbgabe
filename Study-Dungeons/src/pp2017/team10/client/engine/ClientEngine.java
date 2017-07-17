@@ -178,8 +178,8 @@ public class ClientEngine {
 			break;
 		}
 
-		// Move moveMsg = new Move(posx, posy, direction);
-		// handleRequests(moveMsg);
+		Move moveMsg = new Move(posx, posy, direction);
+		handleMove(moveMsg);
 	}
 
 	/*
@@ -269,10 +269,11 @@ public class ClientEngine {
 					handleLogin((Login) m);
 				} else if (m instanceof Move) {
 					System.out.println("This is a MoveMessage");
-					handleMove((Move) m);
+					
 				} else if (m instanceof PlayerAttack) {
 					System.out.println("This is a PlayerAttackMessage");
 					handlePlayerAttack((PlayerAttack) m);
+				} else if (m instanceof Logout) {
 					System.out.println("This is a LogoutMessage");
 					handleLogout((Logout) m);
 				} else if (m instanceof MonsterAttack) {

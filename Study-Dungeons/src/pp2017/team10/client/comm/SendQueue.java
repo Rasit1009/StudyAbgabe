@@ -28,7 +28,7 @@ public class SendQueue extends Thread {
 		boolean lauf = true;
 		while (lauf) {
 			if (ce.getQueue().isEmpty()) {
-				// System.out.println("SendeSchlange leer");
+//				 System.out.println("SendeSchlange leer");
 				try {
 					sleep(0);
 				} catch (Exception e) {
