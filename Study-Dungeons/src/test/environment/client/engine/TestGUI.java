@@ -62,9 +62,9 @@ public class TestGUI {
 		 * Attack Message)
 		 */
 		
-		Messages obj = new Messages();
-		Messages read = obj.readObject("actionInfo.ser");
-		System.out.println(read);
+//		Messages obj = new Messages();
+//		Messages read = obj.readObject("actionInfo.ser");
+//		System.out.println(read);
 
 	}
 }

@@ -14,6 +14,7 @@ import pp2017.team10.shared.Move;
 import pp2017.team10.shared.NewPlayer;
 import pp2017.team10.shared.PlayerAttack;
 import pp2017.team10.shared.PlayerDead;
+import pp2017.team10.shared.Start;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -168,8 +169,8 @@ public class ClientEngine {
 			break;
 		}
 
-		Move moveMsg = new Move(posx, posy, direction);
-		handleRequests(moveMsg);
+		// Move moveMsg = new Move(posx, posy, direction);
+		// handleRequests(moveMsg);
 	}
 
 	/*
@@ -177,18 +178,9 @@ public class ClientEngine {
 	 * the GUI. if we want to send a Chat Message for instance, we are passing
 	 * an Object from the type ChatMessage (see Test class in GUI package).
 	 */
-	public void handleRequests(Messages msg) {
-		MessageRequest hdl = new MessageRequest(msg);
-
-	}
-
-	public void handleResponse(Messages msg) {
-
-		MessageResponse rsp = new MessageResponse(msg);
-	}
 
 	/*
-	 * the functionality of this metho is to check if our player has any items
+	 * the functionality of this method is to check if our player has any items
 	 * in his surrounding to pick up.
 	 */
 
@@ -251,45 +243,140 @@ public class ClientEngine {
 		try {
 			while (!messages.isEmpty()) {
 				Messages m = messages.poll();
-
 				if (m instanceof ChatMessage) {
 					System.out.println("This is a ChatMessage");
-					handleRequests((ChatMessage) m);
+					handleChat((ChatMessage) m);
 				} else if (m instanceof Cheat) {
 					System.out.println("This is a CheatMessage");
-					handleRequests((Cheat) m);
+					handleCheat((Cheat) m);
 				} else if (m instanceof DoorUsage) {
 					System.out.println("This is a DoorUsageMessage");
-					handleRequests((DoorUsage) m);
+					handleDoor((DoorUsage) m);
 				} else if (m instanceof ItemUsage) {
 					System.out.println("This is a ItemUsageMessage");
-					handleRequests((ItemUsage) m);
+					handleItem((ItemUsage) m);
 				} else if (m instanceof Login) {
 					System.out.println("This is a LoginMessage");
-					handleRequests((Login) m);
+					handleLogin((Login) m);
 				} else if (m instanceof Move) {
 					System.out.println("This is a MoveMessage");
-					handleRequests((Move) m);
+					handleMove((Move) m);
 				} else if (m instanceof PlayerAttack) {
 					System.out.println("This is a PlayerAttackMessage");
-					handleRequests((PlayerAttack) m);
-				} else if (m instanceof Logout) {
+					handlePlayerAttack((PlayerAttack) m);
 					System.out.println("This is a LogoutMessage");
-					handleRequests((Logout) m);
+					handleLogout((Logout) m);
 				} else if (m instanceof MonsterAttack) {
 					System.out.println("This is a MonsterAttackMessage");
-					handleRequests((MonsterAttack) m);
+					handleMonsterAttack((MonsterAttack) m);
 				} else if (m instanceof NewPlayer) {
 					System.out.println("This is a NewPlayerMessage");
-					handleRequests((NewPlayer) m);
+					handleNewPlayer((NewPlayer) m);
 				} else if (m instanceof PlayerDead) {
 					System.out.println("This is a PlayerDeadMessage");
-					handleRequests((PlayerDead) m);
+					handlePlayerDead((PlayerDead) m);
 				}
 			}
 		} catch (Exception e) {
 
 		}
+	}
+
+	private void handlePlayerDead(PlayerDead msg) {
+		System.out.println("Player Dead Message");
+		addQueue(msg);
+
+	}
+
+	private void handleNewPlayer(NewPlayer msg) {
+		System.out.println("New Player Message");
+		addQueue(msg);
+
+	}
+
+	private void handleMonsterAttack(MonsterAttack msg) {
+		System.out.println("Monster Attack Message");
+		addQueue(msg);
+
+	}
+
+	private void handleLogout(Logout msg) {
+		System.out.println("Logout Message");
+		addQueue(msg);
+	}
+
+	public void handleStart(Start msg) {
+		System.out.println("This is a Start message");
+		addQueue(msg);
+	}
+
+	public void handleLogin(Login msg) {
+
+		System.out.println("This is a Login message");
+		addQueue(msg);
+	}
+
+	public void handleMove(Move msg) {
+
+		System.out.println("This is a Move message");
+		addQueue(msg);
+	}
+
+	public void handleItem(ItemUsage msg) {
+
+		System.out.println("This is a Item message");
+		addQueue(msg);
+	}
+
+	public void handleDoor(DoorUsage msg) {
+
+		System.out.println("This is a Door message");
+		addQueue(msg);
+
+	}
+
+	public void handlePlayerAttack(PlayerAttack msg) {
+
+		System.out.println("This is a Attack message");
+		addQueue(msg);
+	}
+
+	public void handleChat(Messages msg) {
+
+		System.out.println("This is a Chat Message");
+		addQueue(msg);
+	}
+
+	/*
+	 * This String is to be exchanged by a CheatMessage Object after
+	 * integrating. String is used for test purposes.
+	 */
+	public void handleCheat(Messages m) {
+		if (m.equals("noFogAnymore")) {
+			activateFogCheat();
+		} else if (m.equals("maxHP")) {
+			activateHPCheat();
+		} else if (m.equals("allDeadEnemy")) {
+			activateEnemyCheat();
+		} else if (m.equals("ScottyBeamMeUp")) {
+			activateTeleportCheat();
+		}
+	}
+
+	private void activateTeleportCheat() {
+		System.out.println("Player teleported");
+	}
+
+	private void activateEnemyCheat() {
+		System.out.println("All Enemies are dead!!");
+	}
+
+	private void activateHPCheat() {
+		System.out.println("You are immortal!!");
+	}
+
+	private void activateFogCheat() {
+		System.out.println("The Fog disappeared!");
 	}
 
 }

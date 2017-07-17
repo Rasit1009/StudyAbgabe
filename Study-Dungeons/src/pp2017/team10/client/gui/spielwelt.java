@@ -704,7 +704,7 @@ public class spielwelt extends javax.swing.JFrame {
 			chatInput.setText("");
 
 			ChatMessage chat = new ChatMessage(chatInput.getText(), receiver, recipient);
-			ceg.handleRequests(chat);
+			ceg.addQueue(chat);
 			chatInput.setEnabled(false);
 
 		}
