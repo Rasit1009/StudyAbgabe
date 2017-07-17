@@ -54,7 +54,7 @@ public class ClientThread extends Thread {
 	public void run() {
 		boolean lauft = true;
 		while (lauft) {
-
+System.out.println("hallo");
 			try {
 				to = (Messages) sInput.readObject();
 				getQueueServer.add(to);
@@ -77,7 +77,7 @@ public class ClientThread extends Thread {
 
 			// System.out.println("im Client"+handler.getTestSchlange().peek());
 			if (handler.getMessageQueue().isEmpty()) {
-
+				System.out.println("empty");
 			}
 			if (!handler.getMessageQueue().isEmpty()) {
 				// System.out.println("r�ckschlange voll
