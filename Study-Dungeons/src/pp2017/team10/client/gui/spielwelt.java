@@ -29,10 +29,12 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.Timer;
 
+import pp2017.team10.client.comm.SendQueue;
 import pp2017.team10.client.engine.ClientEngine;
 import pp2017.team10.shared.Character;
 import pp2017.team10.shared.ChatMessage;
 import pp2017.team10.shared.ItemUsage;
+import pp2017.team10.shared.Login;
 
 /**
  *
@@ -57,6 +59,7 @@ public class spielwelt extends javax.swing.JFrame {
 	private JLayeredPane jlp = new JLayeredPane();
 	private JPanel minimapPanel;
 	public ClientEngine ceg = new ClientEngine();
+	public SendQueue send;
 	public String receiver;
 	public String recipient;
 
@@ -155,6 +158,9 @@ public class spielwelt extends javax.swing.JFrame {
 			new Timer(delay, taskPerformer).start();
 		}
 
+		
+		System.out.println(ceg.bSendQueue.isEmpty());
+		
 	}
 
 	public void movePlayerMinimap(int posX, int posY) {
@@ -164,6 +170,7 @@ public class spielwelt extends javax.swing.JFrame {
 	}
 
 	public spielwelt() throws IOException {
+		
 		for (int i = 0; i < 50; i++) {
 			for (int j = 0; j < 50; j++) {
 				world[i][j] = 0;
@@ -197,7 +204,8 @@ public class spielwelt extends javax.swing.JFrame {
 				try {
 					if (e.getKeyCode() == 37 && playerPosX != 0 && --playerX >= 0 && world[playerX][playerY] != 1) {
 						movePlayerMinimap(playerX, playerY);
-						ceg.consistency(world, "left", ++playerX, playerY);
+//						ceg.consistency(world, "left", ++playerX, playerY);
+						ceg.consistency(world, "left", ++playerX, ++playerY);
 					} else if (e.getKeyCode() == 38 && playerPosY != 0 && --playerY >= 0
 							&& world[playerX][playerY] != 1) {
 						movePlayerMinimap(playerX, playerY);
@@ -380,6 +388,9 @@ public class spielwelt extends javax.swing.JFrame {
 		jlp.add(playerOnField, 3);
 		healthBar.setMaximum(100);
 		healthBar.setValue(50);
+//		Login log = new Login("Rasit", "123");
+//		ceg.addQueue(log);
+		
 	}
 
 	@SuppressWarnings("unchecked")

@@ -24,10 +24,9 @@ public class SendQueue extends Thread {
 	 * runMethode sendet regelm��ig Nachrichten zum Server
 	 */
 	public void run() {
-		// sendeSchlange=ct.getSvS().getCE().getSchlange();
 		boolean lauf = true;
 		while (lauf) {
-			if (ce.getQueue().isEmpty()) {
+			if (sendQueue.isEmpty()) {
 //				 System.out.println("SendeSchlange leer");
 				try {
 					sleep(0);
@@ -35,8 +34,9 @@ public class SendQueue extends Thread {
 
 				}
 			}
-			if (!ce.getQueue().isEmpty()) {
-				while (!ce.getQueue().isEmpty()) {
+			if (!sendQueue.isEmpty()) {
+				System.out.println("wurde gefüllt");
+				while (!sendQueue.isEmpty()) {
 
 					ct.sendTo(ce.deleteQueue());
 				}

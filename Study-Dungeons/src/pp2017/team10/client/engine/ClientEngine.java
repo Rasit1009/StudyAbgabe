@@ -34,8 +34,9 @@ import pp2017.team10.client.gui.spielwelt;
  *
  */
 
-public class ClientEngine {
-	private Queue<Messages> bSendQueue = new LinkedList<Messages>();
+public class ClientEngine{
+
+	public Queue<Messages> bSendQueue = new LinkedList<Messages>();
 	public int posx;
 	public int posy;
 	public boolean isPossible;
@@ -43,25 +44,7 @@ public class ClientEngine {
 	public int charPos;
 	public boolean isAvailable;
 	public int[][] Map;
-	public static spielwelt spiel;
 	public SendQueue send;
-
-	public static void main(String[] args) throws IOException {
-		ClientComm c = new ClientComm("localhost", 1500);
-		if (!c.start())
-			return;
-		SendQueue ss = new SendQueue(c, c.getce());
-		ss.start();
-		c.getSvS().getCE();
-
-		spiel = new spielwelt();
-		spiel.show();
-
-	}
-
-	public ClientEngine() {
-
-	}
 
 	public void getCharInfo() {
 
@@ -129,7 +112,7 @@ public class ClientEngine {
 		case "up":
 			if (posy >= 0 && Map[posx][--posy] != 1) {
 				// System.out.println("you can move up");
-				spiel.movePlayer("up", posx, posy);
+				CE_Main.spiel.movePlayer("up", posx, posy);
 				// itemAvailable(posx, posy, Map);
 				// spiel.movePlayerMinimap(posx, posy);
 				isPossible = true;
@@ -141,7 +124,7 @@ public class ClientEngine {
 		case "down":
 			if (posy < Maplength && Map[posx][++posy] != 1) {
 				// System.out.println("you can move down");
-				spiel.movePlayer("down", posx, posy);
+				CE_Main.spiel.movePlayer("down", posx, posy);
 				// itemAvailable(posx, posy, Map);
 				// spiel.movePlayerMinimap(posx, posy);
 				isPossible = true;
@@ -154,7 +137,7 @@ public class ClientEngine {
 		case "right":
 			if (posx < Maplength && Map[++posx][posy] != 1) {
 				// System.out.println("you can move right");
-				spiel.movePlayer("right", posx, posy);
+				CE_Main.spiel.movePlayer("right", posx, posy);
 				// itemAvailable(posx, posy, Map);
 				// spiel.movePlayerMinimap(posx, posy);
 				isPossible = true;
@@ -167,7 +150,7 @@ public class ClientEngine {
 		case "left":
 			if (posx > 0 && Map[--posx][posy] != 1) {
 				// System.out.println("you can move left");
-				spiel.movePlayer("left", posx, posy);
+				CE_Main.spiel.movePlayer("left", posx, posy);
 				// itemAvailable(posx, posy, Map);
 				// spiel.movePlayerMinimap(posx, posy);
 				isPossible = true;
@@ -245,7 +228,9 @@ public class ClientEngine {
 	}
 
 	public void addQueue(Messages m) {
+		System.out.println("added");
 		bSendQueue.offer(m);
+
 	}
 
 	public void handleMessage(Queue<Messages> messages) {
@@ -269,7 +254,7 @@ public class ClientEngine {
 					handleLogin((Login) m);
 				} else if (m instanceof Move) {
 					System.out.println("This is a MoveMessage");
-					
+
 				} else if (m instanceof PlayerAttack) {
 					System.out.println("This is a PlayerAttackMessage");
 					handlePlayerAttack((PlayerAttack) m);
@@ -323,13 +308,13 @@ public class ClientEngine {
 	public void handleLogin(Login msg) {
 
 		System.out.println("This is a Login message");
-		addQueue(msg);
+		addQueue((Messages) msg);
 	}
 
 	public void handleMove(Move msg) {
 
 		System.out.println("This is a Move message");
-		addQueue(msg);
+		addQueue((Messages) msg);
 	}
 
 	public void handleItem(ItemUsage msg) {
@@ -341,7 +326,7 @@ public class ClientEngine {
 	public void handleDoor(DoorUsage msg) {
 
 		System.out.println("This is a Door message");
-		addQueue(msg);
+		addQueue((Messages) msg);
 
 	}
 

@@ -16,14 +16,13 @@ public class SendfromServer extends Thread {
 	private Messages to;
 	public Queue<Messages> receiveQueueClient = new LinkedList<Messages>();
 	private boolean on = true;
-	// CE ce = new CE();
-	ClientEngine ce;
+	 ClientEngine ce = new ClientEngine();
+//	ClientEngine ce;
 
 	// Konstruktor
 	public SendfromServer(ObjectInputStream ois, ClientEngine ce) {
 		this.sInput = ois;
 		this.ce = ce;
-		// empfangsSchlangeClient.add(new ItemMessage(1,1));
 	}
 
 	/**
@@ -34,8 +33,8 @@ public class SendfromServer extends Thread {
 		while (on) {
 
 			try {
+
 				to = (Messages) sInput.readObject();
-				System.out.println("");
 				receiveQueueClient.add(to);
 				// addElementeSC(nach);
 				System.out.println(receiveQueueClient.size());

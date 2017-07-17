@@ -37,12 +37,16 @@ public class ServerComm {
 
 				System.out.println("Server wartet auf Client mit Port " + port + ".");
 				Socket socket = serverSocket.accept();
+				System.out.println(socket);
+				System.out.println(laeuft);
 				if (!laeuft)
 					break;
 
 				ClientThread t = new ClientThread(socket, einId, al);
+				System.out.println(einId + " " +  al);
 				// uniqueId++;
 				al.add(t);
+				System.out.println(t);
 				t.start();
 
 			}
