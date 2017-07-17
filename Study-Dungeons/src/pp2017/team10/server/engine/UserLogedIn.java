@@ -4,9 +4,9 @@ package pp2017.team10.server.engine;
  * Author: Felix Schifferdecker, 5585147
  */
 /*
- * Klasse um die eingeloggten User zu definieren, inklusiv aller Spielerwerte und Items und den jeweiligen
- * Get- und Set-Methoden
- * */
+ * Klasse um die eingeloggten User zu definieren, inklusiv aller Spielerwerte
+ * und Items und den jeweiligen Get- und Set-Methoden
+ */
 
 public class UserLogedIn {
 	private int health;
@@ -18,9 +18,9 @@ public class UserLogedIn {
 	private int userPosX;
 	private int userPosY;
 	private int damage;
-	
-	public UserLogedIn(int health, int[] items, String user, int score, boolean gotKey, int userID, int userPosX, 
-			int userPosY, int damage){
+
+	public UserLogedIn(int health, int[] items, String user, int score, boolean gotKey, int userID, int userPosX,
+			int userPosY, int damage) {
 		this.health = health;
 		this.items = items;
 		this.user = user;
@@ -31,47 +31,61 @@ public class UserLogedIn {
 		this.userPosY = userPosY;
 		this.damage = damage;
 	}
-	public int getUserID(){
+
+	public int getUserID() {
 		return userID;
 	}
-	public String getUser(){
+
+	public String getUser() {
 		return user;
 	}
-	public int[] getItems(){
+
+	public int[] getItems() {
 		return items;
 	}
-	public int getHealth(){
+
+	public int getHealth() {
 		return health;
 	}
-	public int getScore(){
+
+	public int getScore() {
 		return score;
 	}
-	public boolean getGotKey(){
+
+	public boolean getGotKey() {
 		return gotKey;
 	}
-	public int getUserPosX(){
+
+	public int getUserPosX() {
 		return userPosX;
 	}
-	public int getUserPosY(){
+
+	public int getUserPosY() {
 		return userPosY;
 	}
-	public int getDamage(){
+
+	public int getDamage() {
 		return damage;
 	}
-	public void setHealth(int health){
+
+	public void setHealth(int health) {
 		this.health = health;
 	}
-	public void setItems(int[] items){
+
+	public void setItems(int[] items) {
 		this.items = items;
 	}
-	public void setGotKey(boolean gotKey){
+
+	public void setGotKey(boolean gotKey) {
 		this.gotKey = gotKey;
 	}
-	public void setUserPosX(int userPosX){
+
+	public void setUserPosX(int userPosX) {
 		this.userPosX = userPosX;
 	}
-	public void setUserPosY(int userPosY){
+
+	public void setUserPosY(int userPosY) {
 		this.userPosY = userPosY;
 	}
-	
+
 }

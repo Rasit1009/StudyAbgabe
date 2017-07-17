@@ -55,7 +55,7 @@ public class Item {
 	public void setItemID(int itemID) { // setzt die itemID
 		this.itemID = itemID;
 	}
-	
+
 	public int setItemPos(int itemID) {
 		this.itemID = itemPos[itemXPos][itemYPos];
 		return itemID;

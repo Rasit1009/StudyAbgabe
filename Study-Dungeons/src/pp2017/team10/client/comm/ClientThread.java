@@ -39,7 +39,6 @@ public class ClientThread extends Thread {
 		 * Ein Data-Stream zum Server wird erzeugt ueber diesen werden die
 		 * Leveldaten empfangen.
 		 */
-
 	}
 
 	public void run() {

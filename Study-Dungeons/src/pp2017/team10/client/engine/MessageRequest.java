@@ -23,6 +23,8 @@ import pp2017.team10.shared.Messages;
 public class MessageRequest {
 
 	public String content;
+	public Messages msg;
+	public ClientEngine ce;
 
 	public MessageRequest(Messages msg) {
 		receiveRequest(msg);
@@ -56,49 +58,50 @@ public class MessageRequest {
 
 	public void handleStart(Messages msg) {
 		System.out.println("This is a Start message");
-		msg.sendRequest(msg);
+		ce.addQueue(msg);
 	}
 
 	public void handleLogin(Messages msg) {
 
 		System.out.println("This is a Login message");
-		msg.sendRequest(msg);
+		ce.addQueue(msg);
 	}
 
 	public void handleMove(Messages msg) {
 
 		System.out.println("This is a Move message");
-		msg.sendRequest(msg);
+		ce.addQueue(msg);
 	}
 
 	public void handleItem(Messages msg) {
 
 		System.out.println("This is a Item message");
-		msg.sendRequest(msg);
+		ce.addQueue(msg);
 	}
 
 	public void handleDoor(Messages msg) {
 
 		System.out.println("This is a Door message");
-		msg.sendRequest(msg);
+		ce.addQueue(msg);
 
 	}
 
 	public void handleAttack(Messages msg) {
 
 		System.out.println("This is a Attack message");
-		msg.sendRequest(msg);
+		ce.addQueue(msg);
 	}
 
 	public void handleLevelSwitch(Messages msg) {
 
-		System.out.println("This is a Level message");
-		msg.sendRequest(msg);
+		System.out.println("This is a Level message");	
+		ce.addQueue(msg);
 	}
 
 	public void handleChat(Messages msg) {
+		
 		System.out.println("This is a Chat Message");
-		msg.sendRequest(msg);
+		ce.addQueue(msg);
 	}
 
 }

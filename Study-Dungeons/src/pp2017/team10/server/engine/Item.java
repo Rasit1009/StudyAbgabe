@@ -5,8 +5,8 @@ public class Item {
 	public int itemID;
 	public int itemXPos;
 	public int itemYPos;
-	public int[][] itemPos = new int [5][5]; 
-	
+	public int[][] itemPos = new int[5][5];
+
 	public Item() {
 	}
 

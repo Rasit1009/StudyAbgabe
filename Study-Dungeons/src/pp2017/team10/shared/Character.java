@@ -11,19 +11,18 @@ public class Character {
 	public int posx;
 	public int posy;
 	public int[][] world;
-	
 
 	public Character(int[][] world, int posx, int posy) {
-	this.posx = posx;
-	this.posy = posy;
-	world[posx][posy] = 2;		
-	
+		this.posx = posx;
+		this.posy = posy;
+		world[posx][posy] = 2;
+
 	}
 
 	public int getPosX() {
 		return posx;
 	}
- 
+
 	public int getPosY() {
 		return posy;
 	}

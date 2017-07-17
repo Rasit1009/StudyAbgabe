@@ -1,12 +1,12 @@
- package pp2017.team10.shared;
+package pp2017.team10.shared;
 
 public class ItemRasit {
 
 	public int itemID;
 	public int itemXPos;
 	public int itemYPos;
-	public int[][] itemPos = new int [5][5]; 
-	
+	public int[][] itemPos = new int[5][5];
+
 	public ItemRasit() {
 	}
 

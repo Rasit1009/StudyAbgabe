@@ -1,6 +1,6 @@
 package test.environment.client.engine;
 
-import pp2017.team10.client.engine.ClientEngineGUI;
+import pp2017.team10.client.engine.ClientEngine;
 import pp2017.team10.shared.ChatMessage;
 import pp2017.team10.shared.Cheat;
 import pp2017.team10.shared.DoorUsage;
@@ -19,7 +19,7 @@ public class TestGUI {
 	 * @author Güven, Rasit Matnr: 6019617
 	 */
 
-	public ClientEngineGUI g;
+	public ClientEngine g;
 	public static Messages msg;
 	public static boolean doors = true;
 	public DoorUsage use;
@@ -34,7 +34,7 @@ public class TestGUI {
 
 	
 	public static void main(String[] args) {
-		ClientEngineGUI neu = new ClientEngineGUI();
+		ClientEngine neu = new ClientEngine();
 	
 	/*	DoorUsage DoorMsg = new DoorUsage(doors);
 		neu.handleRequests(DoorMsg);
@@ -62,9 +62,9 @@ public class TestGUI {
 		 * Attack Message)
 		 */
 		
-		Messages obj = new Messages();
-		Messages read = obj.readObject("actionInfo.ser");
-		System.out.println(read);
+//		Messages obj = new Messages();
+//		Messages read = obj.readObject("actionInfo.ser");
+//		System.out.println(read);
 
 	}
 }

@@ -1,5 +1,6 @@
  package pp2017.team10.client.engine;
 
+import pp2017.team10.client.gui.spielwelt;
 import pp2017.team10.shared.DoorUsage;
 import pp2017.team10.shared.ItemUsage;
 import pp2017.team10.shared.Login;
@@ -19,6 +20,7 @@ import pp2017.team10.shared.Start;
  */
 
 public class MessageResponse {
+	public static spielwelt spiel;
 
 	public MessageResponse(Messages msg) {
 		receiveResponse(msg);
@@ -78,7 +80,9 @@ public class MessageResponse {
 	}
 
 	public void respondChat(Messages msg) {
+		
 		System.out.println("Server said chat is ok");
+		
 	}
 
 }

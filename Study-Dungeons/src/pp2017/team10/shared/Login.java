@@ -11,12 +11,10 @@ public class Login extends Messages {
 
 	public String user;
 	public String pass;
-	
-	public Login(String user, String pass){
+
+	public Login(String user, String pass) {
 		this.user = user;
 		this.pass = pass;
 	}
-	
-	
-	
+
 }

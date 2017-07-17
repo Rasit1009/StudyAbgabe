@@ -9,9 +9,9 @@ public class DoorUsage extends Messages {
 	 */
 	private static final long serialVersionUID = 1903689929686383967L;
 	public String user;
-	
-	public DoorUsage(String username){
+
+	public DoorUsage(String username) {
 		user = username;
 	}
-	
+
 }
