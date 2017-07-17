@@ -148,7 +148,7 @@ public class TestMain {
 			System.out.print(id + "-->");
 		}
 		Monster M = new Monster(0, 0, 0, 1);
-		ArrayList<Node> graph2 = M.readMap(map, 2);// Ich gebe die Karte und die
+		ArrayList<Node> graph2 = M.readMap(map);// Ich gebe die Karte und die
 													// Tiefe des Dungeons an die
 													// Kartenauswertung
 		int nextdirection = M.useAStar(graph2, M.start, M.destination);
@@ -162,7 +162,7 @@ public class TestMain {
 		System.out.println("Das Leben des Spielers nach dem Angriff ist " + M.attackPlayer());
 
 		Monster M2 = new Monster(0, 4, 3, 2);
-		ArrayList<Node> graph3 = M2.readMap(map, 2);
+		ArrayList<Node> graph3 = M2.readMap(map);
 		System.out.println("Das Leben des Monsters nach dem Angriff ist " + M2.takeDmg());
 		System.out.println("Das Leben des Spielers nach dem Angriff ist " + M2.attackPlayer());
 		M2.escape();
@@ -175,7 +175,7 @@ public class TestMain {
 																													// in
 																													// Darstellung
 		Monster M3 = new Monster(0, 6, 3, 2);
-		ArrayList<Node> graph4 = M3.readMap(map, 2);
+		ArrayList<Node> graph4 = M3.readMap(map);
 		M3.hunt(0);
 		System.out.println(
 				"Y-Koordinate des Monsters ist " + M3.getposx() + " X-Koordinate des Monsters ist " + M3.getposy());

@@ -276,14 +276,14 @@ public class Monster {
 																	// und Hunt
 		// finite state machine. Der endliche Zustandsautomat
 		// Zustaende rumlaufen, jagen und fluechten
-		this.map = map;
+		this.graph=readMap(map);
 		// Monster koennen nicht um die Ecke gucken, daher Verfolgung auf diese
 		// Weise
 		if (gethp() > getmaxHp() / 2) { // Verfolgezustaende, wenn Leben ueber
 										// der Haelfte. In Hunt wird verfolgt
 										// und angegriffen
 			if (playerInSight(playerposx, playerposy) == true) {
-				hunt(directToPlayer(playerposx, playerposy));
+				hunt(useAStar(graph, start, destination));
 
 			} else {
 				stroll(graph, getposx(), getposy());
@@ -342,7 +342,7 @@ public class Monster {
 		return dir;
 	}
 
-	public ArrayList<Node> readMap(int[][] map, int dungeondepth) { // Die Karte
+	public ArrayList<Node> readMap(int[][] map) { // Die Karte
 																	// wird
 																	// ausgelesen
 																	// und die
@@ -373,13 +373,13 @@ public class Monster {
 					}
 					if (map[i][j] == 3) {
 						start = mapgraph[i][j];
-						monsterid = 0;
-						Random random = new Random();
-						type = random.nextInt(3);
-						Monster M = new Monster(type, j, i, dungeondepth);
-						M.monsterid = id;
-						id++;
-						ActiveMonsters.add(M);
+						//monsterid = 0;
+						//Random random = new Random();
+						//type = random.nextInt(3);
+						//Monster M = new Monster(type, j, i, dungeondepth);
+						//M.monsterid = id;
+						//id++;
+						//ActiveMonsters.add(M);
 					}
 
 				}
