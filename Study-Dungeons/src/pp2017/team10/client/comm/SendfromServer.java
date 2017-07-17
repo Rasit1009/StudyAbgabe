@@ -16,8 +16,8 @@ public class SendfromServer extends Thread {
 	private Messages to;
 	public Queue<Messages> receiveQueueClient = new LinkedList<Messages>();
 	private boolean on = true;
-	 ClientEngine ce = new ClientEngine();
-//	ClientEngine ce;
+//	 ClientEngine ce = new ClientEngine();
+	ClientEngine ce;
 
 	// Konstruktor
 	public SendfromServer(ObjectInputStream ois, ClientEngine ce) {
@@ -35,6 +35,7 @@ public class SendfromServer extends Thread {
 			try {
 
 				to = (Messages) sInput.readObject();
+				System.out.println("eingelesen");
 				receiveQueueClient.add(to);
 				// addElementeSC(nach);
 				System.out.println(receiveQueueClient.size());

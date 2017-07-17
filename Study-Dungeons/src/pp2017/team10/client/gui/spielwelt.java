@@ -158,9 +158,8 @@ public class spielwelt extends javax.swing.JFrame {
 			new Timer(delay, taskPerformer).start();
 		}
 
-		
-		System.out.println(ceg.bSendQueue.isEmpty());
-		
+//		System.out.println(ceg.bSendQueue.isEmpty());
+
 	}
 
 	public void movePlayerMinimap(int posX, int posY) {
@@ -170,7 +169,7 @@ public class spielwelt extends javax.swing.JFrame {
 	}
 
 	public spielwelt() throws IOException {
-		
+
 		for (int i = 0; i < 50; i++) {
 			for (int j = 0; j < 50; j++) {
 				world[i][j] = 0;
@@ -204,7 +203,7 @@ public class spielwelt extends javax.swing.JFrame {
 				try {
 					if (e.getKeyCode() == 37 && playerPosX != 0 && --playerX >= 0 && world[playerX][playerY] != 1) {
 						movePlayerMinimap(playerX, playerY);
-//						ceg.consistency(world, "left", ++playerX, playerY);
+						// ceg.consistency(world, "left", ++playerX, playerY);
 						ceg.consistency(world, "left", ++playerX, ++playerY);
 					} else if (e.getKeyCode() == 38 && playerPosY != 0 && --playerY >= 0
 							&& world[playerX][playerY] != 1) {
@@ -388,9 +387,9 @@ public class spielwelt extends javax.swing.JFrame {
 		jlp.add(playerOnField, 3);
 		healthBar.setMaximum(100);
 		healthBar.setValue(50);
-//		Login log = new Login("Rasit", "123");
-//		ceg.addQueue(log);
-		
+		 Login log = new Login("Rasit", "123");
+		 ceg.addQueue(log);
+
 	}
 
 	@SuppressWarnings("unchecked")
@@ -720,6 +719,11 @@ public class spielwelt extends javax.swing.JFrame {
 
 		}
 
+	}
+
+	public ClientEngine returnEngine(ClientEngine ceg) {
+		ceg = this.ceg;
+		return ceg;
 	}
 
 	// Variables declaration - do not modify
