@@ -59,7 +59,7 @@ public class spielwelt extends javax.swing.JFrame {
 	private JLayeredPane jlp = new JLayeredPane();
 	private JPanel minimapPanel;
 	public ClientEngineGUI ceg = new ClientEngineGUI();
-	public JMenuItem mntmExit;
+	public JMenuItem mntmExit, mntmControls;
 
 	/**
 	 * Creates new form spielwelt
@@ -82,22 +82,7 @@ public class spielwelt extends javax.swing.JFrame {
 		// System.out.println(playerPosX/(screenWidth/50)+ "," +
 		// playerPosY/(screenWidth/50));
 
-                    }
-                    else{
-                        chatButton.setText("Chat verbergen");
-                        chatWindow.setVisible(true);
-                    }
-                }
-                if(e.getKeyChar() == 'm' || e.getKeyChar() == 'M') {//minimap anzeigen/schließen
-                	if(minimapPanel.isVisible())
-                		minimapPanel.setVisible(false);
-                	else
-                		minimapPanel.setVisible(true);
-                 
-                }if(e.getKeyChar()== 'v' || e.getKeyChar() == 'V'){ //Item aufheben
-                	ceg.itemAvailable(playerX, playerY, world);
-                }
-            }
+
 
 		// if (n.isPossible == true){
 		if (direction.equals("right") && world[posX][posY] != 1) {
@@ -262,6 +247,8 @@ public class spielwelt extends javax.swing.JFrame {
 				if (e.getKeyChar() == 'v' || e.getKeyChar() == 'V') {
 					ceg.itemAvailable(playerX, playerY, world);
 				}
+				
+
 			}
 
 			@Override
@@ -428,8 +415,9 @@ public class spielwelt extends javax.swing.JFrame {
 		JMenuItem mntmCheatcodes = new JMenuItem("CheatCodes");
 		mnHelp.add(mntmCheatcodes);
 
-		JMenuItem mntmControls = new JMenuItem("Controls");
+		mntmControls = new JMenuItem("Controls");
 		mnHelp.add(mntmControls);
+		mntmControls.addActionListener(new bHandler());
 		this.setVisible(true);
 	}
 
@@ -752,6 +740,9 @@ public class spielwelt extends javax.swing.JFrame {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == mntmExit) {
 				new Logout();
+			}
+			if(e.getSource()== mntmControls){
+				new Controls();
 			}
 			/*
 			 * if (e.getSource() == inventory1) { if (inventar.isVisible() ==

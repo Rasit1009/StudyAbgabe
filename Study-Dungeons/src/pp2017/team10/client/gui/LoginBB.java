@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-public class Login extends JFrame implements ActionListener {
+public class LoginBB extends JFrame implements ActionListener {
 	JLabel logo, user, pw, choice;
 	JPanel panel;
 	JTextField userInput;
@@ -17,7 +17,7 @@ public class Login extends JFrame implements ActionListener {
 	JButton signInButton, signUpButton, cancel;
 	JComboBox choice1;
 
-	public Login() {
+	public LoginBB() {
 
 		super("Login to Study");
 		this.setSize(301, 427);
@@ -122,6 +122,6 @@ public class Login extends JFrame implements ActionListener {
 
 	public static void main(String[] args) {
 
-		new Login();
+		new LoginBB();
 	}
 }

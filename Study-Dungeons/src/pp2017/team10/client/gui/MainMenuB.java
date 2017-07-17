@@ -21,7 +21,7 @@ import javax.swing.JTextField;
 import java.awt.Color;
 import javax.swing.SwingConstants;
 
-public class MainMenu extends JFrame implements ActionListener {
+public class MainMenuB extends JFrame implements ActionListener {
 
 	/**
 	 * 
@@ -36,7 +36,7 @@ public class MainMenu extends JFrame implements ActionListener {
 	private boolean resizability = true;
 	JButton startButton, highscoreButton, exitButton;
 
-	public MainMenu() {
+	public MainMenuB() {
 		setVisible(visibility);
 		setSize(FrameWidth, FrameHeight);
 		setResizable(resizability);
@@ -96,7 +96,7 @@ public class MainMenu extends JFrame implements ActionListener {
 
 	public static void main(String[] args) {
 
-		new MainMenu();
+		new MainMenuB();
 	}
 
 	@Override
