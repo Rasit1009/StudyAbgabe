@@ -12,7 +12,7 @@ public class Monster {
 
 	ArrayList<Monster> ActiveMonsters = new ArrayList<Monster>();
 	private int monsterid;
-	Character C = null;
+	UserLogedIn User = null;
 	private int map[][] = null;
 
 	private int currentposx;
@@ -57,7 +57,7 @@ public class Monster {
 
 	public int takeDmg() { // Gibt das neue Leben des Monsters
 							// wieder
-		currentHp = maxHp - C.getdmg();
+		currentHp = maxHp - User.getDamage();
 		return currentHp;
 	}
 
@@ -68,8 +68,8 @@ public class Monster {
 
 	public int attackPlayer() { // gibt den neuen Lebensstand des Spielers
 								// wieder
-		C.sethp(C.gethp() - getdmg());
-		return C.gethp();
+		User.setHealth(User.getHealth() - getdmg());
+		return User.getHealth();
 
 	}
 
@@ -145,7 +145,7 @@ public class Monster {
 	}
 
 	public void hunt(int dir) { // Monster verfolgt und attackiert den Spieler
-		if (Math.pow(getposx() + getposy() - C.getposx() - C.getposy(), 2) == 1) { // Wenn
+		if (Math.pow(getposx() + getposy() - User.getUserPosX() - User.getUserPosY(), 2) == 1) { // Wenn
 																					// sich
 																					// die
 																					// Koordinaten
@@ -187,8 +187,8 @@ public class Monster {
 	public void escape() {// Monster fluechtet aus dem Kampf
 		int mx = getposx();
 		int my = getposy();
-		int px = C.getposx();
-		int py = C.getposy();
+		int px = User.getUserPosX();
+		int py = User.getUserPosY();
 		int nextStepDirection = 0;
 		Node currentMonsterNode = null;
 		for (Node u : graph) { // den aktuellen Knoten des Monsters finden
@@ -369,7 +369,7 @@ public class Monster {
 					graph.add(mapgraph[i][j]);
 					if (map[i][j] == 2) {
 						destination = mapgraph[i][j];
-						C = new Character(1, j, i);
+						//User = new UserLogedIn(1, j, i);
 					}
 					if (map[i][j] == 3) {
 						start = mapgraph[i][j];
