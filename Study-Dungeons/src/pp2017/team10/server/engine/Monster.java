@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
 
+import monsterpackage.UserLogedIn;
+
 public class Monster {
 	private int currentHp;
 	private int maxHp;
@@ -66,10 +68,14 @@ public class Monster {
 	 * getposx(), 2) + Math.pow(C.getposy() - getposx(), 2)) < 2); }
 	 */
 
-	public int attackPlayer() { // gibt den neuen Lebensstand des Spielers
-								// wieder
-		User.setHealth(User.getHealth() - getdmg());
-		return User.getHealth();
+	public void attackPlayer(int userID) { // gibt den neuen Lebensstand des Spielers
+		ArrayList<UserLogedIn> userlist= getUserList();				// wieder
+		for(UserLogedIn u : userlist){
+			if(u.getUserID()==userID){
+				u.setHealth(u.getHealth()-getdmg());
+			}
+		}
+		//return User.getHealth();
 
 	}
 
@@ -144,7 +150,7 @@ public class Monster {
 
 	}
 
-	public void hunt(int dir) { // Monster verfolgt und attackiert den Spieler
+	public void hunt(int dir, int userID) { // Monster verfolgt und attackiert den Spieler
 		if (Math.pow(getposx() + getposy() - User.getUserPosX() - User.getUserPosY(), 2) == 1) { // Wenn
 																					// sich
 																					// die
@@ -178,7 +184,7 @@ public class Monster {
 																					// 1
 																					// rauskommen
 																					// kann
-			attackPlayer();
+			attackPlayer(userID);
 		} else {
 			move(dir);
 		}
@@ -264,7 +270,7 @@ public class Monster {
 
 	}
 
-	public void fsm(int playerposx, int playerposy, int[][] map) { // es fehlt
+	public void fsm(int playerposx, int playerposy, int userID, int[][] map) { // es fehlt
 																	// noch eine
 																	// Regenaration
 																	// der
@@ -283,7 +289,7 @@ public class Monster {
 										// der Haelfte. In Hunt wird verfolgt
 										// und angegriffen
 			if (playerInSight(playerposx, playerposy) == true) {
-				hunt(useAStar(graph, start, destination));
+				hunt(useAStar(graph, start, destination), userID);
 
 			} else {
 				stroll(graph, getposx(), getposy());
