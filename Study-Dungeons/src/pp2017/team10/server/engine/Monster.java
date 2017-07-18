@@ -15,6 +15,7 @@ public class Monster {
 	//UserLogedIn User = null;
 	private int map[][] = null;
 	public ArrayList<UserLogedIn> userlist;
+	public Node mapgraph[][];
 
 	private int currentposx;
 	private int currentposy;
@@ -290,13 +291,13 @@ public class Monster {
 	}
 
 	public void death(int id) { // Monster stirbt
-		ArrayList<Monster> clone = new ArrayList<Monster>(ActiveMonsters);
+		/*ArrayList<Monster> clone = new ArrayList<Monster>(ActiveMonsters);
 		for (Monster M : clone) {
 			if (M.getid() == id) {
 				System.out.println("Folgendes Monster wurde getoetet: " + M.getid());
 				ActiveMonsters.remove(M);
 			} // es fehlt noch Schluessel fallen lassen
-		}
+		}*/
 
 	}
 
@@ -314,8 +315,12 @@ public class Monster {
 		// finite state machine. Der endliche Zustandsautomat
 		// Zustaende rumlaufen, jagen und fluechten
 		this.graph = readMap(map);
-		// Monster koennen nicht um die Ecke gucken, daher Verfolgung auf diese
-		// Weise
+		this.start= mapgraph[getposy()][getposx()];
+		for (UserLogedIn u : userlist) {
+			if (u.getUserID() == userID) {
+				this.destination=mapgraph[u.getUserPosY()][u.getUserPosX()];
+			}
+		}
 		if (gethp() > getmaxHp() / 2) { // Verfolgezustaende, wenn Leben ueber
 										// der Haelfte. In Hunt wird verfolgt
 										// und angegriffen
@@ -369,11 +374,11 @@ public class Monster {
 				} else {
 					mapgraph[i][j].accessible = true;
 					graph.add(mapgraph[i][j]);
-					if (map[i][j] == 2) {
-						destination = mapgraph[i][j];
+					//if (map[i][j] == 2) {
+						//destination = mapgraph[i][j];
 						// User = new UserLogedIn(1, j, i);
-					}
-					if (map[i][j] == 3) {
+					//}
+				//	if (map[i][j] == 3) {
 						start = mapgraph[i][j];
 						// monsterid = 0;
 						// Random random = new Random();
@@ -384,7 +389,7 @@ public class Monster {
 						// ActiveMonsters.add(M);
 					}
 
-				}
+				//}
 
 			}
 
