@@ -1,5 +1,6 @@
 /CancelIcon.jpg
 /Controls.jpg
+<<<<<<< HEAD
 /Ground.png
 /LoginFrameIcon.jpg
 /LoginFrameIcon2.jpg
@@ -31,6 +32,13 @@
 /glove3.jpg
 /glove4.jpg
 /grau.jpg
+=======
+/LoginFrameIcon.jpg
+/LoginFrameIcon2.jpg
+/SignInIcon.jpg
+/SignUpIcon.jpg
+/StudyDungeonsMainIcon.png
+>>>>>>> branch 'master' of https://github.com/Rasit1009/StudyAbgabe.git
 /helmet1.jpg
 /helmet2.jpg
 /highscore.txt

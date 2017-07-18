@@ -9,9 +9,11 @@ import java.util.Queue;
 import pp2017.team10.server.*;
 import pp2017.team10.shared.*;
 import pp2017.team10.client.engine.*;
+import pp2017.team10.client.gui.spielwelt;
+
 import java.io.*;
 
-public class ClientComm {
+public class ClientComm{
 	// Attribute
 	private ObjectInputStream Input;
 	private ObjectOutputStream Output;
@@ -32,7 +34,6 @@ public class ClientComm {
 
 		this.server = server;
 		this.port = port;
-
 	}
 
 	/**
@@ -75,6 +76,7 @@ public class ClientComm {
 		try {
 			// schreibt in Outputstream
 			Output.writeObject(to);
+			System.out.println("verschickt");
 		} catch (IOException e) {
 			setserverruns(false);
 
@@ -147,7 +149,7 @@ public class ClientComm {
 		bSendQueue.poll();
 	}
 
-	public Queue<Messages> getzwischenSchlange() {
+	public Queue<Messages> getbQueue() {
 		return bSendQueue;
 	}
 
