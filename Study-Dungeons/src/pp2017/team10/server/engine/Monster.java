@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
 
-import monsterpackage.UserLogedIn;
-
 public class Monster {
 	private int currentHp;
 	private int maxHp;
@@ -68,14 +66,15 @@ public class Monster {
 	 * getposx(), 2) + Math.pow(C.getposy() - getposx(), 2)) < 2); }
 	 */
 
-	public void attackPlayer(int userID) { // gibt den neuen Lebensstand des Spielers
-		ArrayList<UserLogedIn> userlist= getUserList();				// wieder
-		for(UserLogedIn u : userlist){
-			if(u.getUserID()==userID){
-				u.setHealth(u.getHealth()-getdmg());
+	public void attackPlayer(int userID) { // gibt den neuen Lebensstand des
+											// Spielers
+		ArrayList<UserLogedIn> userlist = getUserList(); // wieder
+		for (UserLogedIn u : userlist) {
+			if (u.getUserID() == userID) {
+				u.setHealth(u.getHealth() - getdmg());
 			}
 		}
-		//return User.getHealth();
+		// return User.getHealth();
 
 	}
 
@@ -150,40 +149,41 @@ public class Monster {
 
 	}
 
-	public void hunt(int dir, int userID) { // Monster verfolgt und attackiert den Spieler
+	public void hunt(int dir, int userID) { // Monster verfolgt und attackiert
+											// den Spieler
 		if (Math.pow(getposx() + getposy() - User.getUserPosX() - User.getUserPosY(), 2) == 1) { // Wenn
-																					// sich
-																					// die
-																					// Koordinaten
-																					// nur
-																					// in
-																					// einem
-																					// Punkt
-																					// unterscheiden,
-																					// steht
-																					// der
-																					// Spieler
-																					// neben
-																					// dem
-																					// Monster
-																					// und
-																					// wird
-																					// angegriffen.
-																					// Die
-																					// Potenzierung
-																					// ist
-																					// eine
-																					// Vereinfach,
-																					// da
-																					// bei
-																					// dieser
-																					// Rechnung
-																					// entweder
-																					// 0
-																					// oder
-																					// 1
-																					// rauskommen
-																					// kann
+			// sich
+			// die
+			// Koordinaten
+			// nur
+			// in
+			// einem
+			// Punkt
+			// unterscheiden,
+			// steht
+			// der
+			// Spieler
+			// neben
+			// dem
+			// Monster
+			// und
+			// wird
+			// angegriffen.
+			// Die
+			// Potenzierung
+			// ist
+			// eine
+			// Vereinfach,
+			// da
+			// bei
+			// dieser
+			// Rechnung
+			// entweder
+			// 0
+			// oder
+			// 1
+			// rauskommen
+			// kann
 			attackPlayer(userID);
 		} else {
 			move(dir);
@@ -270,19 +270,20 @@ public class Monster {
 
 	}
 
-	public void fsm(int playerposx, int playerposy, int userID, int[][] map) { // es fehlt
-																	// noch eine
-																	// Regenaration
-																	// der
-																	// Monster
-																	// und damit
-																	// Zustandswechsel
-																	// nach
-																	// Stroll
-																	// und Hunt
+	public void fsm(int playerposx, int playerposy, int userID, int[][] map) { // es
+																				// fehlt
+		// noch eine
+		// Regenaration
+		// der
+		// Monster
+		// und damit
+		// Zustandswechsel
+		// nach
+		// Stroll
+		// und Hunt
 		// finite state machine. Der endliche Zustandsautomat
 		// Zustaende rumlaufen, jagen und fluechten
-		this.graph=readMap(map);
+		this.graph = readMap(map);
 		// Monster koennen nicht um die Ecke gucken, daher Verfolgung auf diese
 		// Weise
 		if (gethp() > getmaxHp() / 2) { // Verfolgezustaende, wenn Leben ueber
@@ -306,57 +307,23 @@ public class Monster {
 
 	public boolean playerInSight(int playerposx, int playerposy) {
 		boolean inSight = false;
-		if ((playerposx == getposx() && playerposy - getposy() <= 3 && playerposy - getposy() > 1)
-				|| (playerposx == getposx() && playerposy - getposy() >= -3 && playerposy - getposy() < -1)
-				|| (playerposy == getposy() && playerposx - getposx() >= -3 && playerposx - getposx() < -1)
-				|| (playerposy == getposy() && playerposx - getposx() <= 3 && playerposx - getposx() > 1))
+		if (playerposy - getposy() <= 3 && playerposx - getposx() <= 3 && playerposy - getposy() >= -3
+				&& playerposx - getposx() >= -3)
+
 			inSight = true;
 		return inSight;
 	}
 
-	/*public int directToPlayer(int playerposx, int playerposy) { // gibt die
-																// Richtung an,
-																// in der das
-																// Monster den
-																// Spieler sieht
-		int dir = 0;
-		if (playerposx == getposx() && playerposy - getposy() <= 3 && playerposy - getposy() > 1) { // Spieler
-			// ist
-			// suedlich
-			// vom
-			// Monster
-			dir = 2;
-		} else if (playerposx == getposx() && playerposy - getposy() >= -3 && playerposy - getposy() < -1) { // Spieler
-			// ist
-			// noerdlich
-			// vom
-			// Monster
-			dir = 0;
-		} else if (playerposy == getposy() && playerposx - getposx() >= -3 && playerposx - getposx() < -1) { // Spieler
-			// ist
-			// westlich
-			// vom
-			// Monster
-			dir = 3;
-		} else if (playerposy == getposy() && playerposx - getposx() <= 3 && playerposx - getposx() > 1) {// Spieler
-			// ist
-			// oestlich
-			// vom
-			// Monster
-			dir = 1;
-		}
-		return dir;
-	}*/
 
 	public ArrayList<Node> readMap(int[][] map) { // Die Karte
-																	// wird
-																	// ausgelesen
-																	// und die
-																	// Nicht-Wand-Felder
-																	// werden in
-																	// einen
-																	// Graphen
-																	// gespeichert
+													// wird
+													// ausgelesen
+													// und die
+													// Nicht-Wand-Felder
+													// werden in
+													// einen
+													// Graphen
+													// gespeichert
 		Node mapgraph[][] = new Node[map.length][map.length];
 		for (int i = 0; i < map.length; i++) {
 			int id;
@@ -375,17 +342,17 @@ public class Monster {
 					graph.add(mapgraph[i][j]);
 					if (map[i][j] == 2) {
 						destination = mapgraph[i][j];
-						//User = new UserLogedIn(1, j, i);
+						// User = new UserLogedIn(1, j, i);
 					}
 					if (map[i][j] == 3) {
 						start = mapgraph[i][j];
-						//monsterid = 0;
-						//Random random = new Random();
-						//type = random.nextInt(3);
-						//Monster M = new Monster(type, j, i, dungeondepth);
-						//M.monsterid = id;
-						//id++;
-						//ActiveMonsters.add(M);
+						// monsterid = 0;
+						// Random random = new Random();
+						// type = random.nextInt(3);
+						// Monster M = new Monster(type, j, i, dungeondepth);
+						// M.monsterid = id;
+						// id++;
+						// ActiveMonsters.add(M);
 					}
 
 				}
