@@ -580,4 +580,8 @@ public class GameServer {
 			System.out.println();
 		}
 	}
+	
+	public ArrayList<UserLogedIn> getUserList(){
+		return userList;
+	}
 }
