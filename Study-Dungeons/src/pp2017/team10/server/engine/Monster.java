@@ -12,7 +12,7 @@ public class Monster {
 
 	ArrayList<Monster> ActiveMonsters = new ArrayList<Monster>();
 	private int monsterid;
-	UserLogedIn User = null;
+	//UserLogedIn User = null;
 	private int map[][] = null;
 	public ArrayList<UserLogedIn> userlist;
 
@@ -56,9 +56,19 @@ public class Monster {
 	 * success; }
 	 */
 
-	public int takeDmg() { // Gibt das neue Leben des Monsters
-							// wieder
-		currentHp = maxHp - User.getDamage();
+	public int takeDmg(int userID, ArrayList<UserLogedIn> userlist) { // Gibt
+																		// das
+																		// neue
+																		// Leben
+																		// des
+																		// Monsters
+		// wieder
+		for (UserLogedIn u : userlist) {
+			if (u.getUserID() == userID) {
+				currentHp = maxHp - u.getDamage();
+			}
+
+		}
 		return currentHp;
 	}
 
@@ -67,9 +77,13 @@ public class Monster {
 	 * getposx(), 2) + Math.pow(C.getposy() - getposx(), 2)) < 2); }
 	 */
 
-	public void attackPlayer(int userID, ArrayList<UserLogedIn> userlist) { // gibt den neuen Lebensstand des
-											// Spielers
-		this.userlist=userlist; // wieder
+	public void attackPlayer(int userID, ArrayList<UserLogedIn> userlist) { // gibt
+																			// den
+																			// neuen
+																			// Lebensstand
+																			// des
+		// Spielers
+		this.userlist = userlist; // wieder
 		for (UserLogedIn u : userlist) {
 			if (u.getUserID() == userID) {
 				u.setHealth(u.getHealth() - getdmg());
@@ -150,52 +164,67 @@ public class Monster {
 
 	}
 
-	public void hunt(int dir, int userID, ArrayList<UserLogedIn> userlist) { // Monster verfolgt und attackiert
-											// den Spieler
-		if (Math.pow(getposx() + getposy() - User.getUserPosX() - User.getUserPosY(), 2) == 1) { // Wenn
-			// sich
-			// die
-			// Koordinaten
-			// nur
-			// in
-			// einem
-			// Punkt
-			// unterscheiden,
-			// steht
-			// der
-			// Spieler
-			// neben
-			// dem
-			// Monster
-			// und
-			// wird
-			// angegriffen.
-			// Die
-			// Potenzierung
-			// ist
-			// eine
-			// Vereinfach,
-			// da
-			// bei
-			// dieser
-			// Rechnung
-			// entweder
-			// 0
-			// oder
-			// 1
-			// rauskommen
-			// kann
-			attackPlayer(userID, userlist);
-		} else {
-			move(dir);
+	public void hunt(int dir, int userID, ArrayList<UserLogedIn> userlist) { // Monster
+																				// verfolgt
+																				// und
+																				// attackiert
+		int userposx = 0, userposy = 0; // den Spieler
+		for (UserLogedIn u : userlist) {
+			if (u.getUserID() == userID) {
+				userposx = u.getUserPosX();
+				userposy = u.getUserPosY();
+			}
+			if (Math.pow((getposx() + getposy()) - (userposx + userposy), 2) == 1) { // Wenn
+				// sich
+				// die
+				// Koordinaten
+				// nur
+				// in
+				// einem
+				// Punkt
+				// unterscheiden,
+				// steht
+				// der
+				// Spieler
+				// neben
+				// dem
+				// Monster
+				// und
+				// wird
+				// angegriffen.
+				// Die
+				// Potenzierung
+				// ist
+				// eine
+				// Vereinfach,
+				// da
+				// bei
+				// dieser
+				// Rechnung
+				// entweder
+				// 0
+				// oder
+				// 1
+				// rauskommen
+				// kann
+				attackPlayer(userID, userlist);
+			} else {
+				move(dir);
+			}
 		}
 	}
 
-	public void escape() {// Monster fluechtet aus dem Kampf
+	public void escape(int userID, ArrayList<UserLogedIn> userlist) {// Monster fluechtet aus dem Kampf
 		int mx = getposx();
 		int my = getposy();
-		int px = User.getUserPosX();
-		int py = User.getUserPosY();
+		int px = 0;
+		int py = 0;
+		for (UserLogedIn u : userlist) {
+			if (u.getUserID() == userID) {
+				px=u.getUserPosX();
+				py=u.getUserPosY();
+			}
+		}
 		int nextStepDirection = 0;
 		Node currentMonsterNode = null;
 		for (Node u : graph) { // den aktuellen Knoten des Monsters finden
@@ -272,7 +301,7 @@ public class Monster {
 	}
 
 	public void fsm(int playerposx, int playerposy, int userID, int[][] map, ArrayList<UserLogedIn> userlist) { // es
-																				// fehlt
+		// fehlt
 		// noch eine
 		// Regenaration
 		// der
@@ -299,7 +328,7 @@ public class Monster {
 		} else if (gethp() <= getmaxHp() / 2 && gethp() > 0) { // Ab der Haelfte
 																// fluechtet das
 																// Monster
-			escape();
+			escape(userID, userlist);
 		} else if (gethp() == 0) { // Bei 0 HP stirbt das Monster
 			death(getid());
 		}
@@ -314,7 +343,6 @@ public class Monster {
 			inSight = true;
 		return inSight;
 	}
-
 
 	public ArrayList<Node> readMap(int[][] map) { // Die Karte
 													// wird
