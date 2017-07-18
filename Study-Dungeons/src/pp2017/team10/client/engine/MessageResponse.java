@@ -1,13 +1,19 @@
  package pp2017.team10.client.engine;
 
 import pp2017.team10.client.gui.spielwelt;
-import pp2017.team10.shared.DoorUsage;
-import pp2017.team10.shared.ItemUsage;
+import pp2017.team10.shared.DoorUsageMessage;
+import pp2017.team10.shared.ItemUsageMessage;
 import pp2017.team10.shared.Login;
 import pp2017.team10.shared.Messages;
+<<<<<<< HEAD
+import pp2017.team10.shared.MoveMessage;
+import pp2017.team10.shared.PlayerAttackMessage;
+import pp2017.team10.shared.Start;
+=======
 import pp2017.team10.shared.Move;
 import pp2017.team10.shared.PlayerAttack;
-import pp2017.team10.shared.Start;
+import pp2017.team10.shared.StartMessage;
+>>>>>>> branch 'master' of https://github.com/Rasit1009/StudyAbgabe.git
 
 /**
  * this class is the equivalent to the MessageRequest class. we sent our request
@@ -28,17 +34,17 @@ public class MessageResponse {
 
 	public void receiveResponse(Messages msg) {
 
-		if (msg instanceof Start) {
+		if (msg instanceof StartMessage) {
 			respondStart(msg);
 		} else if (msg instanceof Login) {
 			respondLogin(msg);
-		} else if (msg instanceof Move) {
+		} else if (msg instanceof MoveMessage) {
 			respondMove(msg);
-		} else if (msg instanceof ItemUsage) {
+		} else if (msg instanceof ItemUsageMessage) {
 			respondItem(msg);
-		} else if (msg instanceof DoorUsage) {
+		} else if (msg instanceof DoorUsageMessage) {
 			respondDoor(msg);
-		} else if (msg instanceof PlayerAttack) {
+		} else if (msg instanceof PlayerAttackMessage) {
 			respondAttack(msg);
 		}
 	}

@@ -54,7 +54,6 @@ public class ClientThread extends Thread {
 	public void run() {
 		boolean lauft = true;
 		while (lauft) {
-System.out.println("hallo");
 			try {
 				to = (Messages) sInput.readObject();
 				getQueueServer.add(to);

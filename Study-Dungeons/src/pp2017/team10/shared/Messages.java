@@ -14,14 +14,26 @@ public class Messages implements Serializable {
 	public String filename;
 	public Messages msg;
 	private Queue<Messages> messageQueue = new LinkedList<Messages>();
+	public int clientID;
+	public int levelID; 
 
 	/**
 	 * Author: Felix Schifferdecker, 5585147
 	 */
 	private static final long serialVersionUID = 1171553980546243488L;
 
+
+	
+	public int getClientID(){
+		return this.clientID;
+	}
+	
 	public Messages getName() {
 		return msg;
+	}
+	
+	public int getLevelID(){
+		return levelID; 
 	}
 
 	/*

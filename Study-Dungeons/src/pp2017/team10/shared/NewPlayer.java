@@ -9,6 +9,7 @@ public class NewPlayer extends Messages {
 	private static final long serialVersionUID = 1L;
 	private String user;
 	private String pw;
+	private boolean added;
 
 	public NewPlayer(String name, String password) {
 		user = name;
@@ -24,6 +25,11 @@ public class NewPlayer extends Messages {
 	}
 
 	public NewPlayer(String name, boolean added) {
-
+		this.user = name;
+		this.added = added;
+	}
+	
+	public boolean getAdded() {
+		return added;
 	}
 }

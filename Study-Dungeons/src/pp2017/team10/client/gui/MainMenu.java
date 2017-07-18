@@ -22,7 +22,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.Color;
-import javax.swing.SwingConstants;
 
 public class MainMenu extends JFrame implements ActionListener {
 
@@ -37,9 +36,13 @@ public class MainMenu extends JFrame implements ActionListener {
 	private String name = "Main Menu";
 	private boolean visibility = true;
 	private boolean resizability = true;
+<<<<<<< HEAD
 	JButton startButton, highscoreButton, storyButton, levelButton, exitButton;
 
 	boolean startButtonClicked = false;
+=======
+	JButton startButton, highscoreButton, difficultyButton, exitButton;
+>>>>>>> branch 'master' of https://github.com/Rasit1009/StudyAbgabe.git
 
 	public MainMenu() {
 		setVisible(visibility);
@@ -50,26 +53,50 @@ public class MainMenu extends JFrame implements ActionListener {
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
 
+<<<<<<< HEAD
 		/*
 		 * text1 = new JLabel("Study Dungeons");
 		 * text1.setForeground(Color.YELLOW); text1.setBounds(208, 0, 653, 96);
 		 * text1.setFont(new Font("Serif", Font.BOLD | Font.ITALIC, 75));
 		 * getContentPane().add(text1);
 		 */
+=======
+		text1 = new JLabel("Study Dungeons");
+		text1.setForeground(Color.YELLOW);
+		text1.setBounds(208, 0, 653, 96);
+		text1.setFont(new Font("Serif", Font.BOLD | Font.ITALIC, 75));
+		getContentPane().add(text1);
+>>>>>>> branch 'master' of https://github.com/Rasit1009/StudyAbgabe.git
 
 		text2 = new JLabel("Main Menu");
+<<<<<<< HEAD
 		text2.setHorizontalAlignment(SwingConstants.CENTER);
 		text2.setForeground(Color.WHITE);
 		text2.setBounds(94, 27, 785, 100);
+=======
+		text2.setForeground(Color.YELLOW);
+		text2.setBounds(50, 100, 300, 55);
+>>>>>>> branch 'master' of https://github.com/Rasit1009/StudyAbgabe.git
 		// text.setBounds(x, y, width, height);
 		Font schrift2 = new Font("Serif", Font.BOLD, 40);
+<<<<<<< HEAD
 		text2.setFont(new Font("18thCentury", Font.BOLD, 90));
+=======
+		text2.setFont(schrift2);
+>>>>>>> branch 'master' of https://github.com/Rasit1009/StudyAbgabe.git
 		getContentPane().add(text2);
 
+<<<<<<< HEAD
 		startButton = new JButton();
 		startButton.setIcon(new ImageIcon(getClass().getResource("/StartIcon.jpg")));
 		startButton.setBackground(Color.BLACK);
 		startButton.setBounds(10, 150, 280, 35);
+=======
+		startButton = new JButton("Start");
+		startButton.setFont(new Font("X-Files", Font.BOLD, 25));
+		startButton.setBackground(Color.YELLOW);
+		startButton.setBounds(35, 160, 400, 35);
+>>>>>>> branch 'master' of https://github.com/Rasit1009/StudyAbgabe.git
 		startButton.setEnabled(true);
 		startButton.addActionListener(this);
 		getContentPane().add(startButton);
@@ -77,7 +104,11 @@ public class MainMenu extends JFrame implements ActionListener {
 		highscoreButton = new JButton();
 		highscoreButton.setIcon(new ImageIcon(getClass().getResource("/HighscoreIcon.jpg")));
 		highscoreButton.setBackground(Color.YELLOW);
+<<<<<<< HEAD
 		highscoreButton.setBounds(10, 220, 280, 35);
+=======
+		highscoreButton.setBounds(35, 220, 400, 35);
+>>>>>>> branch 'master' of https://github.com/Rasit1009/StudyAbgabe.git
 		highscoreButton.setEnabled(true);
 		highscoreButton.addActionListener(this);
 		getContentPane().add(highscoreButton);
@@ -90,6 +121,7 @@ public class MainMenu extends JFrame implements ActionListener {
 		levelButton.addActionListener(this);
 		getContentPane().add(levelButton);
 
+<<<<<<< HEAD
 		storyButton = new JButton();
 		storyButton.setIcon(new ImageIcon(getClass().getResource("/StoryIcon.jpg")));
 		storyButton.setBackground(Color.YELLOW);
@@ -103,14 +135,28 @@ public class MainMenu extends JFrame implements ActionListener {
 		exitButton.setBackground(Color.YELLOW);
 		exitButton.setBounds(380, 380, 180, 60);
 		exitButton.setIcon(new ImageIcon(getClass().getResource("/ExitIcon.jpg")));
+=======
+		difficultyButton = new JButton("Difficulty");
+		difficultyButton.setFont(new Font("X-Files", Font.BOLD, 25));
+		difficultyButton.setBackground(Color.YELLOW);
+		difficultyButton.setBounds(35, 280, 400, 35);
+		difficultyButton.setEnabled(true);
+		difficultyButton.addActionListener(this);
+		getContentPane().add(difficultyButton);
+
+		exitButton = new JButton("EXIT");
+		exitButton.setFont(new Font("X-Files", Font.BOLD, 40));
+		exitButton.setBackground(new Color(128, 0, 0));
+		exitButton.setBounds(260, 380, 180, 60);
+>>>>>>> branch 'master' of https://github.com/Rasit1009/StudyAbgabe.git
 		exitButton.setEnabled(true);
 		exitButton.addActionListener(this);
 		getContentPane().add(exitButton);
 
 		welcome = new JLabel();
 		welcome.setLayout(null);
-		welcome.setIcon(new ImageIcon(getClass().getResource("/StudyDungeonsMainIcon.png")));
-		welcome.setBounds(0, 0, 1000, 461);
+		welcome.setIcon(new ImageIcon(getClass().getResource("src/MainmenuTest.jpg")));
+		welcome.setBounds(0, 0, 1000, 500);
 		getContentPane().add(welcome);
 
 		HandlerClass handler = new HandlerClass();
@@ -140,6 +186,8 @@ public class MainMenu extends JFrame implements ActionListener {
 			this.dispose();
 		} else if (e.getSource() == highscoreButton) {
 			new Highscore();
+		} else if (e.getSource() == difficultyButton) {
+			// difficulty frame
 		} else if (e.getSource() == exitButton) {
 			System.exit(0);
 		}

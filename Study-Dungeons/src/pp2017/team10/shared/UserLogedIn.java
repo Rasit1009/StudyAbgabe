@@ -1,4 +1,4 @@
-package pp2017.team10.server.engine;
+package pp2017.team10.shared;
 
 /**
  * Author: Felix Schifferdecker, 5585147

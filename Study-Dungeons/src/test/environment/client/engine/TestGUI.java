@@ -3,11 +3,11 @@ package test.environment.client.engine;
 import pp2017.team10.client.engine.ClientEngine;
 import pp2017.team10.shared.ChatMessage;
 import pp2017.team10.shared.Cheat;
-import pp2017.team10.shared.DoorUsage;
-import pp2017.team10.shared.ItemUsage;
+import pp2017.team10.shared.DoorUsageMessage;
+import pp2017.team10.shared.ItemUsageMessage;
 import pp2017.team10.shared.Messages;
-import pp2017.team10.shared.Move;
-import pp2017.team10.shared.PlayerAttack;
+import pp2017.team10.shared.MoveMessage;
+import pp2017.team10.shared.PlayerAttackMessage;
 
 public class TestGUI {
 	/**
@@ -22,7 +22,7 @@ public class TestGUI {
 	public ClientEngine g;
 	public static Messages msg;
 	public static boolean doors = true;
-	public DoorUsage use;
+	public DoorUsageMessage use;
 	public static String content = "maxHP";
 	public static int pID = 12;
 	public static int frpID = 21;

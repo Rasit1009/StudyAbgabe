@@ -9,12 +9,20 @@ public class Login extends Messages {
 	 */
 	private static final long serialVersionUID = -8177275538000046658L;
 
-	public String user;
-	public String pass;
+	private String user;
+	private String pass;
 
 	public Login(String user, String pass) {
 		this.user = user;
 		this.pass = pass;
+	}
+	
+	public String getUser() {
+		return user;
+	}
+	
+	public String getPassword() {
+		return pass;
 	}
 
 }

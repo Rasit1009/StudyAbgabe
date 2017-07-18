@@ -10,12 +10,12 @@ public class Character {
 
 	public int posx;
 	public int posy;
-	public int[][] world;
+	public int playerID;
 
-	public Character(int[][] world, int posx, int posy) {
+	public Character(int playerID, int posx, int posy) {
 		this.posx = posx;
 		this.posy = posy;
-		world[posx][posy] = 2;
+		this.playerID = playerID;
 
 	}
 
@@ -25,6 +25,10 @@ public class Character {
 
 	public int getPosY() {
 		return posy;
+	}
+	
+	public int getplayerID(){
+		return playerID;
 	}
 
 	public int setXPos(int posx) {
