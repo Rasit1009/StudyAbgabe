@@ -3,31 +3,30 @@ package pp2017.team10.client.engine;
 import pp2017.team10.shared.Character;
 import pp2017.team10.shared.ChatMessage;
 import pp2017.team10.shared.Cheat;
-<<<<<<< HEAD
+
 import pp2017.team10.shared.DoorUsageMessage;
 import pp2017.team10.shared.ItemMessage;
 import pp2017.team10.shared.ItemUsageMessage;
-=======
-import pp2017.team10.shared.DoorUsage;
-import pp2017.team10.shared.Item;
-import pp2017.team10.shared.ItemUsage;
+
+import pp2017.team10.shared.DoorUsageMessage;
+import pp2017.team10.shared.ItemMessage;
+import pp2017.team10.shared.ItemUsageMessage;
 import pp2017.team10.shared.Level;
->>>>>>> branch 'master' of https://github.com/Rasit1009/StudyAbgabe.git
 import pp2017.team10.shared.Login;
 import pp2017.team10.shared.LogoutMessage;
 import pp2017.team10.shared.Messages;
 import pp2017.team10.shared.MonsterAttack;
 import pp2017.team10.shared.MoveMessage;
 import pp2017.team10.shared.NewPlayer;
-<<<<<<< HEAD
+
 import pp2017.team10.shared.PlayerAttackMessage;
 import pp2017.team10.shared.GameOverMessage;
-import pp2017.team10.shared.Start;
-=======
-import pp2017.team10.shared.PlayerAttack;
-import pp2017.team10.shared.PlayerDead;
 import pp2017.team10.shared.StartMessage;
->>>>>>> branch 'master' of https://github.com/Rasit1009/StudyAbgabe.git
+
+import pp2017.team10.shared.PlayerAttackMessage;
+import pp2017.team10.shared.PlayersMessage;
+import pp2017.team10.shared.StartMessage;
+//github.com/Rasit1009/StudyAbgabe.git
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -54,7 +53,7 @@ public class ClientEngine {
 	public int posx;
 	public int posy;
 	public boolean isPossible;
-	public ItemMessage item = new ItemMessage();
+	// public ItemMessage item = new ItemMessage();
 	public int charPos;
 	public boolean isAvailable;
 	public int[][] map;
@@ -197,11 +196,11 @@ public class ClientEngine {
 	 * correctly.
 	 */
 
-	public void setItemOnMap(int[][] Map) {
-		getCharInfo();
-		Map[posx + 1][posy + 1] = item.setItemPos(1);
-		itemAvailable(posx, posy, Map);
-	}
+	// public void setItemOnMap(int[][] Map) {
+	// getCharInfo();
+	// Map[posx + 1][posy + 1] = item.setItemPos(1);
+	// itemAvailable(posx, posy, Map);
+	// }
 
 	public boolean itemAvailable(int x, int y, int[][] Map) {
 		// this.Map = Map;
@@ -220,8 +219,9 @@ public class ClientEngine {
 						System.out.println(isPossible);
 						System.out.println("Item is on Position posx: [" + i + "] posy: [" + j + "]"
 								+ " Player can pick it up, it is in his surrounding");
-						ItemUsageMessage useItem = new ItemUsageMessage(i, j, isAvailable);
-						addQueue(useItem);
+						// ItemUsageMessage useItem = new ItemUsageMessage(i, j,
+						// isAvailable);
+						// addQueue(useItem);
 					}
 				}
 			}
@@ -269,13 +269,11 @@ public class ClientEngine {
 					handleLogin((Login) m);
 				} else if (m instanceof MoveMessage) {
 					System.out.println("This is a MoveMessage");
-<<<<<<< HEAD
 
 				} else if (m instanceof PlayerAttackMessage) {
-=======
-					handleMove((Move) m);
+
+					handleMove((MoveMessage) m);
 				} else if (m instanceof PlayerAttack) {
->>>>>>> branch 'master' of https://github.com/Rasit1009/StudyAbgabe.git
 					System.out.println("This is a PlayerAttackMessage");
 					handlePlayerAttack((PlayerAttackMessage) m);
 				} else if (m instanceof LogoutMessage) {
@@ -289,17 +287,15 @@ public class ClientEngine {
 					handleNewPlayer((NewPlayer) m);
 				} else if (m instanceof GameOverMessage) {
 					System.out.println("This is a PlayerDeadMessage");
-<<<<<<< HEAD
+
 					handlePlayerDead((GameOverMessage) m);
-=======
-					handlePlayerDead((PlayerDead) m);
+					// handlePlayerDead((PlayerDead) m);
 				} else if (m instanceof Level) {
 					System.out.println("This is a LevelMessage");
 					handleLevel((Level) m);
 				} else if (m instanceof StartMessage) {
 					System.out.println("This is a StartMessage");
 					handleStart((StartMessage) m);
->>>>>>> branch 'master' of https://github.com/Rasit1009/StudyAbgabe.git
 				}
 			}
 		} catch (Exception e) {
@@ -307,9 +303,11 @@ public class ClientEngine {
 		}
 	}
 
-<<<<<<< HEAD
 	private void handlePlayerDead(GameOverMessage msg) {
-=======
+		
+	}
+
+
 	private void handleLevel(Level msg) {
 		int[][] world;
 		int levelID;
@@ -319,6 +317,7 @@ public class ClientEngine {
 		System.out.println("LevelMessage empfangen");
 
 	}
+	
 
 	public void buildLevel(int levelID) {
 
@@ -380,7 +379,6 @@ public class ClientEngine {
 
 	public void handleMove(MoveMessage msg) {
 
-		
 		System.out.println("This is a Move message");
 		addQueue((Messages) msg);
 	}
