@@ -77,32 +77,15 @@ public class GameServer {
 
 	public int[][] mapToArray(Map map) {
 
-	/*	Map build = new Map(); 
-		map.getLevelID();
-		switch(map.levelID){
-		case 1: 
-			Map wiso = lg.buildWiso();
-			build = wiso;
-			break;
-		case 2: 
-			Map  philo = lg.buildPhilo();
-			build = philo;
-			break;
-		case 3: 
-			Map library = lg.buildLibrary();
-			build = library;
-			break;
-		case 4: 
-			Map physik = lg.buildPhysik();
-			build = physik;
-			break;
-		case 5: 
-			Map copt = lg.buildCopt();
-			build = copt;
-			break;
-		}
-		*/
-//		Map wiso = lg.buildWiso();
+		/*
+		 * Map build = new Map(); map.getLevelID(); switch(map.levelID){ case 1:
+		 * Map wiso = lg.buildWiso(); build = wiso; break; case 2: Map philo =
+		 * lg.buildPhilo(); build = philo; break; case 3: Map library =
+		 * lg.buildLibrary(); build = library; break; case 4: Map physik =
+		 * lg.buildPhysik(); build = physik; break; case 5: Map copt =
+		 * lg.buildCopt(); build = copt; break; }
+		 */
+		// Map wiso = lg.buildWiso();
 		for (int i = 0; i < 50; i++) {
 			for (int j = 0; j < 50; j++) {
 				if (map.getTile(i, j).isWall())
@@ -129,9 +112,9 @@ public class GameServer {
 					world[i][j] = 8;
 				else if (map.getTile(i, j).isKey())
 					world[i][j] = 9;
-//				System.out.print(world[i][j] + ", ");
+				// System.out.print(world[i][j] + ", ");
 			}
-//			System.out.println();
+			// System.out.println();
 		}
 		return world;
 
@@ -189,7 +172,7 @@ public class GameServer {
 	public void handleChatMessage(ChatMessage m) throws IOException {
 		for (UserLogedIn u : userList)
 			if (!m.user.equals(u.getUser())) {
-				ChatMessage msg = new ChatMessage(m.content, u.getUser(), m.sender);
+				ChatMessage msg = new ChatMessage(m.content, u.getUser());
 				messageQueue.offer(msg);
 			}
 	}
@@ -538,33 +521,32 @@ public class GameServer {
 		System.out.println("hol die Levels ab");
 		for (int i = 1; i <= 5; i++) {
 			int[][] lvl = new int[50][50];
-//			for(int k = 0; k < 50; k++){
-//				for(int j = 0;  j < 50; j++){
-//					lvl[k][j] = 1;
-//				}
-				
-//			}
+			// for(int k = 0; k < 50; k++){
+			// for(int j = 0; j < 50; j++){
+			// lvl[k][j] = 1;
+			// }
+
+			// }
 			map = lg.getLevel(i);
-//			System.out.println(map.levelID);
+			// System.out.println(map.levelID);
 			lvl = mapToArray(map);
-//			lvl = getLevel(i);
+			// lvl = getLevel(i);
 			// Funktion wird beim Levelgenerator aufgerufen um alle Level zu
 			// bekommen
-			Level msg = new Level(lvl,map.levelID);
+			Level msg = new Level(lvl, map.levelID);
 			messageQueue.offer(msg);
-<<<<<<< HEAD
+
 			System.out.println("Map: " + i);
-=======
-//			for(int k = 0; k < 50; k++){
-//				for(int j = 0;  j < 50; j++){
-//					System.out.print(lvl[k][j] + ", ");
-//				}
-//				System.out.println();
-//				
-//			}
+
+			// for(int k = 0; k < 50; k++){
+			// for(int j = 0; j < 50; j++){
+			// System.out.print(lvl[k][j] + ", ");
+			// }
+			// System.out.println();
+			//
+			// }
 
 			System.out.println();
->>>>>>> branch 'master' of https://github.com/Rasit1009/StudyAbgabe.git
 		}
 	}
 
@@ -585,8 +567,8 @@ public class GameServer {
 			System.out.println();
 		}
 	}
-	
-	public ArrayList<UserLogedIn> getUserList(){
+
+	public ArrayList<UserLogedIn> getUserList() {
 		return userList;
 	}
 }

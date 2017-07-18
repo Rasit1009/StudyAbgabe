@@ -20,7 +20,7 @@ public class UserLogedIn {
 	private int damage;
 
 	public UserLogedIn(int health, int[] items, String user, int score, boolean gotKey, int userID, int userPosX,
-			int userPosY, int damage) {
+		int userPosY, int damage) {
 		this.health = health;
 		this.items = items;
 		this.user = user;

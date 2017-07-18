@@ -269,11 +269,8 @@ public class ClientEngine {
 					handleLogin((Login) m);
 				} else if (m instanceof MoveMessage) {
 					System.out.println("This is a MoveMessage");
-
-				} else if (m instanceof PlayerAttackMessage) {
-
 					handleMove((MoveMessage) m);
-				} else if (m instanceof PlayerAttack) {
+				} else if (m instanceof PlayerAttackMessage) {
 					System.out.println("This is a PlayerAttackMessage");
 					handlePlayerAttack((PlayerAttackMessage) m);
 				} else if (m instanceof LogoutMessage) {
@@ -304,9 +301,8 @@ public class ClientEngine {
 	}
 
 	private void handlePlayerDead(GameOverMessage msg) {
-		
-	}
 
+	}
 
 	private void handleLevel(Level msg) {
 		int[][] world;
@@ -317,7 +313,6 @@ public class ClientEngine {
 		System.out.println("LevelMessage empfangen");
 
 	}
-	
 
 	public void buildLevel(int levelID) {
 
@@ -341,8 +336,7 @@ public class ClientEngine {
 
 	}
 
-	private void handlePlayerDead(PlayerDead msg) {
->>>>>>> branch 'master' of https://github.com/Rasit1009/StudyAbgabe.git
+	private void handlePlayerDead(PlayersMessage msg) {
 		System.out.println("Player Dead Message");
 		addQueue(msg);
 

@@ -165,15 +165,14 @@ public class spielwelt extends javax.swing.JFrame {
 		};
 		new Timer(delay, taskPerformer).start();
 	}
-<<<<<<< HEAD
-	
+
 	public void setItemCount(int itemID, int count) {
-		switch(itemID) {
-=======
+
+	}
 
 	public void setItem(int itemID, int count) {
 		switch (itemID) {
->>>>>>> branch 'master' of https://github.com/Rasit1009/StudyAbgabe.git
+
 		case 0: {
 			int countBlue = Integer.parseInt(bluePotionCount.getText()) + count;
 			greenPotionCount.setText(Integer.toString(countBlue));
@@ -235,15 +234,9 @@ public class spielwelt extends javax.swing.JFrame {
 	public void resetPlayer() {
 		playerList.clear();
 	}
-<<<<<<< HEAD
-	
+
 	public void deleteItemMap(int itemIDMap) {
 		JLabel item = itemList.get(itemIDMap);
-=======
-
-	public void deleteItemMap(int itemID) {
-		JLabel item = itemList.get(itemID);
->>>>>>> branch 'master' of https://github.com/Rasit1009/StudyAbgabe.git
 		jlp.remove(item);
 		itemList.remove(itemIDMap);
 	}
@@ -535,13 +528,12 @@ public class spielwelt extends javax.swing.JFrame {
 		playerOnMinimap.setBackground(Color.red);
 		playerOnMinimap.setLocation(0, 0);
 		playerOnMinimap.setSize(4, 4);
-<<<<<<< HEAD
-//		playerOnMinimap.setOpaque(true);
-//		minimap.add(playerOnMinimap, 0);
-=======
+
+		// playerOnMinimap.setOpaque(true);
+		// minimap.add(playerOnMinimap, 0);
+
 		playerOnMinimap.setOpaque(true);
 		// minimap.add(playerOnMinimap, 0);
->>>>>>> branch 'master' of https://github.com/Rasit1009/StudyAbgabe.git
 
 		this.setSize(screenWidth + 6, screenHeight + 28);
 		this.setLocationRelativeTo(null);
@@ -896,7 +888,7 @@ public class spielwelt extends javax.swing.JFrame {
 			setChat(chatInput.getText());
 			chatInput.setText("");
 
-			ChatMessage chat = new ChatMessage(chatInput.getText(), receiver, recipient);
+			ChatMessage chat = new ChatMessage(chatInput.getText());
 			ceg.addQueue(chat);
 			chatInput.setEnabled(false);
 

@@ -12,7 +12,7 @@ public class Level extends Messages {
 	private int levelID;
 	private ArrayList<UserLogedIn> u;
 	private boolean doorOpen;
-	private int levelID;
+
 
 	public Level(int[][] world, ArrayList<UserLogedIn> u, boolean doorOpen) {
 		this.world = world;
@@ -28,25 +28,19 @@ public class Level extends Messages {
 	public int[][] getWorld() {
 		return world;
 	}
-<<<<<<< HEAD
-
+	
 	public Level(int[][] world, boolean doorOpen, int levelID) {
 		this.world = world;
 		this.levelID = levelID;
 		this.doorOpen = doorOpen;
-=======
+	}
 	
 	public int getLevelID(){
 		return levelID;
->>>>>>> branch 'master' of https://github.com/Rasit1009/StudyAbgabe.git
 	}
 	
 	public boolean getDoorOpen() {
 		return doorOpen;
-	}
-	
-	public int getLevelID() {
-		return levelID;
 	}
 	
 }

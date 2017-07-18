@@ -9,10 +9,12 @@ public class ChatMessage extends Messages {
 	 */
 	private static final long serialVersionUID = -9207628058769370829L;
 	private String content;
+	private String user; 
 
 	public ChatMessage(String content) {
 		this.content = content;
 	}
+	
 
 	public String getContent() {
 		return content;
