@@ -33,7 +33,7 @@ import pp2017.team10.client.comm.SendQueue;
 import pp2017.team10.client.engine.ClientEngine;
 import pp2017.team10.shared.Character;
 import pp2017.team10.shared.ChatMessage;
-import pp2017.team10.shared.ItemUsage;
+import pp2017.team10.shared.ItemUsageMessage;
 import pp2017.team10.shared.Login;
 
 /**
@@ -168,7 +168,7 @@ public class spielwelt extends javax.swing.JFrame {
 		new Timer(delay, taskPerformer).start();
 	}
 	
-	public void setItem(int itemID, int count) {
+	public void setItemCount(int itemID, int count) {
 		switch(itemID) {
 		case 0: {
 			int countBlue = Integer.parseInt(bluePotionCount.getText()) + count;
@@ -232,10 +232,10 @@ public class spielwelt extends javax.swing.JFrame {
 		playerList.clear();
 	}
 	
-	public void deleteItemMap(int itemID) {
-		JLabel item = itemList.get(itemID);
+	public void deleteItemMap(int itemIDMap) {
+		JLabel item = itemList.get(itemIDMap);
 		jlp.remove(item);
-		itemList.remove(itemID);
+		itemList.remove(itemIDMap);
 	}
 
 	public void setWorld() {
@@ -525,8 +525,8 @@ public class spielwelt extends javax.swing.JFrame {
 		playerOnMinimap.setBackground(Color.red);
 		playerOnMinimap.setLocation(0, 0);
 		playerOnMinimap.setSize(4, 4);
-		playerOnMinimap.setOpaque(true);
-		minimap.add(playerOnMinimap, 0);
+//		playerOnMinimap.setOpaque(true);
+//		minimap.add(playerOnMinimap, 0);
 
 		this.setSize(screenWidth + 6, screenHeight + 28);
 		this.setLocationRelativeTo(null);

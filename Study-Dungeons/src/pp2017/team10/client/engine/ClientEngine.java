@@ -3,17 +3,17 @@ package pp2017.team10.client.engine;
 import pp2017.team10.shared.Character;
 import pp2017.team10.shared.ChatMessage;
 import pp2017.team10.shared.Cheat;
-import pp2017.team10.shared.DoorUsage;
-import pp2017.team10.shared.Item;
-import pp2017.team10.shared.ItemUsage;
+import pp2017.team10.shared.DoorUsageMessage;
+import pp2017.team10.shared.ItemMessage;
+import pp2017.team10.shared.ItemUsageMessage;
 import pp2017.team10.shared.Login;
-import pp2017.team10.shared.Logout;
+import pp2017.team10.shared.LogoutMessage;
 import pp2017.team10.shared.Messages;
 import pp2017.team10.shared.MonsterAttack;
-import pp2017.team10.shared.Move;
+import pp2017.team10.shared.MoveMessage;
 import pp2017.team10.shared.NewPlayer;
-import pp2017.team10.shared.PlayerAttack;
-import pp2017.team10.shared.PlayerDead;
+import pp2017.team10.shared.PlayerAttackMessage;
+import pp2017.team10.shared.GameOverMessage;
 import pp2017.team10.shared.Start;
 
 import java.io.IOException;
@@ -40,7 +40,7 @@ public class ClientEngine{
 	public int posx;
 	public int posy;
 	public boolean isPossible;
-	public Item item = new Item();
+	public ItemMessage item = new ItemMessage();
 	public int charPos;
 	public boolean isAvailable;
 	public int[][] Map;
@@ -161,7 +161,7 @@ public class ClientEngine{
 			break;
 		}
 
-		Move moveMsg = new Move(posx, posy, direction);
+		MoveMessage moveMsg = new MoveMessage(posx, posy, direction);
 		handleMove(moveMsg);
 	}
 
@@ -205,7 +205,7 @@ public class ClientEngine{
 						System.out.println(isPossible);
 						System.out.println("Item is on Position posx: [" + i + "] posy: [" + j + "]"
 								+ " Player can pick it up, it is in his surrounding");
-						ItemUsage useItem = new ItemUsage(i, j, isAvailable);
+						ItemUsageMessage useItem = new ItemUsageMessage(i, j, isAvailable);
 						addQueue(useItem);
 					}
 				}
@@ -243,33 +243,33 @@ public class ClientEngine{
 				} else if (m instanceof Cheat) {
 					System.out.println("This is a CheatMessage");
 					handleCheat((Cheat) m);
-				} else if (m instanceof DoorUsage) {
+				} else if (m instanceof DoorUsageMessage) {
 					System.out.println("This is a DoorUsageMessage");
-					handleDoor((DoorUsage) m);
-				} else if (m instanceof ItemUsage) {
+					handleDoor((DoorUsageMessage) m);
+				} else if (m instanceof ItemUsageMessage) {
 					System.out.println("This is a ItemUsageMessage");
-					handleItem((ItemUsage) m);
+					handleItem((ItemUsageMessage) m);
 				} else if (m instanceof Login) {
 					System.out.println("This is a LoginMessage");
 					handleLogin((Login) m);
-				} else if (m instanceof Move) {
+				} else if (m instanceof MoveMessage) {
 					System.out.println("This is a MoveMessage");
 
-				} else if (m instanceof PlayerAttack) {
+				} else if (m instanceof PlayerAttackMessage) {
 					System.out.println("This is a PlayerAttackMessage");
-					handlePlayerAttack((PlayerAttack) m);
-				} else if (m instanceof Logout) {
+					handlePlayerAttack((PlayerAttackMessage) m);
+				} else if (m instanceof LogoutMessage) {
 					System.out.println("This is a LogoutMessage");
-					handleLogout((Logout) m);
+					handleLogout((LogoutMessage) m);
 				} else if (m instanceof MonsterAttack) {
 					System.out.println("This is a MonsterAttackMessage");
 					handleMonsterAttack((MonsterAttack) m);
 				} else if (m instanceof NewPlayer) {
 					System.out.println("This is a NewPlayerMessage");
 					handleNewPlayer((NewPlayer) m);
-				} else if (m instanceof PlayerDead) {
+				} else if (m instanceof GameOverMessage) {
 					System.out.println("This is a PlayerDeadMessage");
-					handlePlayerDead((PlayerDead) m);
+					handlePlayerDead((GameOverMessage) m);
 				}
 			}
 		} catch (Exception e) {
@@ -277,7 +277,7 @@ public class ClientEngine{
 		}
 	}
 
-	private void handlePlayerDead(PlayerDead msg) {
+	private void handlePlayerDead(GameOverMessage msg) {
 		System.out.println("Player Dead Message");
 		addQueue(msg);
 
@@ -295,7 +295,7 @@ public class ClientEngine{
 
 	}
 
-	private void handleLogout(Logout msg) {
+	private void handleLogout(LogoutMessage msg) {
 		System.out.println("Logout Message");
 		addQueue(msg);
 	}
@@ -311,26 +311,26 @@ public class ClientEngine{
 		addQueue((Messages) msg);
 	}
 
-	public void handleMove(Move msg) {
+	public void handleMove(MoveMessage msg) {
 
 		System.out.println("This is a Move message");
 		addQueue((Messages) msg);
 	}
 
-	public void handleItem(ItemUsage msg) {
+	public void handleItem(ItemUsageMessage msg) {
 
 		System.out.println("This is a Item message");
 		addQueue(msg);
 	}
 
-	public void handleDoor(DoorUsage msg) {
+	public void handleDoor(DoorUsageMessage msg) {
 
 		System.out.println("This is a Door message");
 		addQueue((Messages) msg);
 
 	}
 
-	public void handlePlayerAttack(PlayerAttack msg) {
+	public void handlePlayerAttack(PlayerAttackMessage msg) {
 
 		System.out.println("This is a Attack message");
 		addQueue(msg);

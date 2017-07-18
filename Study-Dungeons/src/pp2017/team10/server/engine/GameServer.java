@@ -17,16 +17,17 @@ import pp2017.team10.shared.Messages;
 import pp2017.team10.server.map.LevelGenerator;
 import pp2017.team10.shared.ChatMessage;
 import pp2017.team10.shared.Cheat;
-import pp2017.team10.shared.DoorUsage;
-import pp2017.team10.shared.ItemUsage;
+import pp2017.team10.shared.DoorUsageMessage;
+import pp2017.team10.shared.ItemUsageMessage;
 import pp2017.team10.shared.Level;
 import pp2017.team10.shared.Login;
-import pp2017.team10.shared.Logout;
+import pp2017.team10.shared.LogoutMessage;
 import pp2017.team10.shared.MonsterAttack;
-import pp2017.team10.shared.Move;
+import pp2017.team10.shared.MoveMessage;
 import pp2017.team10.shared.NewPlayer;
-import pp2017.team10.shared.PlayerAttack;
-import pp2017.team10.shared.PlayerDead;
+import pp2017.team10.shared.PlayerAttackMessage;
+import pp2017.team10.shared.GameOverMessage;
+import pp2017.team10.shared.UserLogedIn;
 import pp2017.team10.shared.Map;
 
 /**
@@ -122,33 +123,33 @@ public class GameServer {
 				} else if (m instanceof Cheat) {
 					System.out.println("This is a CheatMessage");
 					handleCheat((Cheat) m);
-				} else if (m instanceof DoorUsage) {
+				} else if (m instanceof DoorUsageMessage) {
 					System.out.println("This is a DoorUsageMessage");
-					handleDoorUsage((DoorUsage) m);
-				} else if (m instanceof ItemUsage) {
+					handleDoorUsage((DoorUsageMessage) m);
+				} else if (m instanceof ItemUsageMessage) {
 					System.out.println("This is a ItemUsageMessage");
-					handleItemUsage((ItemUsage) m);
+					handleItemUsage((ItemUsageMessage) m);
 				} else if (m instanceof Login) {
 					System.out.println("This is a LoginMessage");
 					handleLogin((Login) m);
-				} else if (m instanceof Move) {
+				} else if (m instanceof MoveMessage) {
 					System.out.println("This is a MoveMessage");
-					handleMove((Move) m);
-				} else if (m instanceof PlayerAttack) {
+					handleMove((MoveMessage) m);
+				} else if (m instanceof PlayerAttackMessage) {
 					System.out.println("This is a PlayerAttackMessage");
-					handlePlayerAttack((PlayerAttack) m);
-				} else if (m instanceof Logout) {
+					handlePlayerAttack((PlayerAttackMessage) m);
+				} else if (m instanceof LogoutMessage) {
 					System.out.println("This is a LogoutMessage");
-					handleLogout((Logout) m);
+					handleLogout((LogoutMessage) m);
 				} else if (m instanceof MonsterAttack) {
 					System.out.println("This is a MonsterAttackMessage");
 					handleMonsterAttack((MonsterAttack) m);
 				} else if (m instanceof NewPlayer) {
 					System.out.println("This is a NewPlayerMessage");
 					handleNewPlayer((NewPlayer) m);
-				} else if (m instanceof PlayerDead) {
+				} else if (m instanceof GameOverMessage) {
 					System.out.println("This is a PlayerDeadMessage");
-					handlePlayerDead((PlayerDead) m);
+					handlePlayerDead((GameOverMessage) m);
 				}
 			}
 		} catch (Exception e) {
@@ -185,7 +186,7 @@ public class GameServer {
 
 	// Ueberprueft, ob der Nutzer den Schluessel fuer die Tuer hat, falls ja
 	// wird getLevel(currentlvl++) aufgerufen
-	public void handleDoorUsage(DoorUsage m) throws IOException {
+	public void handleDoorUsage(DoorUsageMessage m) throws IOException {
 		boolean userKey = false;
 		for (UserLogedIn u : userList)
 			if (m.user.equals(u.getUser()) && u.getGotKey() == true) {
@@ -207,7 +208,7 @@ public class GameServer {
 	// �berpr�ft ob der Nutzer ein Item aufheben oder Nutzen will und
 	// verarbeitet dieses
 	// (Bisher nur Trank implementiert) und Levelabh�ngig
-	public void handleItemUsage(ItemUsage m) throws IOException {
+	public void handleItemUsage(ItemUsageMessage m) throws IOException {
 		if (m.pickup == true) {
 			for (UserLogedIn u : userList)
 				if (u.getUser().equals(m.user)) {
@@ -247,7 +248,7 @@ public class GameServer {
 	// Diese Methode �berpr�ft ob der Nutzer vorhanden ist und logged ihn in das
 	// System ein
 	public void handleLogin(Login m) throws IOException {
-		boolean userExisting = false;
+		boolean userExisting = true;
 		Password p = new Password();
 		String pw = p.hashing(m.pass);
 		for (User u : db.userdata)
@@ -267,7 +268,7 @@ public class GameServer {
 
 	// Diese Methode bewegt den Nutzer �ber die Karte mit Hilfe der neuen
 	// Koordinaten
-	public void handleMove(Move m) throws IOException {
+	public void handleMove(MoveMessage m) throws IOException {
 		for (UserLogedIn u : userList) {
 			if (u.getUser().equals(m.user)) {
 				System.out.println("Der User " + u.getUser() + " befindet sich an der Position X: " + u.getUserPosX()
@@ -291,7 +292,7 @@ public class GameServer {
 	// Sobald der User angreift �berpr�ft diese Klasse ob ein Monster in der
 	// N�he ist und zieht dem Monster HP ab
 	// Da keine Level vorhanden monentan ohne Funktion
-	public void handlePlayerAttack(PlayerAttack m) throws IOException {
+	public void handlePlayerAttack(PlayerAttackMessage m) throws IOException {
 		for (UserLogedIn u : userList)
 			if (u.getUser().equals(m.user)) {
 				for (int i = 0; i < 3; i++) {
@@ -314,7 +315,7 @@ public class GameServer {
 
 	// Logged den User aus und speichert das Spiel als txt.-Datei mit seinem
 	// Namen ab
-	public void handleLogout(Logout m) throws IOException {
+	public void handleLogout(LogoutMessage m) throws IOException {
 		saveLevel(world, m.user);
 		int i = 0;
 		for (UserLogedIn u : userList) {
@@ -368,7 +369,7 @@ public class GameServer {
 
 	// Sobald ein Nutzer gestorben ist wird die Highscore abgespeichert und eine
 	// Nachricht �bergeben
-	public void handlePlayerDead(PlayerDead m) throws IOException {
+	public void handlePlayerDead(GameOverMessage m) throws IOException {
 		System.out.println("Player killed");
 		int score = 0;
 		for (UserLogedIn u : userList)
@@ -377,7 +378,7 @@ public class GameServer {
 		Highscore highscore = new Highscore(m.getUser(), score);
 		db.addHighscore(highscore);
 
-		PlayerDead msg = new PlayerDead(m.getUser(), "GAME OVER");
+		GameOverMessage msg = new GameOverMessage(m.getUser(), "GAME OVER");
 		messageQueue.offer(msg);
 	}
 
@@ -513,6 +514,7 @@ public class GameServer {
 			// bekommen
 			Level msg = new Level(lvl);
 			messageQueue.offer(msg);
+			System.out.println("Map: " + i);
 		}
 	}
 

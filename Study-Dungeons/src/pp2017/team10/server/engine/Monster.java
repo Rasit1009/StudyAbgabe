@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
 
+import pp2017.team10.shared.UserLogedIn;
+
 public class Monster {
 	private int currentHp;
 	private int maxHp;

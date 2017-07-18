@@ -2,11 +2,11 @@ package pp2017.team10.client.engine;
 
 import pp2017.team10.shared.ChatMessage;
 import pp2017.team10.shared.Cheat;
-import pp2017.team10.shared.DoorUsage;
-import pp2017.team10.shared.ItemUsage;
+import pp2017.team10.shared.DoorUsageMessage;
+import pp2017.team10.shared.ItemUsageMessage;
 import pp2017.team10.shared.Login;
-import pp2017.team10.shared.Move;
-import pp2017.team10.shared.PlayerAttack;
+import pp2017.team10.shared.MoveMessage;
+import pp2017.team10.shared.PlayerAttackMessage;
 import pp2017.team10.shared.Start;
 import pp2017.team10.shared.Messages;
 
@@ -36,13 +36,13 @@ public class MessageRequest {
 			handleStart(msg);
 		} else if (msg instanceof Login) {
 			handleLogin(msg);
-		} else if (msg instanceof Move) {
+		} else if (msg instanceof MoveMessage) {
 			handleMove(msg);
-		} else if (msg instanceof ItemUsage) {
+		} else if (msg instanceof ItemUsageMessage) {
 			handleItem(msg);
-		} else if (msg instanceof DoorUsage) {
+		} else if (msg instanceof DoorUsageMessage) {
 			handleDoor(msg);
-		} else if (msg instanceof PlayerAttack) {
+		} else if (msg instanceof PlayerAttackMessage) {
 			handleAttack(msg);
 		} else if (msg instanceof ChatMessage) {
 			handleChat(msg);

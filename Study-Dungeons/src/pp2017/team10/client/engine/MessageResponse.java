@@ -1,12 +1,12 @@
  package pp2017.team10.client.engine;
 
 import pp2017.team10.client.gui.spielwelt;
-import pp2017.team10.shared.DoorUsage;
-import pp2017.team10.shared.ItemUsage;
+import pp2017.team10.shared.DoorUsageMessage;
+import pp2017.team10.shared.ItemUsageMessage;
 import pp2017.team10.shared.Login;
 import pp2017.team10.shared.Messages;
-import pp2017.team10.shared.Move;
-import pp2017.team10.shared.PlayerAttack;
+import pp2017.team10.shared.MoveMessage;
+import pp2017.team10.shared.PlayerAttackMessage;
 import pp2017.team10.shared.Start;
 
 /**
@@ -32,13 +32,13 @@ public class MessageResponse {
 			respondStart(msg);
 		} else if (msg instanceof Login) {
 			respondLogin(msg);
-		} else if (msg instanceof Move) {
+		} else if (msg instanceof MoveMessage) {
 			respondMove(msg);
-		} else if (msg instanceof ItemUsage) {
+		} else if (msg instanceof ItemUsageMessage) {
 			respondItem(msg);
-		} else if (msg instanceof DoorUsage) {
+		} else if (msg instanceof DoorUsageMessage) {
 			respondDoor(msg);
-		} else if (msg instanceof PlayerAttack) {
+		} else if (msg instanceof PlayerAttackMessage) {
 			respondAttack(msg);
 		}
 	}
