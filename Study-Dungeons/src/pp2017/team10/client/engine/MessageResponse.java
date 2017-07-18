@@ -7,7 +7,7 @@ import pp2017.team10.shared.Login;
 import pp2017.team10.shared.Messages;
 import pp2017.team10.shared.Move;
 import pp2017.team10.shared.PlayerAttack;
-import pp2017.team10.shared.Start;
+import pp2017.team10.shared.StartMessage;
 
 /**
  * this class is the equivalent to the MessageRequest class. we sent our request
@@ -28,7 +28,7 @@ public class MessageResponse {
 
 	public void receiveResponse(Messages msg) {
 
-		if (msg instanceof Start) {
+		if (msg instanceof StartMessage) {
 			respondStart(msg);
 		} else if (msg instanceof Login) {
 			respondLogin(msg);

@@ -18,20 +18,20 @@ public class CE_Main {
 		ClientComm c = new ClientComm("localhost", 1500);
 		spiel = new spielwelt();
 		ce = spiel.returnEngine(ce);
-		System.out.println(ce.bSendQueue.isEmpty());
 		if (!c.start())
 			return;
+		System.out.println(ce.bSendQueue.isEmpty());
 		SendQueue ss = new SendQueue(c, ce);
 		System.out.println(ce.bSendQueue.isEmpty());
 		ss.start();
-		ce=c.getSvS().getCE();
 		System.out.println(ce);
-		
+		System.out.println(ce);
+		ce = c.getSvS().getCE();
+		System.out.println(ce);
+
 		// bSendQueue.add(m);
 
-		
-		spiel.show();
-		
+		spiel.setVisible(true);
 
 	}
 

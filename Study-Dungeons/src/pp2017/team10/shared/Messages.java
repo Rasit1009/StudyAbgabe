@@ -15,6 +15,7 @@ public class Messages implements Serializable {
 	public Messages msg;
 	private Queue<Messages> messageQueue = new LinkedList<Messages>();
 	public int clientID;
+	public int levelID; 
 
 	/**
 	 * Author: Felix Schifferdecker, 5585147
@@ -29,6 +30,10 @@ public class Messages implements Serializable {
 	
 	public Messages getName() {
 		return msg;
+	}
+	
+	public int getLevelID(){
+		return levelID; 
 	}
 
 	/*

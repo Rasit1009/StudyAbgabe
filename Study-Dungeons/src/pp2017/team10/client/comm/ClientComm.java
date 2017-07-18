@@ -28,6 +28,7 @@ public class ClientComm{
 	private ClientEngine ce = new ClientEngine();
 	public SendfromServer sFs;
 
+
 	// Konstruktor der Client erzeugt
 	public ClientComm(String server, int port) {
 		// Client(String server,int port,Message nach);

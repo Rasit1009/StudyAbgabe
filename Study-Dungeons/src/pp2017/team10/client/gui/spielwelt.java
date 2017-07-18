@@ -62,11 +62,11 @@ public class spielwelt extends javax.swing.JFrame {
 	public SendQueue send;
 	public String receiver;
 	public String recipient;
-	public ArrayList <JLabel> monsterList = new ArrayList<JLabel>();
-	public ArrayList <JLabel> playerList = new ArrayList<JLabel>();
-	public ArrayList <JLabel> itemList = new ArrayList<JLabel>();
+	public ArrayList<JLabel> monsterList = new ArrayList<JLabel>();
+	public ArrayList<JLabel> playerList = new ArrayList<JLabel>();
+	public ArrayList<JLabel> itemList = new ArrayList<JLabel>();
 	private JLayeredPane minimap;
-	public ArrayList <JLabel> playerMiniMapList = new ArrayList<JLabel>();
+	public ArrayList<JLabel> playerMiniMapList = new ArrayList<JLabel>();
 
 	/**
 	 * Creates new form spielwelt
@@ -83,51 +83,50 @@ public class spielwelt extends javax.swing.JFrame {
 		ImageIcon img = new ImageIcon(dimg);
 		return img;
 	}
-	
+
 	public void addMonster(int monsterTyp, int monsterPosX, int monsterPosY) {
 		JLabel monster = new JLabel();
 		monster.setSize(screenWidth / 50, screenWidth / 50);
-		switch(monsterTyp) {
-		case 0:{
+		switch (monsterTyp) {
+		case 0: {
 			monster.setIcon(getImage("wachmann1.png"));
 		}
-		case 1:{
+		case 1: {
 			monster.setIcon(getImage("wachmann2.png"));
 		}
-		case 2:{
+		case 2: {
 			monster.setIcon(getImage("wachmann.png"));
 		}
 		}
-		monster.setLocation((monsterPosX * (screenWidth/50)), (monsterPosY * (screenWidth/50)));
+		monster.setLocation((monsterPosX * (screenWidth / 50)), (monsterPosY * (screenWidth / 50)));
 		monsterList.add(monster);
 		jlp.add(monster, 3);
-		
+
 	}
-	
+
 	public void moveMonster(int monsterID, int posXNeu, int posYNeu) {
 		JLabel monster = monsterList.get(monsterID);
 		ActionListener taskPerformer = new ActionListener() {
 			boolean run = true;
 
 			public void actionPerformed(ActionEvent evt) {
-				int posX = (monsterList.get(monsterID).getLocation().x/screenWidth);
-				int posY = (monsterList.get(monsterID).getLocation().y/screenWidth);
+				int posX = (monsterList.get(monsterID).getLocation().x / screenWidth);
+				int posY = (monsterList.get(monsterID).getLocation().y / screenWidth);
 				if (run == false) {
 					((Timer) evt.getSource()).stop();
 				}
 				if (posXNeu != posX)
 					posX++;
+				else if (posYNeu != posY)
+					posY++;
 				else
-					if(posYNeu != posY)
-						posY++;
-					else
-						run = false;
+					run = false;
 				monster.setLocation(posX, posY);
 			}
 		};
 		new Timer(delay, taskPerformer).start();
 	}
-	
+
 	public void addPlayer(int playerID, int posX, int posY) {
 		JLabel player = new JLabel();
 		player.setLocation(posX * (screenWidth / 50), posY * (screenWidth / 50));
@@ -135,41 +134,40 @@ public class spielwelt extends javax.swing.JFrame {
 		player.setIcon(getImage("run0.png"));
 		jlp.add(player, 3);
 		playerList.add(player);
-		
+
 		playerOnMinimap.setBackground(Color.red);
-		playerOnMinimap.setLocation(posX*4, posY*4);
+		playerOnMinimap.setLocation(posX * 4, posY * 4);
 		playerOnMinimap.setSize(4, 4);
 		playerOnMinimap.setOpaque(true);
 		minimap.add(playerOnMinimap, 0);
-		
+
 	}
-	
+
 	public void movePlayer(int playerID, int posXNeu, int posYNeu) {
 		JLabel player = playerList.get(playerID);
 		ActionListener taskPerformer = new ActionListener() {
 			boolean run = true;
 
 			public void actionPerformed(ActionEvent evt) {
-				int posX = (playerList.get(playerID).getLocation().x/screenWidth);
-				int posY = (playerList.get(playerID).getLocation().y/screenWidth);
+				int posX = (playerList.get(playerID).getLocation().x / screenWidth);
+				int posY = (playerList.get(playerID).getLocation().y / screenWidth);
 				if (run == false) {
 					((Timer) evt.getSource()).stop();
 				}
 				if (posXNeu != posX)
 					posX++;
+				else if (posYNeu != posY)
+					posY++;
 				else
-					if(posYNeu != posY)
-						posY++;
-					else
-						run = false;
+					run = false;
 				player.setLocation(posX, posY);
 			}
 		};
 		new Timer(delay, taskPerformer).start();
 	}
-	
+
 	public void setItem(int itemID, int count) {
-		switch(itemID) {
+		switch (itemID) {
 		case 0: {
 			int countBlue = Integer.parseInt(bluePotionCount.getText()) + count;
 			greenPotionCount.setText(Integer.toString(countBlue));
@@ -187,20 +185,20 @@ public class spielwelt extends javax.swing.JFrame {
 		}
 		}
 	}
-	
+
 	public void setChat(String message) {
 		chatText.append(chatInput.getText() + "\n");
 	}
-	
+
 	public void setHealth(int leben) {
 		healthBar.setValue(leben);
 	}
-	
+
 	public void addItemMap(int itemID, int posX, int posY) {
 		JLabel item = new JLabel();
-		item.setSize(screenWidth/50, screenWidth/50);
-		item.setLocation(posX * (screenWidth/50), posY * (screenWidth/50));
-		switch(itemID) {
+		item.setSize(screenWidth / 50, screenWidth / 50);
+		item.setLocation(posX * (screenWidth / 50), posY * (screenWidth / 50));
+		switch (itemID) {
 		case 0: {
 			item.setIcon(getImage("bluePotion.png"));
 		}
@@ -214,31 +212,38 @@ public class spielwelt extends javax.swing.JFrame {
 		itemList.add(item);
 		jlp.add(item, 4);
 	}
-	
+
 	public void deleteMonster(int monsterID) {
 		JLabel monster = monsterList.get(monsterID);
 		jlp.remove(monster);
 	}
-	
+
 	public void resetMonster() {
 		monsterList.clear();
 	}
-	
+
 	public void resetItem() {
 		itemList.clear();
 	}
-	
+
 	public void resetPlayer() {
 		playerList.clear();
 	}
-	
+
 	public void deleteItemMap(int itemID) {
 		JLabel item = itemList.get(itemID);
 		jlp.remove(item);
 		itemList.remove(itemID);
 	}
 
-	public void setWorld() {
+	public void setWorld(int[][] world) {
+		for (int k = 0; k < 50; k++) {
+			for (int j = 0; j < 50; j++) {
+				System.out.print(world[k][j] + ", ");
+			}
+			System.out.println();
+		}
+
 		minimapPanel = new JPanel();
 		minimapPanel.setSize(200, 200);
 		minimapPanel.setLocation(screenWidth - 220, 20);
@@ -265,10 +270,9 @@ public class spielwelt extends javax.swing.JFrame {
 				minimapBackground.setLocation(i * 4, j * 4);
 			}
 		}
-		
 
 		jlp.add(minimapPanel, 2);
-		
+
 		JLabel groundImageLabel = new JLabel();
 
 		for (int j = 0; j < 50; j++) {
@@ -290,95 +294,97 @@ public class spielwelt extends javax.swing.JFrame {
 				groundImageLabel.setLocation(i * screenWidth / 50, j * screenWidth / 50);
 			}
 		}
+
 	}
-	
+
 	public void resetWorld() {
 		jlp.removeAll();
 	}
-	
+
 	public void deletePlayer(int playerID) {
 		JLabel player = playerList.get(playerID);
 		jlp.remove(player);
 		playerList.remove(playerID);
 	}
-//	public void moveOwnPlayer(String direction, int posX, int posY) throws InterruptedException {
-//		if (direction.equals("right") && world[posX][posY] != 1) {
-//			ActionListener taskPerformer = new ActionListener() {
-//				int count = 0;
-//
-//				public void actionPerformed(ActionEvent evt) {
-//					if (count > ((screenWidth / 50) % 1000) - 2) {// we did the
-//																	// task 10
-//																	// times
-//						((Timer) evt.getSource()).stop();
-//					}
-//					if (playerPosX < screenWidth - (screenWidth / 50))
-//						playerPosX++;
-//					playerOnField.setLocation(playerPosX, playerPosY);
-//					count++;
-//				}
-//			};
-//			new Timer(delay, taskPerformer).start();
-//		}
-//		if (direction.equals("up") && world[posX][posY] != 1) {
-//			ActionListener taskPerformer = new ActionListener() {
-//				int count = 0;
-//
-//				public void actionPerformed(ActionEvent evt) {
-//					if (count > ((screenWidth / 50) % 1000) - 2) {// we did the
-//																	// task 10
-//																	// times
-//						((Timer) evt.getSource()).stop();
-//					}
-//					if (playerPosY > 0)
-//						playerPosY--;
-//					playerOnField.setLocation(playerPosX, playerPosY);
-//					count++;
-//				}
-//			};
-//			new Timer(delay, taskPerformer).start();
-//		}
-//		if (direction.equals("left") && world[posX][posY] != 1) {
-//			ActionListener taskPerformer = new ActionListener() {
-//				int count = 0;
-//
-//				public void actionPerformed(ActionEvent evt) {
-//
-//					if (count > ((screenWidth / 50) % 1000) - 2) {// we did the
-//																	// task 10
-//																	// times
-//						((Timer) evt.getSource()).stop();
-//					}
-//					if (playerPosX > 0)
-//						playerPosX--;
-//					playerOnField.setLocation(playerPosX, playerPosY);
-//					count++;
-//				}
-//			};
-//			new Timer(delay, taskPerformer).start();
-//		}
-//		if (direction.equals("down") && world[posX][posY] != 1) {
-//			ActionListener taskPerformer = new ActionListener() {
-//				int count = 0;
-//
-//				public void actionPerformed(ActionEvent evt) {
-//					if (count > ((screenWidth / 50) % 1000) - 2) {// we did the
-//																	// task 10
-//																	// times
-//						((Timer) evt.getSource()).stop();
-//					}
-//					if (playerPosY < (screenWidth - (screenWidth / 50)))
-//						playerPosY++;
-//					playerOnField.setLocation(playerPosX, playerPosY);
-//					count++;
-//				}
-//			};
-//			new Timer(delay, taskPerformer).start();
-//		}
-//
-//		System.out.println(ceg.bSendQueue.isEmpty());
-//
-//	}
+	// public void moveOwnPlayer(String direction, int posX, int posY) throws
+	// InterruptedException {
+	// if (direction.equals("right") && world[posX][posY] != 1) {
+	// ActionListener taskPerformer = new ActionListener() {
+	// int count = 0;
+	//
+	// public void actionPerformed(ActionEvent evt) {
+	// if (count > ((screenWidth / 50) % 1000) - 2) {// we did the
+	// // task 10
+	// // times
+	// ((Timer) evt.getSource()).stop();
+	// }
+	// if (playerPosX < screenWidth - (screenWidth / 50))
+	// playerPosX++;
+	// playerOnField.setLocation(playerPosX, playerPosY);
+	// count++;
+	// }
+	// };
+	// new Timer(delay, taskPerformer).start();
+	// }
+	// if (direction.equals("up") && world[posX][posY] != 1) {
+	// ActionListener taskPerformer = new ActionListener() {
+	// int count = 0;
+	//
+	// public void actionPerformed(ActionEvent evt) {
+	// if (count > ((screenWidth / 50) % 1000) - 2) {// we did the
+	// // task 10
+	// // times
+	// ((Timer) evt.getSource()).stop();
+	// }
+	// if (playerPosY > 0)
+	// playerPosY--;
+	// playerOnField.setLocation(playerPosX, playerPosY);
+	// count++;
+	// }
+	// };
+	// new Timer(delay, taskPerformer).start();
+	// }
+	// if (direction.equals("left") && world[posX][posY] != 1) {
+	// ActionListener taskPerformer = new ActionListener() {
+	// int count = 0;
+	//
+	// public void actionPerformed(ActionEvent evt) {
+	//
+	// if (count > ((screenWidth / 50) % 1000) - 2) {// we did the
+	// // task 10
+	// // times
+	// ((Timer) evt.getSource()).stop();
+	// }
+	// if (playerPosX > 0)
+	// playerPosX--;
+	// playerOnField.setLocation(playerPosX, playerPosY);
+	// count++;
+	// }
+	// };
+	// new Timer(delay, taskPerformer).start();
+	// }
+	// if (direction.equals("down") && world[posX][posY] != 1) {
+	// ActionListener taskPerformer = new ActionListener() {
+	// int count = 0;
+	//
+	// public void actionPerformed(ActionEvent evt) {
+	// if (count > ((screenWidth / 50) % 1000) - 2) {// we did the
+	// // task 10
+	// // times
+	// ((Timer) evt.getSource()).stop();
+	// }
+	// if (playerPosY < (screenWidth - (screenWidth / 50)))
+	// playerPosY++;
+	// playerOnField.setLocation(playerPosX, playerPosY);
+	// count++;
+	// }
+	// };
+	// new Timer(delay, taskPerformer).start();
+	// }
+	//
+	// System.out.println(ceg.bSendQueue.isEmpty());
+	//
+	// }
 
 	public void movePlayerMinimap(int posX, int posY) {
 		int playerX = posX * 4;
@@ -400,8 +406,7 @@ public class spielwelt extends javax.swing.JFrame {
 					movePlayerMinimap(playerX, playerY);
 					// ceg.consistency(world, "left", ++playerX, playerY);
 					ceg.consistency(world, "left", ++playerX, ++playerY);
-				} else if (e.getKeyCode() == 38 && playerPosY != 0 && --playerY >= 0
-						&& world[playerX][playerY] != 1) {
+				} else if (e.getKeyCode() == 38 && playerPosY != 0 && --playerY >= 0 && world[playerX][playerY] != 1) {
 					movePlayerMinimap(playerX, playerY);
 					ceg.consistency(world, "up", playerX, ++playerY);
 				} else if (e.getKeyCode() == 39 && playerPosX != screenWidth && ++playerX < 50
@@ -453,9 +458,8 @@ public class spielwelt extends javax.swing.JFrame {
 		public void keyReleased(KeyEvent e) {
 		}
 	};
-	
-	public spielwelt() throws IOException {
 
+	public spielwelt() throws IOException {
 
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
@@ -469,8 +473,6 @@ public class spielwelt extends javax.swing.JFrame {
 
 		chatButton.setSize(screenWidth / 5, 37);
 		chatButton.setLocation(0, 0);
-
-		
 
 		BufferedImage bi = null;
 		try {
@@ -518,15 +520,11 @@ public class spielwelt extends javax.swing.JFrame {
 		chatInput.setEnabled(false);
 		chatInput.addActionListener(new tHandler());
 
-		
-		
-		
-		
 		playerOnMinimap.setBackground(Color.red);
 		playerOnMinimap.setLocation(0, 0);
 		playerOnMinimap.setSize(4, 4);
 		playerOnMinimap.setOpaque(true);
-		minimap.add(playerOnMinimap, 0);
+		// minimap.add(playerOnMinimap, 0);
 
 		this.setSize(screenWidth + 6, screenHeight + 28);
 		this.setLocationRelativeTo(null);
@@ -553,8 +551,7 @@ public class spielwelt extends javax.swing.JFrame {
 		worldPanel.setPreferredSize(worldPanelSize);
 		mainItemPanel.setSize(screenWidth, 100);
 		mainItemPanel.setPreferredSize(itemPanelSize);
-		
-		
+
 		healthBar.setMaximum(100);
 		Login log = new Login("Rasit", "123");
 		ceg.addQueue(log);

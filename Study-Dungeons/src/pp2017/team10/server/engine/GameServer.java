@@ -56,6 +56,7 @@ public class GameServer {
 	private boolean[][] darkside;
 	private int currentLvl;
 	private LevelGenerator lg = new LevelGenerator();
+	public Map map;
 
 	private Queue<Messages> messageQueue = new LinkedList<Messages>();
 	private ArrayList<UserLogedIn> userList = new ArrayList<UserLogedIn>();
@@ -73,38 +74,65 @@ public class GameServer {
 		messageQueue.offer(m);
 	}
 
-	public void mapToArray() {
-		Map wiso = lg.buildWiso();
+	public int[][] mapToArray(Map map) {
+
+	/*	Map build = new Map(); 
+		map.getLevelID();
+		switch(map.levelID){
+		case 1: 
+			Map wiso = lg.buildWiso();
+			build = wiso;
+			break;
+		case 2: 
+			Map  philo = lg.buildPhilo();
+			build = philo;
+			break;
+		case 3: 
+			Map library = lg.buildLibrary();
+			build = library;
+			break;
+		case 4: 
+			Map physik = lg.buildPhysik();
+			build = physik;
+			break;
+		case 5: 
+			Map copt = lg.buildCopt();
+			build = copt;
+			break;
+		}
+		*/
+//		Map wiso = lg.buildWiso();
 		for (int i = 0; i < 50; i++) {
 			for (int j = 0; j < 50; j++) {
-				if (wiso.getTile(i, j).isWall())
+				if (map.getTile(i, j).isWall())
 					world[i][j] = 2;
-				else if (wiso.getTile(i, j).isItem())
+				else if (map.getTile(i, j).isItem())
 					world[i][j] = 20;
-				else if (wiso.getTile(i, j).isMonster())
+				else if (map.getTile(i, j).isMonster())
 					world[i][j] = 150;
-				else if (wiso.getTile(i, j).isPlayer())
+				else if (map.getTile(i, j).isPlayer())
 					world[i][j] = 100;
-				else if (wiso.getTile(i, j).isDoor())
+				else if (map.getTile(i, j).isDoor())
 					world[i][j] = 6;
-				else if (wiso.getTile(i, j).isExit())
+				else if (map.getTile(i, j).isExit())
 					world[i][j] = 7;
-				else if (wiso.getTile(i, j).isFloor())
+				else if (map.getTile(i, j).isFloor())
 					world[i][j] = 5;
-				else if (wiso.getTile(i, j).isStone())
+				else if (map.getTile(i, j).isStone())
 					world[i][j] = 4;
-				else if (wiso.getTile(i, j).isMarble())
+				else if (map.getTile(i, j).isMarble())
 					world[i][j] = 3;
-				else if (wiso.getTile(i, j).isEntrance())
+				else if (map.getTile(i, j).isEntrance())
 					world[i][j] = 1;
-				else if (wiso.getTile(i, j).isColumn())
+				else if (map.getTile(i, j).isColumn())
 					world[i][j] = 8;
-				else if (wiso.getTile(i, j).isKey())
+				else if (map.getTile(i, j).isKey())
 					world[i][j] = 9;
-				System.out.print(world[i][j] + ", ");
+//				System.out.print(world[i][j] + ", ");
 			}
-			System.out.println();
+//			System.out.println();
 		}
+		return world;
 
 	}
 
@@ -247,7 +275,7 @@ public class GameServer {
 	// Diese Methode �berpr�ft ob der Nutzer vorhanden ist und logged ihn in das
 	// System ein
 	public void handleLogin(Login m) throws IOException {
-		boolean userExisting = false;
+		boolean userExisting = true;
 		Password p = new Password();
 		String pw = p.hashing(m.pass);
 		for (User u : db.userdata)
@@ -506,13 +534,32 @@ public class GameServer {
 
 	// Funktion um alle Level auf einemal zu �bertragen
 	public void getAllLevels() {
+		System.out.println("hol die Levels ab");
 		for (int i = 1; i <= 5; i++) {
 			int[][] lvl = new int[50][50];
-			// lvl = getLevel(i)
+//			for(int k = 0; k < 50; k++){
+//				for(int j = 0;  j < 50; j++){
+//					lvl[k][j] = 1;
+//				}
+				
+//			}
+			map = lg.getLevel(i);
+//			System.out.println(map.levelID);
+			lvl = mapToArray(map);
+//			lvl = getLevel(i);
 			// Funktion wird beim Levelgenerator aufgerufen um alle Level zu
 			// bekommen
-			Level msg = new Level(lvl);
+			Level msg = new Level(lvl,map.levelID);
 			messageQueue.offer(msg);
+//			for(int k = 0; k < 50; k++){
+//				for(int j = 0;  j < 50; j++){
+//					System.out.print(lvl[k][j] + ", ");
+//				}
+//				System.out.println();
+//				
+//			}
+
+			System.out.println();
 		}
 	}
 
