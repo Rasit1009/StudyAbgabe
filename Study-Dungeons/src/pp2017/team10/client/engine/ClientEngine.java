@@ -355,6 +355,7 @@ public class ClientEngine {
 
 	public void handleMove(Move msg) {
 
+		
 		System.out.println("This is a Move message");
 		addQueue((Messages) msg);
 	}
