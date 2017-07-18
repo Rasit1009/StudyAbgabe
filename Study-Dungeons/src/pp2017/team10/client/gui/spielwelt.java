@@ -1,11 +1,5 @@
 package pp2017.team10.client.gui;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
@@ -34,14 +28,13 @@ import javax.swing.JTextField;
 import javax.swing.Timer;
 
 import pp2017.team10.client.engine.ClientEngine;
+import pp2017.team10.client.engine.ClientEngineGUI;
 import pp2017.team10.shared.Character;
-<<<<<<< HEAD
-=======
+
 import pp2017.team10.shared.ChatMessage;
 import pp2017.team10.shared.ItemUsage;
->>>>>>> branch 'master' of https://github.com/Rasit1009/StudyAbgabe.git
 
-/**
+/*
  *
  * @author Computer
  */
@@ -63,18 +56,11 @@ public class spielwelt extends javax.swing.JFrame {
 	public JLabel playerOnMinimap = new JLabel();
 	private JLayeredPane jlp = new JLayeredPane();
 	private JPanel minimapPanel;
-<<<<<<< HEAD
 	public ClientEngineGUI ceg = new ClientEngineGUI();
 	public JMenuItem mntmExit, mntmControls;
-=======
 	public ClientEngine ceg = new ClientEngine();
 	public String receiver;
 	public String recipient;
->>>>>>> branch 'master' of https://github.com/Rasit1009/StudyAbgabe.git
-
-	/**
-	 * Creates new form spielwelt
-	 */
 
 	private ImageIcon getImage(String name) {
 		BufferedImage bi = null;
@@ -88,18 +74,11 @@ public class spielwelt extends javax.swing.JFrame {
 		return img;
 	}
 
-<<<<<<< HEAD
+	public void movePlayer(String direction, int posX, int posY) throws InterruptedException {
+	// System.out.println(playerPosX/(screenWidth/50)+ "," +
+	// playerPosY/(screenWidth/50));
 
 	public void movePlayer(String direction, int posX, int posY) throws InterruptedException {
-		// System.out.println(playerPosX/(screenWidth/50)+ "," +
-		// playerPosY/(screenWidth/50));
-
-
-=======
-	public void movePlayer(String direction, int posX, int posY) throws InterruptedException {
-		// System.out.println(playerPosX/(screenWidth/50)+ "," +
-		// playerPosY/(screenWidth/50));
->>>>>>> branch 'master' of https://github.com/Rasit1009/StudyAbgabe.git
 
 		// if (n.isPossible == true){
 		if (direction.equals("right") && world[posX][posY] != 1) {
@@ -123,42 +102,29 @@ public class spielwelt extends javax.swing.JFrame {
 		if (direction.equals("up") && world[posX][posY] != 1) {
 			ActionListener taskPerformer = new ActionListener() {
 				int count = 0;
+			}
 
-				public void actionPerformed(ActionEvent evt) {
-					if (count > ((screenWidth / 50) % 1000) - 2) {// we did the
-																	// task 10
-																	// times
-						((Timer) evt.getSource()).stop();
-					}
-					if (playerPosY > 0)
-						playerPosY--;
-					playerOnField.setLocation(playerPosX, playerPosY);
-					count++;
-				}
-			};
-			new Timer(delay, taskPerformer).start();
+	public void actionPerformed(ActionEvent evt) {
+		if (count > ((screenWidth / 50) % 1000) - 2) {// we did the
+														// task 10
+														// times
+			((Timer) evt.getSource()).stop();
 		}
-		if (direction.equals("left") && world[posX][posY] != 1) {
-			ActionListener taskPerformer = new ActionListener() {
-				int count = 0;
+		if (playerPosY > 0)
+			playerPosY--;
+		playerOnField.setLocation(playerPosX, playerPosY);
+		count++;
+	}};new Timer(delay,taskPerformer).start();}if(direction.equals("left")&&world[posX][posY]!=1){
 
-				public void actionPerformed(ActionEvent evt) {
+	ActionListener taskPerformer=new ActionListener(){int count=0;
 
-					if (count > ((screenWidth / 50) % 1000) - 2) {// we did the
-																	// task 10
-																	// times
-						((Timer) evt.getSource()).stop();
-					}
-					if (playerPosX > 0)
-						playerPosX--;
-					playerOnField.setLocation(playerPosX, playerPosY);
-					count++;
-				}
-			};
-			new Timer(delay, taskPerformer).start();
-		}
-		if (direction.equals("down") && world[posX][posY] != 1) {
-			ActionListener taskPerformer = new ActionListener() {
+	public void actionPerformed(ActionEvent evt){
+
+	if(count>((screenWidth/50)%1000)-2){// we did the
+										// task 10
+										// times
+	((Timer)evt.getSource()).stop();}if(playerPosX>0)playerPosX--;playerOnField.setLocation(playerPosX,playerPosY);count++;}};new Timer(delay,taskPerformer).start();}if(direction.equals("down")&&world[posX][posY]!=1){
+	ActionListener taskPerformer = new ActionListener() {
 				int count = 0;
 
 				public void actionPerformed(ActionEvent evt) {
@@ -174,7 +140,7 @@ public class spielwelt extends javax.swing.JFrame {
 				}
 			};
 			new Timer(delay, taskPerformer).start();
-		}
+	}
 
 	}
 
@@ -244,179 +210,118 @@ public class spielwelt extends javax.swing.JFrame {
 					chatInput.requestFocus();
 				}
 				if (e.getKeyChar() == 'x' || e.getKeyChar() == 'X') {
-<<<<<<< HEAD
 					if (chatButton.getText() == "Hide Chat") {
 						chatWindow.setVisible(false);
 						chatButton.setText("Show Chat");
-=======
 					if (chatButton.getText() == "Chat verbergen") {
 						chatWindow.setVisible(false);
 						chatButton.setText("Chat anzeigen");
->>>>>>> branch 'master' of https://github.com/Rasit1009/StudyAbgabe.git
 						showChat = false;
 
 					} else {
-<<<<<<< HEAD
 						chatButton.setText("Hide Chat");
 						chatWindow.setVisible(true);
 					}
 				}
 				if (e.getKeyChar() == 'm' || e.getKeyChar() == 'M') {
-=======
 						chatButton.setText("Chat verbergen");
 						chatWindow.setVisible(true);
 					}
 				}
-				if (e.getKeyChar() == 'm' || e.getKeyChar() == 'M') {// minimap
-																		// anzeigen/schließen
->>>>>>> branch 'master' of https://github.com/Rasit1009/StudyAbgabe.git
+				if (e.getKeyChar() == 'm' || e.getKeyChar() == 'M') {
 					if (minimapPanel.isVisible())
 						minimapPanel.setVisible(false);
 					else
 						minimapPanel.setVisible(true);
 
 				}
-<<<<<<< HEAD
 				if (e.getKeyChar() == 'v' || e.getKeyChar() == 'V') {
 					ceg.itemAvailable(playerX, playerY, world);
 				}
-				
-=======
 				if (e.getKeyChar() == 'v' || e.getKeyChar() == 'V') { // Item
 																		// aufheben
 					ceg.itemAvailable(playerX, playerY, world);
 				}
 			}
->>>>>>> branch 'master' of https://github.com/Rasit1009/StudyAbgabe.git
-
-<<<<<<< HEAD
 			}
-=======
-			@Override
+
+	@Override
 			public void keyReleased(KeyEvent e) {
 			}
-		};
->>>>>>> branch 'master' of https://github.com/Rasit1009/StudyAbgabe.git
 
-<<<<<<< HEAD
-			@Override
-			public void keyReleased(KeyEvent e) {
-				if (e.getKeyChar() == (' ')) {
-					System.out.println("Attack");
-				}
-			}
-		};
-=======
-		BufferedImage bi = null;
-		try {
-			bi = ImageIO.read(getClass().getResource("bluePotion.png"));
-		} catch (Exception e) {
-			System.out.println(e);
+	};
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		if (e.getKeyChar() == (' ')) {
+			System.out.println("Attack");
 		}
-		Image dimg = bi.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
-		ImageIcon img = new ImageIcon(dimg);
-		bluePotionLabel.setIcon(img);
-		bluePotionLabel.setText("");
->>>>>>> branch 'master' of https://github.com/Rasit1009/StudyAbgabe.git
+	}};
 
-<<<<<<< HEAD
-		BufferedImage bi = null;
-		try {
-			bi = ImageIO.read(getClass().getResource("bluePotion.png"));
-		} catch (Exception e) {
-			System.out.println(e);
+	BufferedImage bi = null;try{bi=ImageIO.read(
+
+	getClass().getResource("bluePotion.png"));
+		}catch(
+
+	Exception e){System.out.println(e);}
+	Image dimg = bi.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
+	ImageIcon img = new ImageIcon(dimg);bluePotionLabel.setIcon(img);bluePotionLabel.setText("");>>>>>>>branch'master'
+	of https:// github.com/Rasit1009/StudyAbgabe.git
+
+	HEAD BufferedImage bi=null;try{bi=ImageIO.read(
+
+	getClass().getResource("bluePotion.png"));
+		}catch(
+
+	Exception e){System.out.println(e);}
+	Image dimg = bi.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
+	ImageIcon img = new ImageIcon(
+			dimg);bluePotionLabel.setIcon(img);bluePotionLabel.setText("");bluePotionLabel.addKeyListener(kl);bluePotionLabel.requestFocus();
+	bi=null;try{bi=ImageIO.read(
+
+	getClass().getResource("greenPotion.png"));
+		}catch(
+
+	Exception e){System.out.println(e);}dimg=bi.getScaledInstance(25,25,Image.SCALE_SMOOTH);img=new ImageIcon(dimg);
+
+	greenPotionLabel.setIcon(img);greenPotionLabel.setText("");
+
+	bi=null;try{bi=ImageIO.read(getClass().getResource("redPotion.png"));}catch(
+	Exception e){System.out.println(e);}dimg=bi.getScaledInstance(25,25,Image.SCALE_SMOOTH);img=new ImageIcon(dimg);
+
+	redPotionLabel.setIcon(img);redPotionLabel.setText("");redPotionCount.setText("0");greenPotionCount.setText("0");bluePotionCount.setText("0");
+
+	chatWindow.setOpaque(false);chatWindow.addKeyListener(kl);chatText.setEditable(false);chatText.setLineWrap(true);chatText.addKeyListener(kl);chatInput.setEnabled(false);chatInput.addActionListener(new tHandler());
+
+	minimapPanel=new JPanel();minimapPanel.setSize(200,200);minimapPanel.setLocation(screenWidth-220,20);
+	JLayeredPane minimap = new JLayeredPane();minimap.setLocation(0,0);minimap.setSize(200,200);minimapPanel.setLayout(null);minimapPanel.setOpaque(false);minimap.setOpaque(true);minimapPanel.add(minimap);
+	JPanel minimapBackground;for(
+	int j = 0;j<50;j++){for(
+	int i = 0;i<50;i++)
+	{
+		minimapBackground = new JPanel();
+		minimapBackground.setSize(4, 4);
+		switch (world[i][j]) {
+		case 0:
+			minimapBackground.setBackground(Color.YELLOW);
+			break;
+		case 1:
+			minimapBackground.setBackground(Color.black);
 		}
-		Image dimg = bi.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
-		ImageIcon img = new ImageIcon(dimg);
-		bluePotionLabel.setIcon(img);
-		bluePotionLabel.setText("");
-		bluePotionLabel.addKeyListener(kl);
-		bluePotionLabel.requestFocus();
-=======
->>>>>>> branch 'master' of https://github.com/Rasit1009/StudyAbgabe.git
-		bi = null;
-		try {
-			bi = ImageIO.read(getClass().getResource("greenPotion.png"));
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		dimg = bi.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
-		img = new ImageIcon(dimg);
+		minimap.add(minimapBackground, 1);
+		minimapBackground.setLocation(i * 4, j * 4);
+	}}playerOnMinimap.setBackground(Color.red);playerOnMinimap.setLocation(0,0);playerOnMinimap.setSize(4,4);playerOnMinimap.setOpaque(true);minimap.add(playerOnMinimap,0);
 
-		greenPotionLabel.setIcon(img);
-		greenPotionLabel.setText("");
+	this.setLocationRelativeTo(null);
 
-		bi = null;
-		try {
-			bi = ImageIO.read(getClass().getResource("redPotion.png"));
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		dimg = bi.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
-		img = new ImageIcon(dimg);
+	HEAD ImageIcon playerIcon=
 
-		redPotionLabel.setIcon(img);
-		redPotionLabel.setText("");
-		redPotionCount.setText("0");
-		greenPotionCount.setText("0");
-		bluePotionCount.setText("0");
-
-		chatWindow.setOpaque(false);
-		chatWindow.addKeyListener(kl);
-		chatText.setEditable(false);
-		chatText.setLineWrap(true);
-		chatText.addKeyListener(kl);
-		chatInput.setEnabled(false);
-		chatInput.addActionListener(new tHandler());
-
-		minimapPanel = new JPanel();
-		minimapPanel.setSize(200, 200);
-		minimapPanel.setLocation(screenWidth - 220, 20);
-		JLayeredPane minimap = new JLayeredPane();
-		minimap.setLocation(0, 0);
-		minimap.setSize(200, 200);
-		minimapPanel.setLayout(null);
-		minimapPanel.setOpaque(false);
-		minimap.setOpaque(true);
-		minimapPanel.add(minimap);
-		JPanel minimapBackground;
-		for (int j = 0; j < 50; j++) {
-			for (int i = 0; i < 50; i++) {
-				minimapBackground = new JPanel();
-				minimapBackground.setSize(4, 4);
-				switch (world[i][j]) {
-				case 0:
-					minimapBackground.setBackground(Color.YELLOW);
-					break;
-				case 1:
-					minimapBackground.setBackground(Color.black);
-				}
-				minimap.add(minimapBackground, 1);
-				minimapBackground.setLocation(i * 4, j * 4);
-			}
-		}
-		playerOnMinimap.setBackground(Color.red);
-		playerOnMinimap.setLocation(0, 0);
-		playerOnMinimap.setSize(4, 4);
-		playerOnMinimap.setOpaque(true);
-		minimap.add(playerOnMinimap, 0);
-
-<<<<<<< HEAD
-		this.setSize(screenWidth + 6, screenHeight + 50);
-=======
-		this.setSize(screenWidth + 6, screenHeight + 28);
->>>>>>> branch 'master' of https://github.com/Rasit1009/StudyAbgabe.git
-		this.setLocationRelativeTo(null);
-
-<<<<<<< HEAD
-		ImageIcon playerIcon = getImage("frame-2.png");
+	getImage("frame-2.png");
 		ImageIcon groundIcon = getImage("boden.jpg");
 		ImageIcon wallIcon = getImage("stone.png");
-=======
 		ImageIcon playerIcon = getImage("spieler.png");
 		ImageIcon groundIcon = getImage("green.png");
 		ImageIcon wallIcon = getImage("wall4.png");
->>>>>>> branch 'master' of https://github.com/Rasit1009/StudyAbgabe.git
 		ImageIcon itemIcon = getImage("greenPotion.png");
 
 		playerOnField.setSize(screenWidth / 50, screenWidth / 50);
@@ -433,7 +338,6 @@ public class spielwelt extends javax.swing.JFrame {
 		chatButton.addKeyListener(kl);
 		mainPanel.setSize(screenWidth, screenHeight);
 		mainPanel.setPreferredSize(mainPanelSize);
-<<<<<<< HEAD
 		mainPanel.setLocation(0, 10);
 		worldPanel.setLocation(screenWidth, screenWidth);
 		worldPanel.setPreferredSize(worldPanelSize);
@@ -815,7 +719,7 @@ public class spielwelt extends javax.swing.JFrame {
 			if (e.getSource() == mntmExit) {
 				new Logout();
 			}
-			if(e.getSource()== mntmControls){
+			if (e.getSource() == mntmControls) {
 				new Controls();
 			}
 			/*
@@ -823,15 +727,13 @@ public class spielwelt extends javax.swing.JFrame {
 			 * true) { inventar.setVisible(false); } else if
 			 * (inventar.isVisible() == false) { inventar.setVisible(true);
 			 */
-		}
-=======
-		worldPanel.setLocation(screenWidth, screenWidth);
-		worldPanel.setPreferredSize(worldPanelSize);
-		mainItemPanel.setSize(screenWidth, 100);
-		mainItemPanel.setPreferredSize(itemPanelSize);
+		}worldPanel.setLocation(screenWidth,screenWidth);worldPanel.setPreferredSize(worldPanelSize);mainItemPanel.setSize(screenWidth,100);mainItemPanel.setPreferredSize(itemPanelSize);
+
 		JLabel groundImageLabel = new JLabel();
 
-		for (int j = 0; j < 50; j++) {
+		for(
+		int j = 0;j<50;j++)
+		{
 			for (int i = 0; i < 50; i++) {
 				groundImageLabel = new JLabel();
 				groundImageLabel.setSize(screenWidth / 50, screenWidth / 50);
@@ -849,10 +751,7 @@ public class spielwelt extends javax.swing.JFrame {
 				jlp.add(groundImageLabel, 1);
 				groundImageLabel.setLocation(i * screenWidth / 50, j * screenWidth / 50);
 			}
-		}
-		jlp.add(playerOnField, 3);
-		healthBar.setMaximum(100);
-		healthBar.setValue(50);
+		}jlp.add(playerOnField,3);healthBar.setMaximum(100);healthBar.setValue(50);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -935,8 +834,8 @@ public class spielwelt extends javax.swing.JFrame {
 								.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 		worldPanelLayout.setVerticalGroup(
 				worldPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-						javax.swing.GroupLayout.Alignment.TRAILING, worldPanelLayout.createSequentialGroup()
-								.addContainerGap(532, Short.MAX_VALUE)
+						javax.swing.GroupLayout.Alignment.TRAILING,
+						worldPanelLayout.createSequentialGroup().addContainerGap(532, Short.MAX_VALUE)
 								.addComponent(chatWindow, javax.swing.GroupLayout.PREFERRED_SIZE,
 										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
 								.addContainerGap()));
@@ -1167,7 +1066,6 @@ public class spielwelt extends javax.swing.JFrame {
 			}
 		});
 
->>>>>>> branch 'master' of https://github.com/Rasit1009/StudyAbgabe.git
 	}
 
 	public class tHandler implements ActionListener {
@@ -1176,12 +1074,9 @@ public class spielwelt extends javax.swing.JFrame {
 		public void actionPerformed(ActionEvent e) {
 			chatText.append(chatInput.getText() + "\n");
 			chatInput.setText("");
-<<<<<<< HEAD
-=======
 
 			ChatMessage chat = new ChatMessage(chatInput.getText(), receiver, recipient);
 			ceg.addQueue(chat);
->>>>>>> branch 'master' of https://github.com/Rasit1009/StudyAbgabe.git
 			chatInput.setEnabled(false);
 
 		}

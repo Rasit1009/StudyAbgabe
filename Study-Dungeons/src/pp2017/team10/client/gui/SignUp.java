@@ -22,7 +22,7 @@ public class SignUp extends JFrame implements ActionListener {
 	public SignUp() {
 
 		super("Create an Account");
-		this.setSize(305, 428);
+		this.setSize(305, 425);
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
@@ -39,6 +39,7 @@ public class SignUp extends JFrame implements ActionListener {
 		panel.setLayout(null);
 
 		passwordLabel2 = new JLabel("Repeat Password:");
+		passwordLabel2.setForeground(Color.WHITE);
 		passwordLabel2.setHorizontalAlignment(SwingConstants.CENTER);
 		passwordLabel2.setFont(new Font("Tahoma", Font.BOLD, 12));
 		passwordLabel2.setBounds(0, 209, 120, 50);
@@ -59,12 +60,14 @@ public class SignUp extends JFrame implements ActionListener {
 		panel.add(signUpButton);
 
 		user = new JLabel("Enter Username:");
+		user.setForeground(Color.WHITE);
 		user.setHorizontalAlignment(SwingConstants.TRAILING);
 		user.setFont(new Font("Tahoma", Font.BOLD, 12));
 		user.setBounds(10, 97, 100, 50);
 		panel.add(user);
 
 		passwordLabel1 = new JLabel("Set Password:");
+		passwordLabel1.setForeground(Color.WHITE);
 		passwordLabel1.setHorizontalAlignment(SwingConstants.TRAILING);
 		passwordLabel1.setFont(new Font("Tahoma", Font.BOLD, 12));
 		passwordLabel1.setBounds(10, 160, 100, 50);
@@ -91,7 +94,7 @@ public class SignUp extends JFrame implements ActionListener {
 		panel.add(cancel);
 
 		choice = new JLabel("Choose Fighter:");
-		choice.setForeground(Color.YELLOW);
+		choice.setForeground(Color.WHITE);
 		choice.setFont(new Font("Tahoma", Font.BOLD, 12));
 		choice.setBounds(10, 270, 100, 35);
 		panel.add(choice);
