@@ -8,7 +8,8 @@ public class Level extends Messages {
 	 * Author: Felix Schifferdecker, 5585147
 	 */
 	private static final long serialVersionUID = -856955435338211577L;
-	private int[][] world;
+	private int[][] world = new int[50][50];
+	private int levelID;
 	private ArrayList<UserLogedIn> u;
 	private boolean doorOpen;
 	private int levelID;
@@ -19,14 +20,25 @@ public class Level extends Messages {
 		this.doorOpen = doorOpen;
 	}
 
+	public Level(int[][] world, int levelID) {
+		this.world = world;
+		this.levelID = levelID;
+	}
+
 	public int[][] getWorld() {
 		return world;
 	}
+<<<<<<< HEAD
 
 	public Level(int[][] world, boolean doorOpen, int levelID) {
 		this.world = world;
 		this.levelID = levelID;
 		this.doorOpen = doorOpen;
+=======
+	
+	public int getLevelID(){
+		return levelID;
+>>>>>>> branch 'master' of https://github.com/Rasit1009/StudyAbgabe.git
 	}
 	
 	public boolean getDoorOpen() {

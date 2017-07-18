@@ -3,20 +3,34 @@ package pp2017.team10.client.engine;
 import pp2017.team10.shared.Character;
 import pp2017.team10.shared.ChatMessage;
 import pp2017.team10.shared.Cheat;
+<<<<<<< HEAD
 import pp2017.team10.shared.DoorUsageMessage;
 import pp2017.team10.shared.ItemMessage;
 import pp2017.team10.shared.ItemUsageMessage;
+=======
+import pp2017.team10.shared.DoorUsage;
+import pp2017.team10.shared.Item;
+import pp2017.team10.shared.ItemUsage;
+import pp2017.team10.shared.Level;
+>>>>>>> branch 'master' of https://github.com/Rasit1009/StudyAbgabe.git
 import pp2017.team10.shared.Login;
 import pp2017.team10.shared.LogoutMessage;
 import pp2017.team10.shared.Messages;
 import pp2017.team10.shared.MonsterAttack;
 import pp2017.team10.shared.MoveMessage;
 import pp2017.team10.shared.NewPlayer;
+<<<<<<< HEAD
 import pp2017.team10.shared.PlayerAttackMessage;
 import pp2017.team10.shared.GameOverMessage;
 import pp2017.team10.shared.Start;
+=======
+import pp2017.team10.shared.PlayerAttack;
+import pp2017.team10.shared.PlayerDead;
+import pp2017.team10.shared.StartMessage;
+>>>>>>> branch 'master' of https://github.com/Rasit1009/StudyAbgabe.git
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -34,7 +48,7 @@ import pp2017.team10.client.gui.spielwelt;
  *
  */
 
-public class ClientEngine{
+public class ClientEngine {
 
 	public Queue<Messages> bSendQueue = new LinkedList<Messages>();
 	public int posx;
@@ -43,8 +57,9 @@ public class ClientEngine{
 	public ItemMessage item = new ItemMessage();
 	public int charPos;
 	public boolean isAvailable;
-	public int[][] Map;
+	public int[][] map;
 	public SendQueue send;
+	public ArrayList<int[][]> levels = new ArrayList();
 
 	public void getCharInfo() {
 
@@ -112,7 +127,7 @@ public class ClientEngine{
 		case "up":
 			if (posy >= 0 && Map[posx][--posy] != 1) {
 				// System.out.println("you can move up");
-				CE_Main.spiel.movePlayer("up", posx, posy);
+				// CE_Main.spiel.movePlayer("up", posx, posy);
 				// itemAvailable(posx, posy, Map);
 				// spiel.movePlayerMinimap(posx, posy);
 				isPossible = true;
@@ -124,7 +139,7 @@ public class ClientEngine{
 		case "down":
 			if (posy < Maplength && Map[posx][++posy] != 1) {
 				// System.out.println("you can move down");
-				CE_Main.spiel.movePlayer("down", posx, posy);
+				// CE_Main.spiel.movePlayer("down", posx, posy);
 				// itemAvailable(posx, posy, Map);
 				// spiel.movePlayerMinimap(posx, posy);
 				isPossible = true;
@@ -137,7 +152,7 @@ public class ClientEngine{
 		case "right":
 			if (posx < Maplength && Map[++posx][posy] != 1) {
 				// System.out.println("you can move right");
-				CE_Main.spiel.movePlayer("right", posx, posy);
+				// CE_Main.spiel.movePlayer("right", posx, posy);
 				// itemAvailable(posx, posy, Map);
 				// spiel.movePlayerMinimap(posx, posy);
 				isPossible = true;
@@ -150,7 +165,7 @@ public class ClientEngine{
 		case "left":
 			if (posx > 0 && Map[--posx][posy] != 1) {
 				// System.out.println("you can move left");
-				CE_Main.spiel.movePlayer("left", posx, posy);
+				// CE_Main.spiel.movePlayer("left", posx, posy);
 				// itemAvailable(posx, posy, Map);
 				// spiel.movePlayerMinimap(posx, posy);
 				isPossible = true;
@@ -254,8 +269,13 @@ public class ClientEngine{
 					handleLogin((Login) m);
 				} else if (m instanceof MoveMessage) {
 					System.out.println("This is a MoveMessage");
+<<<<<<< HEAD
 
 				} else if (m instanceof PlayerAttackMessage) {
+=======
+					handleMove((Move) m);
+				} else if (m instanceof PlayerAttack) {
+>>>>>>> branch 'master' of https://github.com/Rasit1009/StudyAbgabe.git
 					System.out.println("This is a PlayerAttackMessage");
 					handlePlayerAttack((PlayerAttackMessage) m);
 				} else if (m instanceof LogoutMessage) {
@@ -269,7 +289,17 @@ public class ClientEngine{
 					handleNewPlayer((NewPlayer) m);
 				} else if (m instanceof GameOverMessage) {
 					System.out.println("This is a PlayerDeadMessage");
+<<<<<<< HEAD
 					handlePlayerDead((GameOverMessage) m);
+=======
+					handlePlayerDead((PlayerDead) m);
+				} else if (m instanceof Level) {
+					System.out.println("This is a LevelMessage");
+					handleLevel((Level) m);
+				} else if (m instanceof StartMessage) {
+					System.out.println("This is a StartMessage");
+					handleStart((StartMessage) m);
+>>>>>>> branch 'master' of https://github.com/Rasit1009/StudyAbgabe.git
 				}
 			}
 		} catch (Exception e) {
@@ -277,7 +307,43 @@ public class ClientEngine{
 		}
 	}
 
+<<<<<<< HEAD
 	private void handlePlayerDead(GameOverMessage msg) {
+=======
+	private void handleLevel(Level msg) {
+		int[][] world;
+		int levelID;
+		world = msg.getWorld();
+		levelID = msg.getLevelID();
+		levels.add(world);
+		System.out.println("LevelMessage empfangen");
+
+	}
+
+	public void buildLevel(int levelID) {
+
+		switch (levelID) {
+		case 1:
+			CE_Main.spiel.setWorld(levels.get(0));
+			break;
+		case 2:
+			CE_Main.spiel.setWorld(levels.get(1));
+			break;
+		case 3:
+			CE_Main.spiel.setWorld(levels.get(2));
+			break;
+		case 4:
+			CE_Main.spiel.setWorld(levels.get(3));
+			break;
+		case 5:
+			CE_Main.spiel.setWorld(levels.get(4));
+			break;
+		}
+
+	}
+
+	private void handlePlayerDead(PlayerDead msg) {
+>>>>>>> branch 'master' of https://github.com/Rasit1009/StudyAbgabe.git
 		System.out.println("Player Dead Message");
 		addQueue(msg);
 
@@ -300,9 +366,10 @@ public class ClientEngine{
 		addQueue(msg);
 	}
 
-	public void handleStart(Start msg) {
+	public void handleStart(StartMessage msg) {
 		System.out.println("This is a Start message");
-		addQueue(msg);
+		buildLevel(msg.getLevelID());
+
 	}
 
 	public void handleLogin(Login msg) {
@@ -313,6 +380,7 @@ public class ClientEngine{
 
 	public void handleMove(MoveMessage msg) {
 
+		
 		System.out.println("This is a Move message");
 		addQueue((Messages) msg);
 	}

@@ -5,9 +5,15 @@ import pp2017.team10.shared.Cheat;
 import pp2017.team10.shared.DoorUsageMessage;
 import pp2017.team10.shared.ItemUsageMessage;
 import pp2017.team10.shared.Login;
+<<<<<<< HEAD
 import pp2017.team10.shared.MoveMessage;
 import pp2017.team10.shared.PlayerAttackMessage;
 import pp2017.team10.shared.Start;
+=======
+import pp2017.team10.shared.Move;
+import pp2017.team10.shared.PlayerAttack;
+import pp2017.team10.shared.StartMessage;
+>>>>>>> branch 'master' of https://github.com/Rasit1009/StudyAbgabe.git
 import pp2017.team10.shared.Messages;
 
 /**
@@ -32,7 +38,7 @@ public class MessageRequest {
 
 	public void receiveRequest(Messages msg) {
 
-		if (msg instanceof Start) {
+		if (msg instanceof StartMessage) {
 			handleStart(msg);
 		} else if (msg instanceof Login) {
 			handleLogin(msg);

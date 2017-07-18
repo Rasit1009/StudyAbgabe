@@ -10,6 +10,7 @@ import java.util.Queue;
 import pp2017.team10.server.*;
 import pp2017.team10.shared.*;
 import pp2017.team10.client.engine.*;
+import pp2017.team10.client.gui.spielwelt;
 
 public class SendfromServer extends Thread {
 	private ObjectInputStream sInput;
@@ -18,6 +19,8 @@ public class SendfromServer extends Thread {
 	private boolean on = true;
 //	 ClientEngine ce = new ClientEngine();
 	ClientEngine ce;
+	public spielwelt spiel;
+
 
 	// Konstruktor
 	public SendfromServer(ObjectInputStream ois, ClientEngine ce) {
@@ -33,10 +36,16 @@ public class SendfromServer extends Thread {
 		while (on) {
 
 			try {
-
-				to = (Messages) sInput.readObject();
+				System.out.println("EINGELESEN?");
+				System.out.println(to);
+				System.out.println(sInput);
+				to = (Messages)sInput.readObject();
+				System.out.println(to);
 				System.out.println("eingelesen");
 				receiveQueueClient.add(to);
+//				for (Messages n : receiveQueueClient){
+//					System.out.println(n);
+//				}
 				// addElementeSC(nach);
 				System.out.println(receiveQueueClient.size());
 
