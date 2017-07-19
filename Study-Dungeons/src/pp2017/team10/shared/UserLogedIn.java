@@ -18,9 +18,11 @@ public class UserLogedIn {
 	private int userPosX;
 	private int userPosY;
 	private int damage;
+	private int levelDone;
+	private int levelNow;
 
 	public UserLogedIn(int health, int[] items, String user, int score, boolean gotKey, int userID, int userPosX,
-			int userPosY, int damage) {
+			int userPosY, int damage, int levelDone, int levelNow) {
 		this.health = health;
 		this.items = items;
 		this.user = user;
@@ -30,6 +32,24 @@ public class UserLogedIn {
 		this.userPosX = userPosX;
 		this.userPosY = userPosY;
 		this.damage = damage;
+		this.levelDone = levelDone;
+		this.levelNow = levelNow;
+	}
+	
+	public void setLevelNow(int levelNow) {
+		this.levelNow = levelNow;
+	}
+	
+	public int getLevelNow() {
+		return levelNow;
+	}
+	
+	public void setLevelDone(int levelDone) {
+		this.levelDone = levelDone;
+	}
+	
+	public int getLevelDone() {
+		return levelDone;
 	}
 
 	public int getUserID() {

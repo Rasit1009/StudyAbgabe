@@ -1,14 +1,21 @@
 /CancelIcon.jpg
 /Controls.jpg
+/EnabledExitIcon.jpg
+/ExitIcon.jpg
 /Ground.png
+/HighscoreIcon.jpg
 /LoginFrameIcon.jpg
 /LoginFrameIcon2.jpg
 /MainmenuTest.jpg
 /Monster.png
 /MonsterCroco.png
 /SignInIcon.jpg
+/SignInIcon2.jpg
 /SignUpIcon.jpg
+/SignUpIcon2.jpg
+/StartIcon.jpg
 /Stone.png
+/StoryIcon.jpg
 /StudyDungeonsMainIcon.png
 /Wall.png
 /alpha.jpg
@@ -54,15 +61,5 @@
 /sword4.jpg
 /swordC2.png
 /test/
-<<<<<<< HEAD
-/ExitIcon.jpg
-/EnabledExitIcon.jpg
-/StartIcon.jpg
-/HighscoreIcon.jpg
-/StoryIcon.jpg
-/SignInIcon2.jpg
-/SignUpIcon2.jpg
-=======
 /welcometest.jpg
 /welcometest2.jpg
->>>>>>> branch 'master' of https://github.com/Rasit1009/StudyAbgabe.git

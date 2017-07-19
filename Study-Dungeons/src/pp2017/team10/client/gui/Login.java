@@ -16,15 +16,12 @@ public class Login extends JFrame implements ActionListener {
 
 	public Login() {
 
-<<<<<<< HEAD
 		super("Login to Study");
 		this.setSize(305, 435);
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-=======
 		super("Study Dungeons");
 		this.setSize(300, 350);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
->>>>>>> branch 'master' of https://github.com/Rasit1009/StudyAbgabe.git
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
 
@@ -45,7 +42,6 @@ public class Login extends JFrame implements ActionListener {
 		panel.add(logo);
 
 		user = new JLabel("User:");
-<<<<<<< HEAD
 		user.setForeground(Color.WHITE);
 		user.setHorizontalAlignment(SwingConstants.TRAILING);
 		user.setFont(new Font("Tahoma", Font.BOLD, 18));

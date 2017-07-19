@@ -2,7 +2,6 @@ package pp2017.team10.client.engine;
 
 import pp2017.team10.shared.Character;
 import pp2017.team10.shared.ChatMessage;
-import pp2017.team10.shared.Cheat;
 
 import pp2017.team10.shared.DoorUsageMessage;
 import pp2017.team10.shared.ItemMessage;
@@ -255,9 +254,6 @@ public class ClientEngine {
 				if (m instanceof ChatMessage) {
 					System.out.println("This is a ChatMessage");
 					handleChat((ChatMessage) m);
-				} else if (m instanceof Cheat) {
-					System.out.println("This is a CheatMessage");
-					handleCheat((Cheat) m);
 				} else if (m instanceof DoorUsageMessage) {
 					System.out.println("This is a DoorUsageMessage");
 					handleDoor((DoorUsageMessage) m);
@@ -273,7 +269,7 @@ public class ClientEngine {
 				} else if (m instanceof PlayerAttackMessage) {
 
 					handleMove((MoveMessage) m);
-				} else if (m instanceof PlayerAttack) {
+				} else if (m instanceof PlayerAttackMessage) {
 					System.out.println("This is a PlayerAttackMessage");
 					handlePlayerAttack((PlayerAttackMessage) m);
 				} else if (m instanceof LogoutMessage) {
@@ -341,12 +337,6 @@ public class ClientEngine {
 
 	}
 
-	private void handlePlayerDead(PlayerDead msg) {
->>>>>>> branch 'master' of https://github.com/Rasit1009/StudyAbgabe.git
-		System.out.println("Player Dead Message");
-		addQueue(msg);
-
-	}
 
 	private void handleNewPlayer(NewPlayer msg) {
 		System.out.println("New Player Message");

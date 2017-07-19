@@ -16,7 +16,6 @@ import java.util.Queue;
 import pp2017.team10.shared.Messages;
 import pp2017.team10.server.map.LevelGenerator;
 import pp2017.team10.shared.ChatMessage;
-import pp2017.team10.shared.Cheat;
 import pp2017.team10.shared.DoorUsageMessage;
 import pp2017.team10.shared.ItemUsageMessage;
 import pp2017.team10.shared.Level;
@@ -26,6 +25,7 @@ import pp2017.team10.shared.MonsterAttack;
 import pp2017.team10.shared.MoveMessage;
 import pp2017.team10.shared.NewPlayer;
 import pp2017.team10.shared.PlayerAttackMessage;
+import pp2017.team10.shared.PlayersMessage;
 import pp2017.team10.shared.GameOverMessage;
 import pp2017.team10.shared.UserLogedIn;
 import pp2017.team10.shared.Map;
@@ -61,9 +61,11 @@ public class GameServer {
 
 	private Queue<Messages> messageQueue = new LinkedList<Messages>();
 	private ArrayList<UserLogedIn> userList = new ArrayList<UserLogedIn>();
+	private ArrayList<ArrayList<UserLogedIn>> totalUser = new ArrayList<ArrayList<UserLogedIn>>();
 
 	// Monster werden in dieser Liste abgespeichert und ver�ndert
 	private ArrayList<MonstersOnField> monsterList = new ArrayList<MonstersOnField>();
+	private ArrayList<ArrayList<MonstersOnField>> totalMonster = new ArrayList<ArrayList<MonstersOnField>>();
 
 	// Methode um ausgehende Nachrichten vom Server abzurufen
 	public Queue<Messages> getMessageQueue() {
@@ -148,9 +150,6 @@ public class GameServer {
 				if (m instanceof ChatMessage) {
 					System.out.println("This is a ChatMessage");
 					handleChatMessage((ChatMessage) m);
-				} else if (m instanceof Cheat) {
-					System.out.println("This is a CheatMessage");
-					handleCheat((Cheat) m);
 				} else if (m instanceof DoorUsageMessage) {
 					System.out.println("This is a DoorUsageMessage");
 					handleDoorUsage((DoorUsageMessage) m);
@@ -187,30 +186,38 @@ public class GameServer {
 
 	// Sendet eine Chat-Nachricht an alle Nutzer au�er den Empf�nger
 	public void handleChatMessage(ChatMessage m) throws IOException {
-		for (UserLogedIn u : userList)
-			if (!m.user.equals(u.getUser())) {
-				ChatMessage msg = new ChatMessage(m.content, u.getUser(), m.sender);
-				messageQueue.offer(msg);
-			}
+		switch(m.getContent()) {
+		case "noFogAnymore" : {
+			
+			break;
+		}
+		case "maxHPPlease" : {
+			
+			break;
+		}
+		default : {
+		messageQueue.offer(m);
+		}
+		}
 	}
-
-	// Ruft verschiedene Cheatmethoden auf. Bisher nur noFogAnymore
-	// implementiert
-	public void handleCheat(Cheat m) throws IOException {
-		System.out.println("Cheat wurde aktiviert: " + m.content);
-		if (m.content == "noFogAnymore")
-			fogCheat();
-		else if (m.content == "maxHP") {
-		}
-		// Funtion to set the the HP to the max
-		else if (m.content == "allDeadEnemy") {
-		}
-		// Function to Monster System
-		else if (m.content == "ScottyBeamMeUp") {
-		}
-		// Function for ScottyBeamMeUp
-
-	}
+//
+//	// Ruft verschiedene Cheatmethoden auf. Bisher nur noFogAnymore
+//	// implementiert
+//	public void handleCheat(Cheat m) throws IOException {
+//		System.out.println("Cheat wurde aktiviert: " + m.content);
+//		if (m.content == "noFogAnymore")
+//			fogCheat();
+//		else if (m.content == "maxHP") {
+//		}
+//		// Funtion to set the the HP to the max
+//		else if (m.content == "allDeadEnemy") {
+//		}
+//		// Function to Monster System
+//		else if (m.content == "ScottyBeamMeUp") {
+//		}
+//		// Function for ScottyBeamMeUp
+//
+//	}
 
 	// Ueberprueft, ob der Nutzer den Schluessel fuer die Tuer hat, falls ja
 	// wird getLevel(currentlvl++) aufgerufen
@@ -237,59 +244,65 @@ public class GameServer {
 	// verarbeitet dieses
 	// (Bisher nur Trank implementiert) und Levelabh�ngig
 	public void handleItemUsage(ItemUsageMessage m) throws IOException {
-		if (m.pickup == true) {
-			for (UserLogedIn u : userList)
-				if (u.getUser().equals(m.user)) {
-					if (world[u.getUserPosX()][u.getUserPosY()] > 3 && world[u.getUserPosX()][u.getUserPosY()] < 7) {
-						int[] items = u.getItems();
-						items[world[u.getUserPosX()][u.getUserPosY()] - 4]++;
-						u.setItems(items);
-						world[u.getUserPosX()][u.getUserPosY()] = 1;
-						sendGround();
-						System.out.println("Der User " + u.getUser() + "hat das Item mit der ID"
-								+ (world[u.getUserPosX()][u.getUserPosY()] - 4) + " aufgenommen");
-					}
-					if (world[u.getUserPosX()][u.getUserPosY()] == 7) {
-						System.out.println("Der User " + u.getUser() + " hat den Schl�ssel aufgenommen");
-						u.setGotKey(true);
-						world[u.getUserPosX()][u.getUserPosY()] = 1;
-						sendGround();
-					}
-				}
-		} else {
-			for (UserLogedIn u : userList)
-				if (u.getUser().equals(m.user)) {
-					int[] items = u.getItems();
-					items[m.itemID]--;
-					int health = u.getHealth();
-					health = health + 50;
-					if (health > 100) {
-						health = 100;
-					}
-					System.out.println("Der User " + u.getUser() + " hat ein Item mit der ID "
-							+ (world[u.getUserPosX()][u.getUserPosY()] - 4) + " aufgenommen");
-					u.setHealth(health);
-				}
-		}
+//		if (m.pickup == true) {
+//			for (UserLogedIn u : userList)
+//				if (u.getUser().equals(m.user)) {
+//					if (world[u.getUserPosX()][u.getUserPosY()] > 3 && world[u.getUserPosX()][u.getUserPosY()] < 7) {
+//						int[] items = u.getItems();
+//						items[world[u.getUserPosX()][u.getUserPosY()] - 4]++;
+//						u.setItems(items);
+//						world[u.getUserPosX()][u.getUserPosY()] = 1;
+//						sendGround();
+//						System.out.println("Der User " + u.getUser() + "hat das Item mit der ID"
+//								+ (world[u.getUserPosX()][u.getUserPosY()] - 4) + " aufgenommen");
+//					}
+//					if (world[u.getUserPosX()][u.getUserPosY()] == 7) {
+//						System.out.println("Der User " + u.getUser() + " hat den Schl�ssel aufgenommen");
+//						u.setGotKey(true);
+//						world[u.getUserPosX()][u.getUserPosY()] = 1;
+//						sendGround();
+//					}
+//				}
+//		} else {
+//			for (UserLogedIn u : userList)
+//				if (u.getUser().equals(m.user)) {
+//					int[] items = u.getItems();
+//					items[m.itemID]--;
+//					int health = u.getHealth();
+//					health = health + 50;
+//					if (health > 100) {
+//						health = 100;
+//					}
+//					System.out.println("Der User " + u.getUser() + " hat ein Item mit der ID "
+//							+ (world[u.getUserPosX()][u.getUserPosY()] - 4) + " aufgenommen");
+//					u.setHealth(health);
+//				}
+//		}
 	}
 
 	// Diese Methode �berpr�ft ob der Nutzer vorhanden ist und logged ihn in das
 	// System ein
 	public void handleLogin(Login m) throws IOException {
 		boolean userExisting = true;
+		int levelDone = 0;
 		Password p = new Password();
-		String pw = p.hashing(m.pass);
+		String pw = p.hashing(m.getPassword());
 		for (User u : db.userdata)
-			if (u.getUser().equals(m.user))
-				if (u.getPassword().equals(pw))
+			if (u.getUser().equals(m.getUser()))
+				if (u.getPassword().equals(pw)) {
+					levelDone = u.getLevelDone();
 					userExisting = true;
+				}
 
 		if (userExisting) {
 			System.out.println("Der User ist im System vorhanden und wurde zur Liste hinzugef�gt");
 			int[] items = new int[1];
 			items[0] = 0;
-			userList.add(new UserLogedIn(100, items, m.user, 0, false, userList.size() + 20, 0, 0, 20));
+			userList.add(new UserLogedIn(100, items, m.getUser(), 0, false, userList.size() + 20, 0, 0, 20, levelDone, 0));
 			getAllLevels();
+			
+			PlayersMessage msg = new PlayersMessage(userList);
+			messageQueue.offer(msg);
 			// Funktion um beim Start alle Level zu �bertragen
 		}
 	}
@@ -297,23 +310,39 @@ public class GameServer {
 	// Diese Methode bewegt den Nutzer �ber die Karte mit Hilfe der neuen
 	// Koordinaten
 	public void handleMove(MoveMessage m) throws IOException {
-		for (UserLogedIn u : userList) {
-			if (u.getUser().equals(m.user)) {
-				System.out.println("Der User " + u.getUser() + " befindet sich an der Position X: " + u.getUserPosX()
-						+ " und Y: " + u.getUserPosY());
-
-				// Sobald Level da sind kann es implementiert werden
-				world[u.getUserPosX()][u.getUserPosY()] = 1;
-				world[m.posx][m.posy] = u.getUserID();
-				u.setUserPosX(m.posx);
-				u.setUserPosY(m.posy);
-
-				System.out.println("Der User " + u.getUser() + " befindet sich an der neuen Position X: "
-						+ u.getUserPosX() + " und Y: " + u.getUserPosY());
-
-				sendGround();
+		for(UserLogedIn u : userList) {
+			if(u.getUser().equals(m.getUser())) {
+				u.setUserPosX(m.getPosX());
+				u.setUserPosY(m.getPosY());
+				for(int i = -1; i <= 1; i++) {
+					for(int j = -1; j <= 1; j++) {
+						darkside[m.getPosX() + i][m.getPosY()+j] = false;
+					}
+				}
 			}
 		}
+		
+		PlayersMessage msg = new PlayersMessage(userList);
+		messageQueue.offer(msg);
+		
+		
+//		for (UserLogedIn u : userList) {
+//			if (u.getUser().equals(m.getUser())) {
+//				System.out.println("Der User " + u.getUser() + " befindet sich an der Position X: " + u.getUserPosX()
+//						+ " und Y: " + u.getUserPosY());
+//
+//				// Sobald Level da sind kann es implementiert werden
+//				world[u.getUserPosX()][u.getUserPosY()] = 1;
+//				world[m.posx][m.posy] = u.getUserID();
+//				u.setUserPosX(m.posx);
+//				u.setUserPosY(m.posy);
+//
+//				System.out.println("Der User " + u.getUser() + " befindet sich an der neuen Position X: "
+//						+ u.getUserPosX() + " und Y: " + u.getUserPosY());
+//
+//				sendGround();
+//			}
+//		}
 
 	}
 
@@ -322,7 +351,7 @@ public class GameServer {
 	// Da keine Level vorhanden monentan ohne Funktion
 	public void handlePlayerAttack(PlayerAttackMessage m) throws IOException {
 		for (UserLogedIn u : userList)
-			if (u.getUser().equals(m.user)) {
+			if (u.getUser().equals(m.getUser())) {
 				for (int i = 0; i < 3; i++) {
 					for (int j = 0; j < 3; j++) {
 						if (world[u.getUserPosX() - 1 + i][u.getUserPosY() - 1 + j] >= 10
@@ -330,7 +359,7 @@ public class GameServer {
 							int monsterID = world[u.getUserPosX() - 1 + i][u.getUserPosY() - 1 + j];
 							for (MonstersOnField mon : monsterList)
 								if (monsterID == mon.getMonsterID()) {
-									mon.setHealth(mon.getHealth() - m.damage);
+									mon.setHealth(mon.getHealth() - u.getDamage());
 									System.out.println("Das Monster mit der ID " + mon.getMonsterID() + "hat nun "
 											+ mon.getHealth() + " HP.");
 								}
@@ -344,28 +373,32 @@ public class GameServer {
 	// Logged den User aus und speichert das Spiel als txt.-Datei mit seinem
 	// Namen ab
 	public void handleLogout(LogoutMessage m) throws IOException {
-		saveLevel(world, m.user);
+		saveLevel(world, m.getUser());
 		int i = 0;
 		for (UserLogedIn u : userList) {
-			if (m.user.equals(u.getUser())) {
+			if (m.getUser().equals(u.getUser())) {
 				userList.remove(i);
 			}
 			i++;
 		}
-		for (UserLogedIn u : userList) {
-			System.out.println("Nutzer online: " + u.getUser());
-		}
+		
+		PlayersMessage msg = new PlayersMessage(userList);
+		messageQueue.offer(msg);
+		
+//		for (UserLogedIn u : userList) {
+//			System.out.println("Nutzer online: " + u.getUser());
+//		}
 
 	}
 
 	// Diese Methode registriert einen neuen Spieler
 	public void handleNewPlayer(NewPlayer m) throws IOException {
-		NewPlayer msg = new NewPlayer(m.getUser(), db.addUser(m.getUser(), m.getPw()));
 		int[] items = new int[1];
 		items[0] = 0;
-		userList.add(new UserLogedIn(100, items, m.getUser(), 0, false, userList.size() + 20, 0, 0, 20));
+		userList.add(new UserLogedIn(100, items, m.getUser(), 0, false, userList.size() + 20, 0, 0, 20, 0, 0));
+		
+		PlayersMessage msg = new PlayersMessage(userList);
 		messageQueue.offer(msg);
-		System.out.println("Der Nutzer " + m.getUser() + " wurde registriert.");
 		getAllLevels();
 		// Funktion um beim Start alle Level zu �bertragen
 
@@ -406,7 +439,7 @@ public class GameServer {
 		Highscore highscore = new Highscore(m.getUser(), score);
 		db.addHighscore(highscore);
 
-		GameOverMessage msg = new GameOverMessage(m.getUser(), "GAME OVER");
+		GameOverMessage msg = new GameOverMessage(m.getUser());
 		messageQueue.offer(msg);
 	}
 
@@ -528,7 +561,7 @@ public class GameServer {
 					groundSend[i][j] = 0;
 		// Die Message geht an jeden momentan eingeloggten Nutzer
 		for (UserLogedIn u : userList) {
-			Level msg = new Level(world, userList);
+			Level msg = new Level(world, userList, false);
 			messageQueue.offer(msg);
 		}
 	}
@@ -552,9 +585,7 @@ public class GameServer {
 			// bekommen
 			Level msg = new Level(lvl,map.levelID);
 			messageQueue.offer(msg);
-<<<<<<< HEAD
 			System.out.println("Map: " + i);
-=======
 //			for(int k = 0; k < 50; k++){
 //				for(int j = 0;  j < 50; j++){
 //					System.out.print(lvl[k][j] + ", ");
@@ -564,7 +595,6 @@ public class GameServer {
 //			}
 
 			System.out.println();
->>>>>>> branch 'master' of https://github.com/Rasit1009/StudyAbgabe.git
 		}
 	}
 
