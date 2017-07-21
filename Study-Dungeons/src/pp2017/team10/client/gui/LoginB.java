@@ -20,7 +20,6 @@ public class LoginB extends JFrame implements ActionListener {
 	JComboBox choice1;
 	ClientEngine ce;
 	public static spielwelt spiel;
-	public char[] pass = new char[1];
 
 	public LoginB() {
 		super("Login to Study");
@@ -42,10 +41,7 @@ public class LoginB extends JFrame implements ActionListener {
 		panel.setLayout(null);
 
 		signUpButton = new JButton();
-		signUpButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
+		signUpButton.addActionListener(this);
 		signUpButton.setBounds(170, 300, 120, 40);
 		signUpButton.setIcon(new ImageIcon(getClass().getResource("/SignUpIcon.jpg")));
 		signUpButton.setBorder(BorderFactory.createEmptyBorder());
@@ -105,24 +101,19 @@ public class LoginB extends JFrame implements ActionListener {
 		if (e.getSource() == cancel) {
 			System.exit(0);
 		} else if (e.getSource() == signInButton) {
-			// ce = spiel.returnEngine(ce);
-			NewPlayer log = new NewPlayer("Rasit", pass);
-
-			ClientEngine.getEngine().addQueue(log);
-			// ClientEngine.getEngine().startup(userInput.getText(),
-			// PWInput.getPassword());
+			ClientEngine.getEngine().startLogin(userInput.getText(), PWInput.getPassword());
 			setVisible(false);
 			try {
-				spielwelt.getSpielwelt().setVisible(true);
-			} catch (IOException e1) {
+				new MainMenuB();
+			} catch (IOException e2) {
 				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				e2.printStackTrace();
 			}
 			// this.dispose();
 		} else if (e.getSource() == signUpButton) {
 			// newPlayerMessages verschicken
+			ClientEngine.getEngine().startNewPlayer(userInput.getText(), PWInput.getPassword());
 
-			setVisible(false);
 		}
 
 	}

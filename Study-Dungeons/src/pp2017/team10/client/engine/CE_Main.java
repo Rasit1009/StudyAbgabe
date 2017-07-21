@@ -16,9 +16,7 @@ public class CE_Main {
 	public static void main(String[] args) throws IOException {
 		// spielwelt spiel;
 		ClientEngine ce;
-
 		ClientComm c = new ClientComm("localhost", 1500);
-		spielwelt.getSpielwelt();
 		if (!c.start())
 			return;
 		System.out.println(ClientEngine.getEngine().bSendQueue.isEmpty());
@@ -30,6 +28,8 @@ public class CE_Main {
 		System.out.println(ClientEngine.getEngine());
 		ce = c.getSvS().getCE();
 		System.out.println(ce);
+
+		spielwelt.getSpielwelt();
 
 		// spielwelt.getSpielwelt().setVisible(true);
 		// bSendQueue.add(m);

@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -40,12 +41,11 @@ public class MainMenuB extends JFrame implements ActionListener {
 	private boolean visibility = true;
 	private boolean resizability = true;
 	JButton startButton, highscoreButton, storyButton, exitButton;
-	public ClientEngine ce = new ClientEngine();
 
 	boolean startButtonClicked = false;
 
-	public MainMenuB() {
-		ce = this.ce;
+	public MainMenuB() throws IOException {
+
 		setVisible(visibility);
 		setSize(FrameWidth, FrameHeight);
 		setResizable(resizability);
@@ -131,8 +131,13 @@ public class MainMenuB extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == startButton) {
 			// this.dispose();
-			LoginB log = new LoginB();
 			setVisible(false);
+			try {
+				spielwelt.getSpielwelt().setVisible(true);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		} else if (e.getSource() == highscoreButton) {
 
 		} else if (e.getSource() == exitButton) {

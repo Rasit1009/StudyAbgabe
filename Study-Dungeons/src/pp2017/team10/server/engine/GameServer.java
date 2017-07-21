@@ -392,6 +392,11 @@ public class GameServer {
 		int[] items = new int[1];
 		items[0] = 0;
 		userList.add(new UserLogedIn(100, items, m.getUser(), 0, false, userList.size() + 20, 0, 0, 20, 0, 1));
+		
+		for (UserLogedIn l : userList) {
+			System.out.println("Gib Userliste aus: " + l.getUserID() + l.getUser());
+		}
+
 		getAllLevels();
 		PlayersMessage msg = new PlayersMessage(userList);
 		messageQueue.offer(msg);
@@ -566,6 +571,7 @@ public class GameServer {
 
 	// Funktion um alle Level auf einemal zu �bertragen
 	public void getAllLevels() {
+
 		System.out.println("hol die Levels ab");
 		for (int i = 1; i <= 5; i++) {
 			int[][] lvl = new int[50][50];
@@ -585,14 +591,14 @@ public class GameServer {
 			LevelMessage msg = new LevelMessage(lvl, map.levelID);
 			messageQueue.offer(msg);
 			System.out.println("Map: " + i);
-			// for (int k = 0; k < 50; k++) {
-			// for (int j = 0; j < 50; j++) {
-			// System.out.print(lvl[k][j] + ", ");
-			// }
-			// System.out.println();
-			//
-			// }
-			// System.out.println();
+			for (int k = 0; k < 50; k++) {
+				for (int j = 0; j < 50; j++) {
+					System.out.print(lvl[k][j] + ", ");
+				}
+				System.out.println();
+
+			}
+			System.out.println();
 		}
 	}
 

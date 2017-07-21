@@ -321,8 +321,17 @@ public class spielwelt extends javax.swing.JFrame {
 				case 7:
 					groundImageLabel.setIcon(getImage("groundwiso.png"));
 					break;
+				case 8:
+					// Column
+					break;
+				case 9:
+					groundImageLabel.setIcon(getImage("keygold.png"));
 				case 100:
 					groundImageLabel.setIcon(getImage("spieler.png"));
+					// groundImageLabel.setIcon(getImage("spieler.png"));
+					break;
+				case 150:
+					groundImageLabel.setIcon(getImage("wachmann.png"));
 					break;
 				}
 
@@ -445,6 +454,9 @@ public class spielwelt extends javax.swing.JFrame {
 		public void keyPressed(KeyEvent e) {
 			int playerX = playerPosX / (screenWidth / 50);
 			int playerY = playerPosY / (screenWidth / 50);
+
+			System.out.println(playerPosX);
+			System.out.println(playerPosY);
 			try {
 				if (e.getKeyCode() == 37 && playerPosX != 0 && --playerX >= 0 && world[playerX][playerY] != 1) {
 					movePlayerMinimap(playerX, playerY);
@@ -506,7 +518,7 @@ public class spielwelt extends javax.swing.JFrame {
 	public spielwelt() throws IOException {
 
 		setVisible(false);
-		new MainMenuB();
+		new LoginB();
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
 		int screen = (int) screenSize.getHeight() - 100;
@@ -585,6 +597,8 @@ public class spielwelt extends javax.swing.JFrame {
 		ImageIcon wallIcon = getImage("wallwiso.png");
 		// ImageIcon wallIcon = getImage("wall4.png");
 		ImageIcon itemIcon = getImage("greenPotion.png");
+		ImageIcon keyIcon = getImage("keygold.png");
+		ImageIcon monsterIcon = getImage("wachmann.png");
 
 		playerOnField.setSize(screenWidth / 50, screenWidth / 50);
 		playerOnField.setIcon(playerIcon);
