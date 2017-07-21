@@ -26,6 +26,7 @@ import java.awt.Color;
 import javax.swing.SwingConstants;
 
 import pp2017.team10.client.engine.ClientEngine;
+import pp2017.team10.shared.StartMessage;
 
 public class MainMenuB extends JFrame implements ActionListener {
 
@@ -41,10 +42,13 @@ public class MainMenuB extends JFrame implements ActionListener {
 	private boolean visibility = true;
 	private boolean resizability = true;
 	JButton startButton, highscoreButton, storyButton, exitButton;
+	ClientEngine ce;
+	String user;
 
 	boolean startButtonClicked = false;
 
-	public MainMenuB() throws IOException {
+	public MainMenuB(String user) throws IOException {
+		this.user = user;
 
 		setVisible(visibility);
 		setSize(FrameWidth, FrameHeight);
@@ -130,7 +134,9 @@ public class MainMenuB extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == startButton) {
-			// this.dispose();
+			ce = ClientEngine.getEngine();
+			System.out.println(ce);
+			ce.sendStart(user);
 			setVisible(false);
 			try {
 				spielwelt.getSpielwelt().setVisible(true);

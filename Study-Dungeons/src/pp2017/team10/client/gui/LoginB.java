@@ -102,9 +102,10 @@ public class LoginB extends JFrame implements ActionListener {
 			System.exit(0);
 		} else if (e.getSource() == signInButton) {
 			ClientEngine.getEngine().startLogin(userInput.getText(), PWInput.getPassword());
+			String user = userInput.getText();
 			setVisible(false);
 			try {
-				new MainMenuB();
+				new MainMenuB(user);
 			} catch (IOException e2) {
 				// TODO Auto-generated catch block
 				e2.printStackTrace();

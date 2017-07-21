@@ -58,32 +58,37 @@ public class GameServer {
 	 * Beim Aufruf des GameServers wird eine neue Instanz der Datenbank erstellt
 	 * wodurch alle User dort eingelesen werden.
 	 */
-	Database db = new Database();
+	Database db;
+	int count = 0;
 
-	public GameServer() throws IOException {
+	public void runDatabase() throws IOException {
+		db = new Database();
+	}
+
+	public GameServer() {
+
 		for (int k = 1; k <= 5; k++) {
 			Tiles[][] map = lg.getLevel(k).getGround();
 			monsterOnServer = new ArrayList<Monster>();
 			totalMonServer.add(monsterOnServer);
 			int[][] lvl = new int[50][50];
 			boolean darkSide[][] = new boolean[50][50];
-			for(int b = 0; b < 50; b++)
-				for(int c = 0; c < 50; c++)
-						darkSide[b][c] = true;
-			
-			int walkable[][] = new int [50][50];
+			for (int b = 0; b < 50; b++)
+				for (int c = 0; c < 50; c++)
+					darkSide[b][c] = true;
+
+			int walkable[][] = new int[50][50];
 			for (int i = 0; i < 50; i++) {
 				for (int j = 0; j < 50; j++) {
 					if (map[i][j].isWall())
 						lvl[i][j] = 2;
 					else if (map[i][j].isPlayer()) {
 						lvl[i][j] = 100;
-						for(int b = -2; b <= 4; b++)
-							for(int c = -2; c <= 4; c++)
-								if(i+b < 50 && c + j < 50)
-								darkSide[i+b][j+c] = false;
-					}
-					else if (map[i][j].isDoor())
+						for (int b = -2; b <= 4; b++)
+							for (int c = -2; c <= 4; c++)
+								if (i + b < 50 && c + j < 50)
+									darkSide[i + b][j + c] = false;
+					} else if (map[i][j].isDoor())
 						lvl[i][j] = 6;
 					else if (map[i][j].isExit())
 						lvl[i][j] = 7;
@@ -99,53 +104,51 @@ public class GameServer {
 						lvl[i][j] = 8;
 					else if (map[i][j].isKey())
 						lvl[i][j] = 9;
-					
-					if(map[i][j].isWalkable()) {
+
+					if (map[i][j].isWalkable()) {
 						walkable[i][j] = 1;
-					}
-					else
+					} else
 						walkable[i][j] = 0;
-					
+
 					if (map[i][j].isItem()) {
-//						world[i][j] = 20;
+						// world[i][j] = 20;
 						int type = new Random().nextInt(2);
 						ItemList item = new ItemList(itemList.size(), i, j, type, k);
 						itemList.add(item);
 					}
-						
+
 					if (map[i][j].isMonster()) {
 						int type = new Random().nextInt(2);
 						Monster monster = new Monster(type, i, j, lg.getLevel(k).getLevelID());
 						monsterOnServer.add(monster);
-						int monsterID = 1;//totalMonster.get(map.getLevelID()).size();
+						int monsterID = 1;// totalMonster.get(map.getLevelID()).size();
 						boolean gotKey = false;
-						if(monsterID== 1) 
+						if (monsterID == 1)
 							gotKey = true;
-						MonsterList mof = new MonsterList(monsterID, i, j, monster.getmaxHp(), monster.gethp(), gotKey, monster.getdmg());
-						
-						totalMonServer.add(monsterOnServer);	
-						//totalMonster.get(map.getLevelID()).add(mof);				
-						}
+						MonsterList mof = new MonsterList(monsterID, i, j, monster.getmaxHp(), monster.gethp(), gotKey,
+								monster.getdmg());
+
+						totalMonServer.add(monsterOnServer);
+						// totalMonster.get(map.getLevelID()).add(mof);
+					}
 				}
 			}
-		darkside.add(darkSide);
-		walkableList.add(walkable);
-		levelList.add(new LevelMessage(lvl, k));
-//		lg.printUniversity(map);
+			darkside.add(darkSide);
+			walkableList.add(walkable);
+			levelList.add(new LevelMessage(lvl, k));
+			// lg.printUniversity(map);
 		}
-		//moveMonster();
+		// moveMonster();
 		getAllLevels();
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}//Damit das Programm weiter läuft und nicht terminiert
-		
+		// try {
+		// Thread.sleep(2000);
+		// } catch (InterruptedException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// } // Damit das Programm weiter lï¿½uft und nicht terminiert
+
 	}
-	
-	
-	
+
 	private boolean start = true;
 	private int[][] world = new int[50][50];
 	private ArrayList<boolean[][]> darkside = new ArrayList<boolean[][]>();
@@ -155,7 +158,7 @@ public class GameServer {
 	private ArrayList<Monster> monsterOnServer;
 	private Queue<Messages> messageQueue = new LinkedList<Messages>();
 	private ArrayList<UserLogedIn> userList = new ArrayList<UserLogedIn>();
-	
+
 	private ArrayList<LevelMessage> levelList = new ArrayList<LevelMessage>();
 	private ArrayList<int[][]> walkableList = new ArrayList<int[][]>();
 	private ArrayList<ItemList> itemList = new ArrayList<ItemList>();
@@ -179,66 +182,49 @@ public class GameServer {
 		System.out.println("Hallo - test");
 		ActionListener taskPerformer = new ActionListener() {
 
- 			boolean run = true;
-         		public void actionPerformed(ActionEvent evt) {
-         			
-         			if (run == false) {
-                        ((Timer) evt.getSource()).stop();
-                    }
-         			
-         			for(int i = 0; i < totalMonServer.size(); i++) {
-         				System.out.println("test");
-         				monsterOnServer = totalMonServer.get(i);
-         				for(int j = 0; j < monsterOnServer.size(); j++) {
-         					for(UserLogedIn user : userList) {
-         						System.out.println(monsterOnServer.size());
-         						int posX = user.getUserPosX();
-         						int posY = user.getUserPosY();
-         						int id = user.getUserID();
-         						Monster mon = monsterOnServer.get(j);
-         						mon.fsm(posX, posY, id, walkableList.get(i), userList);
-         						monsterOnServer.set(j, mon);
-         						System.out.println(mon.getposx());
-         					}
-         				}
-                        	 
-                    }
-         			System.out.println("Monster wurde bewegt!");
-         		}
+			boolean run = true;
+
+			public void actionPerformed(ActionEvent evt) {
+
+				if (run == false) {
+					((Timer) evt.getSource()).stop();
+				}
+
+				for (int i = 0; i < totalMonServer.size(); i++) {
+					System.out.println("test");
+					monsterOnServer = totalMonServer.get(i);
+					for (int j = 0; j < monsterOnServer.size(); j++) {
+						for (UserLogedIn user : userList) {
+							System.out.println(monsterOnServer.size());
+							int posX = user.getUserPosX();
+							int posY = user.getUserPosY();
+							int id = user.getUserID();
+							Monster mon = monsterOnServer.get(j);
+							mon.fsm(posX, posY, id, walkableList.get(i), userList);
+							monsterOnServer.set(j, mon);
+							System.out.println(mon.getposx());
+						}
+					}
+
+				}
+				System.out.println("Monster wurde bewegt!");
+			}
 		};
 		new Timer(500, taskPerformer).start();
 
-	}		
-	
-	
+	}
+
 	public int[][] mapToArray(Map map, int lvl) {
-		int walkable[][] = new int [50][50];
-	/*	Map build = new Map(); 
-		map.getLevelID();
-		switch(map.levelID){
-		case 1: 
-			Map wiso = lg.buildWiso();
-			build = wiso;
-			break;
-		case 2: 
-			Map  philo = lg.buildPhilo();
-			build = philo;
-			break;
-		case 3: 
-			Map library = lg.buildLibrary();
-			build = library;
-			break;
-		case 4: 
-			Map physik = lg.buildPhysik();
-			build = physik;
-			break;
-		case 5: 
-			Map copt = lg.buildCopt();
-			build = copt;
-			break;
-		}
-		*/
-//		Map wiso = lg.buildWiso();
+		int walkable[][] = new int[50][50];
+		/*
+		 * Map build = new Map(); map.getLevelID(); switch(map.levelID){ case 1:
+		 * Map wiso = lg.buildWiso(); build = wiso; break; case 2: Map philo =
+		 * lg.buildPhilo(); build = philo; break; case 3: Map library =
+		 * lg.buildLibrary(); build = library; break; case 4: Map physik =
+		 * lg.buildPhysik(); build = physik; break; case 5: Map copt =
+		 * lg.buildCopt(); build = copt; break; }
+		 */
+		// Map wiso = lg.buildWiso();
 		for (int i = 0; i < 50; i++) {
 			for (int j = 0; j < 50; j++) {
 				if (map.getTile(i, j).isWall())
@@ -261,41 +247,40 @@ public class GameServer {
 					world[i][j] = 8;
 				else if (map.getTile(i, j).isKey())
 					world[i][j] = 9;
-				
-				if(map.getTile(i,  j).isWalkable()) {
+
+				if (map.getTile(i, j).isWalkable()) {
 					walkable[i][j] = 1;
-				}
-				else
+				} else
 					walkable[i][j] = 0;
-				
+
 				if (map.getTile(i, j).isItem()) {
 					world[i][j] = 20;
 					int type = new Random().nextInt(2);
 					ItemList item = new ItemList(itemList.size(), i, j, type, lvl);
 					itemList.add(item);
 				}
-					
+
 				if (map.getTile(i, j).isMonster()) {
 					int type = new Random().nextInt(2);
 					Monster monster = new Monster(type, i, j, map.getLevelID());
 					int monsterID = totalMonster.get(map.getLevelID()).size();
 					boolean gotKey = false;
-					if(monsterID== 1) 
+					if (monsterID == 1)
 						gotKey = true;
-					MonsterList mof = new MonsterList(monsterID, i, j, monster.getmaxHp(), monster.gethp(), gotKey, monster.getdmg());
+					MonsterList mof = new MonsterList(monsterID, i, j, monster.getmaxHp(), monster.gethp(), gotKey,
+							monster.getdmg());
 					totalMonster.get(map.getLevelID()).add(mof);
 				}
-//				System.out.print(world[i][j] + ", ");
+				// System.out.print(world[i][j] + ", ");
 			}
-//			System.out.println();
-//			levelList.add(new Level(world, k));
+			// System.out.println();
+			// levelList.add(new Level(world, k));
 		}
-		
-			walkableList.add(walkable);
+
+		walkableList.add(walkable);
 		return world;
-		
+
 	}
-	
 
 	// bearbeitet eingehende Nachrichten von der ClientEngine
 	// Jede Nachricht ist eine Instanz einer anderen Klasse und ruft eine andere
@@ -336,13 +321,13 @@ public class GameServer {
 				} else if (m instanceof GameOverMessage) {
 					System.out.println("This is a PlayerDeadMessage");
 					handlePlayerDead((GameOverMessage) m);
-				} else if(m instanceof ItemAddMessage) {
+				} else if (m instanceof ItemAddMessage) {
 					handleItemAddMessage((ItemAddMessage) m);
-				} else if(m instanceof StartMessage) {
+				} else if (m instanceof StartMessage) {
 					System.out.println("This is a Start Message");
 					handleStartMessage((StartMessage) m);
 				}
-				
+
 			}
 		} catch (Exception e) {
 
@@ -351,65 +336,83 @@ public class GameServer {
 
 	// Sendet eine Chat-Nachricht an alle Nutzer auï¿½er den Empfï¿½nger
 	public void handleItemAddMessage(ItemAddMessage m) {
-		
-		for(UserLogedIn u : userList) {
-			if(u.getUser().equals(m.getUser())) {
+
+		for (UserLogedIn u : userList) {
+			if (u.getUser().equals(m.getUser())) {
 				int items[] = u.getItems();
 				items[m.getItemID()] = items[m.getItemID()] + m.getCount();
 				u.setItems(items);
-			}				
+			}
 		}
 		messageQueue.offer(new PlayersMessage(userList));
 	}
-	
+
 	public void handleStartMessage(StartMessage m) {
-		LevelMessage msg = levelList.get(m.getLevelID() - 1);
-		messageQueue.offer(msg);
-		messageQueue.offer(new PlayersMessage(userList));
-		messageQueue.offer(new MonsterOnFieldMessage(totalMonster.get(m.getLevelID()-1)));
+		if (count == 0) {
+			try {
+				System.out.println("Game is running, create Database");
+				runDatabase();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {
+			System.out.println("mach deinen Job");
+			System.out.println(1);
+			// LevelMessage msg = levelList.get(m.getLevelID() - 1);
+			System.out.println(2);
+
+			messageQueue.offer(new StartMessage(m.getUser(), m.getLevelID()));
+			System.out.println(3);
+			// messageQueue.offer(msg);
+			messageQueue.offer(new PlayersMessage(userList));
+			messageQueue.offer(new MonsterOnFieldMessage(totalMonster.get(m.getLevelID() - 1)));
+		}
+		++count;
+
 	}
-	
+
 	public void handleChatMessage(ChatMessage m) throws IOException {
-		switch(m.getContent()) {
-		case "noFogAnymore" : {
+		switch (m.getContent()) {
+		case "noFogAnymore": {
 			fogCheat();
 			break;
 		}
-		case "maxHPPlease" : {
-			for(UserLogedIn u : userList) {
+		case "maxHPPlease": {
+			for (UserLogedIn u : userList) {
 				u.setHealth(100);
 				messageQueue.offer(new PlayersMessage(userList));
 			}
 			break;
 		}
-		case "allMonstersFlyHigh" : {
-			for(int i = 0; i < totalMonster.get(m.getCurrentLevel() - 1).size(); i++)
+		case "allMonstersFlyHigh": {
+			for (int i = 0; i < totalMonster.get(m.getCurrentLevel() - 1).size(); i++)
 				totalMonster.get(m.getCurrentLevel() - 1).remove(i);
-				messageQueue.offer(new MonsterOnFieldMessage(totalMonster.get(m.getCurrentLevel() - 1)));
+			messageQueue.offer(new MonsterOnFieldMessage(totalMonster.get(m.getCurrentLevel() - 1)));
 		}
-		default : {
-		messageQueue.offer(m);
+		default: {
+			messageQueue.offer(m);
 		}
 		}
 	}
-//
-//	// Ruft verschiedene Cheatmethoden auf. Bisher nur noFogAnymore
-//	// implementiert
-//	public void handleCheat(Cheat m) throws IOException {
-//		System.out.println("Cheat wurde aktiviert: " + m.content);
-//		if (m.content == "noFogAnymore")
-//			fogCheat();
-//		else if (m.content == "maxHP") {
-//		}
-//		// Funtion to set the the HP to the max
-//		else if (m.content == "allDeadEnemy") {
-//		}
-//		// Function to Monster System
-//		else if (m.content == "ScottyBeamMeUp") {
-//		}
-//		// Function for ScottyBeamMeUp
-//
-//	}
+	//
+	// // Ruft verschiedene Cheatmethoden auf. Bisher nur noFogAnymore
+	// // implementiert
+	// public void handleCheat(Cheat m) throws IOException {
+	// System.out.println("Cheat wurde aktiviert: " + m.content);
+	// if (m.content == "noFogAnymore")
+	// fogCheat();
+	// else if (m.content == "maxHP") {
+	// }
+	// // Funtion to set the the HP to the max
+	// else if (m.content == "allDeadEnemy") {
+	// }
+	// // Function to Monster System
+	// else if (m.content == "ScottyBeamMeUp") {
+	// }
+	// // Function for ScottyBeamMeUp
+	//
+	// }
 
 	// Ueberprueft, ob der Nutzer den Schluessel fuer die Tuer hat, falls ja
 	// wird getLevel(currentlvl++) aufgerufen
@@ -419,50 +422,54 @@ public class GameServer {
 			if (m.getUser().equals(u.getUser()) && u.getGotKey() == true) {
 				u.setGotKey(false);
 				userKey = true;
-				
+
 			}
 		}
-			System.out.println("Der User hat keinen Key");
+		System.out.println("Der User hat keinen Key");
 	}
 
 	// ï¿½berprï¿½ft ob der Nutzer ein Item aufheben oder Nutzen will und
 	// verarbeitet dieses
 	// (Bisher nur Trank implementiert) und Levelabhï¿½ngig
 	public void handleItemUsage(ItemUsageMessage m) throws IOException {
-//		if (m.pickup == true) {
-//			for (UserLogedIn u : userList)
-//				if (u.getUser().equals(m.user)) {
-//					if (world[u.getUserPosX()][u.getUserPosY()] > 3 && world[u.getUserPosX()][u.getUserPosY()] < 7) {
-//						int[] items = u.getItems();
-//						items[world[u.getUserPosX()][u.getUserPosY()] - 4]++;
-//						u.setItems(items);
-//						world[u.getUserPosX()][u.getUserPosY()] = 1;
-//						sendGround();
-//						System.out.println("Der User " + u.getUser() + "hat das Item mit der ID"
-//								+ (world[u.getUserPosX()][u.getUserPosY()] - 4) + " aufgenommen");
-//					}
-//					if (world[u.getUserPosX()][u.getUserPosY()] == 7) {
-//						System.out.println("Der User " + u.getUser() + " hat den Schlï¿½ssel aufgenommen");
-//						u.setGotKey(true);
-//						world[u.getUserPosX()][u.getUserPosY()] = 1;
-//						sendGround();
-//					}
-//				}
-//		} else {
-//			for (UserLogedIn u : userList)
-//				if (u.getUser().equals(m.user)) {
-//					int[] items = u.getItems();
-//					items[m.itemID]--;
-//					int health = u.getHealth();
-//					health = health + 50;
-//					if (health > 100) {
-//						health = 100;
-//					}
-//					System.out.println("Der User " + u.getUser() + " hat ein Item mit der ID "
-//							+ (world[u.getUserPosX()][u.getUserPosY()] - 4) + " aufgenommen");
-//					u.setHealth(health);
-//				}
-//		}
+		// if (m.pickup == true) {
+		// for (UserLogedIn u : userList)
+		// if (u.getUser().equals(m.user)) {
+		// if (world[u.getUserPosX()][u.getUserPosY()] > 3 &&
+		// world[u.getUserPosX()][u.getUserPosY()] < 7) {
+		// int[] items = u.getItems();
+		// items[world[u.getUserPosX()][u.getUserPosY()] - 4]++;
+		// u.setItems(items);
+		// world[u.getUserPosX()][u.getUserPosY()] = 1;
+		// sendGround();
+		// System.out.println("Der User " + u.getUser() + "hat das Item mit der
+		// ID"
+		// + (world[u.getUserPosX()][u.getUserPosY()] - 4) + " aufgenommen");
+		// }
+		// if (world[u.getUserPosX()][u.getUserPosY()] == 7) {
+		// System.out.println("Der User " + u.getUser() + " hat den Schlï¿½ssel
+		// aufgenommen");
+		// u.setGotKey(true);
+		// world[u.getUserPosX()][u.getUserPosY()] = 1;
+		// sendGround();
+		// }
+		// }
+		// } else {
+		// for (UserLogedIn u : userList)
+		// if (u.getUser().equals(m.user)) {
+		// int[] items = u.getItems();
+		// items[m.itemID]--;
+		// int health = u.getHealth();
+		// health = health + 50;
+		// if (health > 100) {
+		// health = 100;
+		// }
+		// System.out.println("Der User " + u.getUser() + " hat ein Item mit der
+		// ID "
+		// + (world[u.getUserPosX()][u.getUserPosY()] - 4) + " aufgenommen");
+		// u.setHealth(health);
+		// }
+		// }
 	}
 
 	// Diese Methode ï¿½berprï¿½ft ob der Nutzer vorhanden ist und logged ihn in das
@@ -483,11 +490,12 @@ public class GameServer {
 			System.out.println("Der User ist im System vorhanden und wurde zur Liste hinzugefï¿½gt");
 			int[] items = new int[1];
 			items[0] = 0;
-			userList.add(new UserLogedIn(100, items, m.getUser(), 0, false, userList.size() + 20, 0, 0, 20, levelDone, 0));
-			getAllLevels();
-			
-			PlayersMessage msg = new PlayersMessage(userList);
-			messageQueue.offer(msg);
+			// userList.add(
+			// new UserLogedIn(100, items, m.getUser(), 0, false,
+			// userList.size() + 20, 0, 0, 20, levelDone, 0));
+			// getAllLevels();
+
+			messageQueue.offer(new Login(true, userList));
 			// Funktion um beim Start alle Level zu ï¿½bertragen
 		}
 	}
@@ -495,41 +503,42 @@ public class GameServer {
 	// Diese Methode bewegt den Nutzer ï¿½ber die Karte mit Hilfe der neuen
 	// Koordinaten
 	public void handleMove(MoveMessage m) throws IOException {
-		for(UserLogedIn u : userList) {
-			if(u.getUser().equals(m.getUser())) {
+		for (UserLogedIn u : userList) {
+			if (u.getUser().equals(m.getUser())) {
 				u.setUserPosX(m.getPosX());
 				u.setUserPosY(m.getPosY());
-				
-				for(int i = -2; i <= 2; i++) {
-					for(int j = -2; j <= 2; j++) {
+
+				for (int i = -2; i <= 2; i++) {
+					for (int j = -2; j <= 2; j++) {
 						darkside.get(u.getLevelNow())[i][j] = false;
 					}
 				}
-				
+
 			}
 		}
-		
+
 		PlayersMessage msg = new PlayersMessage(userList);
 		messageQueue.offer(msg);
-		
-		
-//		for (UserLogedIn u : userList) {
-//			if (u.getUser().equals(m.getUser())) {
-//				System.out.println("Der User " + u.getUser() + " befindet sich an der Position X: " + u.getUserPosX()
-//						+ " und Y: " + u.getUserPosY());
-//
-//				// Sobald Level da sind kann es implementiert werden
-//				world[u.getUserPosX()][u.getUserPosY()] = 1;
-//				world[m.posx][m.posy] = u.getUserID();
-//				u.setUserPosX(m.posx);
-//				u.setUserPosY(m.posy);
-//
-//				System.out.println("Der User " + u.getUser() + " befindet sich an der neuen Position X: "
-//						+ u.getUserPosX() + " und Y: " + u.getUserPosY());
-//
-//				sendGround();
-//			}
-//		}
+
+		// for (UserLogedIn u : userList) {
+		// if (u.getUser().equals(m.getUser())) {
+		// System.out.println("Der User " + u.getUser() + " befindet sich an der
+		// Position X: " + u.getUserPosX()
+		// + " und Y: " + u.getUserPosY());
+		//
+		// // Sobald Level da sind kann es implementiert werden
+		// world[u.getUserPosX()][u.getUserPosY()] = 1;
+		// world[m.posx][m.posy] = u.getUserID();
+		// u.setUserPosX(m.posx);
+		// u.setUserPosY(m.posy);
+		//
+		// System.out.println("Der User " + u.getUser() + " befindet sich an der
+		// neuen Position X: "
+		// + u.getUserPosX() + " und Y: " + u.getUserPosY());
+		//
+		// sendGround();
+		// }
+		// }
 
 	}
 
@@ -568,35 +577,56 @@ public class GameServer {
 			}
 			i++;
 		}
-		
+
 		PlayersMessage msg = new PlayersMessage(userList);
 		messageQueue.offer(msg);
-		
-//		for (UserLogedIn u : userList) {
-//			System.out.println("Nutzer online: " + u.getUser());
-//		}
+
+		// for (UserLogedIn u : userList) {
+		// System.out.println("Nutzer online: " + u.getUser());
+		// }
 
 	}
 
 	// Diese Methode registriert einen neuen Spieler
 	public void handleNewPlayer(NewPlayer m) throws IOException {
+		// int[] items = new int[1];
+		// items[0] = 0;
+		//
+		// userList.add(new UserLogedIn(100, items, m.getUser(), 0, false,
+		// userList.size() + 20, 0, 0, 20, 0, 1));
+		// db.addUser(m.getUser(), m.getPw(), m.getLevelID());
+		//
+		// NewPlayer msg = new NewPlayer(userList);
+		// messageQueue.offer(msg);
+		// getAllLevels();
+		// Funktion um beim Start alle Level zu ï¿½bertragen
+
+		// int[] items = new int[1];
+		// items[0] = 0;
+		// userList.add(new UserLogedIn(100, items, m.getUser(), 0, false,
+		// userList.size() + 20, 0, 0, 20, 0, 0));
+		// NewPlayer msg = new NewPlayer(m.getUser(), db.addUser(m.getUser(),
+		// m.getPw()));
+		// messageQueue.offer(msg);
+		// System.out.println("Der Nutzer " + m.getUser() + " wurde
+		// registriert.");
+		// // getAllLevels();
+		// // Funktion um beim Start alle Level zu ï¿½bertragen
+
 		int[] items = new int[1];
 		items[0] = 0;
-<<<<<<< HEAD
+		System.out.println("add to userlist");
 		userList.add(new UserLogedIn(100, items, m.getUser(), 0, false, userList.size() + 20, 0, 0, 20, 0, 1));
-		
-		for (UserLogedIn l : userList) {
-			System.out.println("Gib Userliste aus: " + l.getUserID() + l.getUser());
-		}
+		System.out.println("add to database");
+		System.out.println(m.getUser());
+		System.out.println(m.getPw());
+		System.out.println(m.getLevelID());
+		db.addUser(m.getUser(), m.getPw(), m.getLevelID());
+		System.out.println("Der Nutzer " + m.getUser() + " wurde registriert.");
 
-		getAllLevels();
-=======
-		userList.add(new UserLogedIn(100, items, m.getUser(), 0, false, userList.size() + 20, 0, 0, 20, 0, 0));
-		
->>>>>>> branch 'master' of https://github.com/Rasit1009/StudyAbgabe.git
-		PlayersMessage msg = new PlayersMessage(userList);
+		NewPlayer msg = new NewPlayer(m.getUser(), true);
 		messageQueue.offer(msg);
-		getAllLevels();
+		// getAllLevels();
 		// Funktion um beim Start alle Level zu ï¿½bertragen
 
 	}
@@ -640,11 +670,11 @@ public class GameServer {
 	}
 
 	// Helfermethode um Monster hinzuzufï¿½gen
-//	public void addMonsters() {
-//		for (int i = 0; i < 3; i++) {
-//			monsterList.add(new MonsterList(100, i + 10, i, i, 10));
-//		}
-//	}
+	// public void addMonsters() {
+	// for (int i = 0; i < 3; i++) {
+	// monsterList.add(new MonsterList(100, i + 10, i, i, 10));
+	// }
+	// }
 
 	// speichert das aktuelle Level beim ausloggen ab
 	public void saveLevel(int[][] level, String user) {
@@ -742,11 +772,11 @@ public class GameServer {
 	// entfernt den Nebel um alles zu sehen
 	public void fogCheat() {
 		int k = 0;
-		for(boolean[][] u : darkside) {
-		for (int i = 0; i <= world.length; i++)
-			for (int j = 0; 0 <= world.length; j++)
-				darkside.get(k)[i][j] = false;
-			
+		for (boolean[][] u : darkside) {
+			for (int i = 0; i <= world.length; i++)
+				for (int j = 0; 0 <= world.length; j++)
+					darkside.get(k)[i][j] = false;
+
 		}
 		k++;
 		sendGround();
@@ -759,107 +789,106 @@ public class GameServer {
 			int[][] groundSend = new int[u.getWorld().length][u.getWorld().length];
 			for (int i = 0; i <= u.getWorld().length; i++)
 				for (int j = 0; j <= u.getWorld().length; j++) {
-					if(darkside.get(u.getLevelID())[i][j] == true)
+					if (darkside.get(u.getLevelID())[i][j] == true)
 						groundSend[i][j] = 0;
 					else
 						groundSend[i][j] = u.getWorld()[i][j];
 				}
-					
-		// Die Message geht an jeden momentan eingeloggten Nutzer
-			
+
+			// Die Message geht an jeden momentan eingeloggten Nutzer
+
 			messageQueue.offer(new LevelMessage(groundSend, userList, u.getDoorOpen()));
 		}
+
 	}
 
 	// Funktion um alle Level auf einemal zu ï¿½bertragen
 	public void getAllLevels() {
-<<<<<<< HEAD
 
-		System.out.println("hol die Levels ab");
-		for (int i = 1; i <= 5; i++) {
-			int[][] lvl = new int[50][50];
-			// for(int k = 0; k < 50; k++){
-			// for(int j = 0; j < 50; j++){
-			// lvl[k][j] = 1;
+		// System.out.println("hol die Levels ab");
+		// for (int i = 1; i <= 5; i++) {
+		// int[][] lvl = new int[50][50];
+		// // for(int k = 0; k < 50; k++){
+		// // for(int j = 0; j < 50; j++){
+		// // lvl[k][j] = 1;
+		// // }
+		//
+		// // }
+		// map = lg.getLevel(i);
+		// // System.out.println(map.levelID);
+		// // lvl = mapToArray(map);
+		// // lvl = getLevel(i);
+		// // Funktion wird beim Levelgenerator aufgerufen um alle Level zu
+		// // bekommen
+		// System.out.println(map.levelID);
+		// LevelMessage msg = new LevelMessage(lvl, map.levelID);
+		// messageQueue.offer(msg);
+		// System.out.println("Map: " + i);
+		// for (int k = 0; k < 50; k++) {
+		// for (int j = 0; j < 50; j++) {
+		// System.out.print(lvl[k][j] + ", ");
+		// }
+		// System.out.println();
+		//
+		// }
+		// System.out.println();
+		// }
+
+		// System.out.println("hol die Levels ab");
+		// if(start) {
+		// for (int i = 1; i <= 5; i++) {
+		// int[][] lvl = new int[50][50];
+		//// for(int k = 0; k < 50; k++){
+		//// for(int j = 0; j < 50; j++){
+		//// lvl[k][j] = 1;
+		//// }
+		//
+		//// }
+		// map = lg.getLevel(i);
+		//// System.out.println(map.levelID);
+		// lvl = mapToArray(map, i);
+		//// lvl = getLevel(i);
+		// // Funktion wird beim Levelgenerator aufgerufen um alle Level zu
+		// // bekommen
+		// Level msg = new Level(lvl,map.levelID);
+		// levelList.add(msg);
+		// messageQueue.offer(msg);
+		// System.out.println("Map: " + i);
+		//// for(int k = 0; k < 50; k++){
+		//// for(int j = 0; j < 50; j++){
+		//// System.out.print(lvl[k][j] + ", ");
+		//// }
+		//// System.out.println();
+		////
+		//// }
+		//
+		// System.out.println();
+		// }
+		// start = false;
+		// }
+		// else
+
+		for (LevelMessage l : levelList) {
+			messageQueue.offer(l);
+			// for(int i = 0; i < 50; i++) {
+			// for(int j = 0; j < 50; j++) {
+			// System.out.print(l.getWorld()[i][j]);
 			// }
-
+			// System.out.println();
+			//
 			// }
-			map = lg.getLevel(i);
-			// System.out.println(map.levelID);
-			lvl = mapToArray(map);
-			// lvl = getLevel(i);
-			// Funktion wird beim Levelgenerator aufgerufen um alle Level zu
-			// bekommen
-			System.out.println(map.levelID);
-			LevelMessage msg = new LevelMessage(lvl, map.levelID);
-			messageQueue.offer(msg);
-			System.out.println("Map: " + i);
-			for (int k = 0; k < 50; k++) {
-				for (int j = 0; j < 50; j++) {
-					System.out.print(lvl[k][j] + ", ");
-				}
-				System.out.println();
-
-			}
-			System.out.println();
+			// System.out.println();
 		}
-=======
-//		System.out.println("hol die Levels ab");
-//		if(start) {
-//		for (int i = 1; i <= 5; i++) {
-//			int[][] lvl = new int[50][50];
-////			for(int k = 0; k < 50; k++){
-////				for(int j = 0;  j < 50; j++){
-////					lvl[k][j] = 1;
-////				}
-//				
-////			}
-//			map = lg.getLevel(i);
-////			System.out.println(map.levelID);
-//			lvl = mapToArray(map, i);
-////			lvl = getLevel(i);
-//			// Funktion wird beim Levelgenerator aufgerufen um alle Level zu
-//			// bekommen
-//			Level msg = new Level(lvl,map.levelID);
-//			levelList.add(msg);
-//			messageQueue.offer(msg);
-//			System.out.println("Map: " + i);
-////			for(int k = 0; k < 50; k++){
-////				for(int j = 0;  j < 50; j++){
-////					System.out.print(lvl[k][j] + ", ");
-////				}
-////				System.out.println();
-////				
-////			}
-//
-//			System.out.println();
-//		}
-//		start = false;
-//		}
-//		else
-		
-			for(LevelMessage l : levelList) {
-				messageQueue.offer(l);
-//				for(int i = 0; i < 50; i++) {
-//					for(int j = 0; j < 50; j++) {
-//						System.out.print(l.getWorld()[i][j]);
-//					}
-//					System.out.println();
-//					
-//				}
-//				System.out.println();	
-			}
->>>>>>> branch 'master' of https://github.com/Rasit1009/StudyAbgabe.git
 	}
 
 	// Fï¿½r Testzwecke erstelles Array
-//	public void testArray() {
-//		for (int i = 0; i < 50; i++) {
-//			for (int j = 0; j < 50; j++)
-//				world[i][j] = 1;
-//			world[i][i] = 0;
-//		}
-//	}
+	// public void testArray() {
+	// for (int i = 0; i < 50; i++) {
+	// for (int j = 0; j < 50; j++)
+	// world[i][j] = 1;
+	// world[i][i] = 0;
+	// }
+	// }
 
 	public void ausgabeArray() {
 		for (int i = 0; i < 50; i++) {
@@ -869,8 +898,8 @@ public class GameServer {
 			System.out.println();
 		}
 	}
-	
-	public ArrayList<UserLogedIn> getUserList(){
+
+	public ArrayList<UserLogedIn> getUserList() {
 		return userList;
 	}
 }

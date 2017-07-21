@@ -62,7 +62,6 @@ public class Database {
 		BufferedReader brUser = new BufferedReader(frUser);
 		String username = "";
 		String pw = "";
-		String levelDone = "";
 		int j = 0;
 		String readLineUser = brUser.readLine();
 		while (readLineUser != null) {
@@ -77,14 +76,9 @@ public class Database {
 				pw = pw + readLineUser.charAt(j);
 				j++;
 			}
-			j++;
-			while (readLineUser.charAt(j) != '#') {
-				levelDone = levelDone + readLineUser.charAt(j);
-				j++;
-			}
 			j = 0;
 			readLineUser = brUser.readLine();
-			User u = new User(username, pw, Integer.parseInt(levelDone));
+			User u = new User(username, pw, 0);
 			userdata.add(u);
 		}
 
@@ -144,7 +138,7 @@ public class Database {
 	}
 
 	// User wird hinzugef�gt falls noch nicht vorhanden
-	public boolean addUser(String username, char[] password, int levelDone) {
+	public boolean addUser(String username, char[] password, int levelID) {
 		for (User u : userdata) {
 			if (u.getUser().equals(username))
 				return false;
@@ -159,7 +153,7 @@ public class Database {
 		try {
 			FileWriter fwAdd = new FileWriter("User.txt", true);
 			BufferedWriter bwAdd = new BufferedWriter(fwAdd);
-			bwAdd.write(username + "#" + pw + "#" + 0);
+			bwAdd.write(username + "#" + pw + "#");
 			bwAdd.newLine();
 
 			bwAdd.close();
@@ -170,9 +164,5 @@ public class Database {
 			System.out.println("Datei existiert nicht.");
 			return false;
 		}
-	}
-
-	public void setUser(String user) {
-
 	}
 }

@@ -58,10 +58,11 @@ public final class ClientEngine {
 	public boolean isAvailable;
 	public int[][] map;
 	public SendQueue send;
-	public ArrayList<int[][]> levels = new ArrayList();
-	public ArrayList<UserLogedIn> user = new ArrayList();
+	public ArrayList<LevelMessage> levels = new ArrayList<LevelMessage>();
+	public ArrayList<UserLogedIn> user = new ArrayList<UserLogedIn>();
 	public UserLogedIn use;
 	public int count = 1;
+	int[][] world;
 
 	private static ClientEngine ce = new ClientEngine();
 
@@ -191,8 +192,10 @@ public final class ClientEngine {
 			break;
 		}
 
-		MoveMessage moveMsg = new MoveMessage(posx, posy, direction);
-		bSendQueue.offer(moveMsg);
+		if (isPossible == true) {
+			MoveMessage moveMsg = new MoveMessage(posx, posy, direction);
+			bSendQueue.offer(moveMsg);
+		}
 	}
 
 	/*
@@ -230,13 +233,13 @@ public final class ClientEngine {
 		try {
 			for (int i = x - 1; i <= x + 1; i++) {
 				for (int j = y - 1; j <= y + 1; j++) {
-					if (Map[i][j] == 2) { // if the field is not empty
+					if (Map[i][j] == 2) { // if the field is an itemfield (Zahl
+											// ändern)
 						isPossible = true; // set the sign that there is an Item
 						System.out.println(isPossible);
 						System.out.println("Item is on Position posx: [" + i + "] posy: [" + j + "]"
 								+ " Player can pick it up, it is in his surrounding");
-						// ItemUsageMessage useItem = new ItemUsageMessage(i, j,
-						// isAvailable);
+						// ItemUsageMessage useItem = new ItemUsageMessage();
 						// addQueue(useItem);
 					}
 				}
@@ -279,7 +282,7 @@ public final class ClientEngine {
 					handleItem((ItemUsageMessage) m);
 				} else if (m instanceof Login) {
 					System.out.println("This is a LoginMessage");
-					// handleLogin((Login) m);
+					handleLogin((Login) m);
 				} else if (m instanceof MoveMessage) {
 					System.out.println("This is a MoveMessage");
 					handleMove((MoveMessage) m);
@@ -315,24 +318,25 @@ public final class ClientEngine {
 	}
 
 	private void handlePlayersMessage(PlayersMessage msg) throws IOException {
-		System.out.println("this is a PlayersMessage");
 
+		user = msg.getUser();
 		for (int i = 0; i <= user.size(); i++) {
-			if (user.get(i).getHealth() != msg.getUser().get(i).getHealth()) {
-				spielwelt.getSpielwelt().setHealth(msg.getUser().get(i).getHealth());
-			} else if ((user.get(i).getUserPosX() != msg.getUser().get(i).getUserPosX()
-					|| user.get(i).getUserPosY() != msg.getUser().get(i).getUserPosY())) {
-				spielwelt.getSpielwelt().movePlayer(i, msg.getUser().get(i).getUserPosX(),
-						msg.getUser().get(i).getUserPosY());
-			} else if (user.get(i).getItems() != msg.getUser().get(i).getItems()) {
-				// spielwelt.getSpielwelt().setItemCount(msg.getUser().get(i).get,
-				// count);
-			}
+
+			spielwelt.getSpielwelt().setHealth(user.get(i).getHealth());
+			spielwelt.getSpielwelt().addPlayer(user.get(i).getUserID(), user.get(i).getUserPosX(),
+					user.get(i).getUserPosY());
+			spielwelt.getSpielwelt().movePlayer(user.get(i).getUserID(), user.get(i).getUserPosX(),
+					user.get(i).getUserPosY());
+
+			// spielwelt.getSpielwelt().setItemCount(msg.getUser().get(i).get,
+			// count);
 		}
+
 		// level = user.get(i).getLevelNow();
 		// System.out.println("start level" + level);
 		// i++;
 		// buildLevel(level);
+
 	}
 
 	public void setUser(PlayersMessage msg) {
@@ -346,63 +350,71 @@ public final class ClientEngine {
 
 	}
 
-	private void handleLevel(LevelMessage msg) {
-		int[][] world;
-		int levelID;
+	public void handleLevel(LevelMessage msg) {
 
-		world = msg.getWorld();
+		int levelID;
+		if (levels.size() < 5)
+			world = msg.getWorld();
 		levelID = msg.getLevelID();
-		System.out.println("das momentane Level ist Level" + levelID);
-		levels.add(world);
-		for(int[][] m : levels) {
-			for(int i = 0; i < 50; i++) {
-				for(int j = 0; j < 50; j++) {
-					System.out.print(m[i][j]);
-				}
-				System.out.println();
-				
-			}
-			System.out.println();	
-		}
+		levels.add(msg);
+		System.out.println("das momentane Level ist Level" + levelID + "Levellänge ist" + levels.size());
 		// levels.add(world, levelID);
-		System.out.println("LevelMessage empfangen");
-		++count;
-		if (count == 5) {
+		if (levels.size() == 5) {
 			try {
-				buildLevel(1);
+				buildLevel(msg);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
+
 	}
 
-	public void buildLevel(int levelID) throws IOException {
+	public void buildLevel(LevelMessage lvl) throws IOException {
 
-		int[][] world;
 		int length;
-		switch (levelID) {
+		switch (lvl.getLevelID()) {
 		case 1:
 			System.out.println("hier bin ich");
 			length = levels.size();
 			System.out.println("Anzahl der Elemente: " + length);
 			// spielwelt.getSpielwelt().setWorld(levels.get(levelID).getWorld());
-			spielwelt.getSpielwelt().setWorld(levels.get(0));
+			spielwelt.getSpielwelt().setWorld(levels.get(0).getWorld());
 			break;
 		case 2:
-			spielwelt.getSpielwelt().setWorld(levels.get(1));
+			spielwelt.getSpielwelt().setWorld(levels.get(1).getWorld());
 			break;
 		case 3:
-			spielwelt.getSpielwelt().setWorld(levels.get(2));
+			spielwelt.getSpielwelt().setWorld(levels.get(2).getWorld());
 			break;
 		case 4:
-			spielwelt.getSpielwelt().setWorld(levels.get(3));
+			spielwelt.getSpielwelt().setWorld(levels.get(3).getWorld());
 			break;
 		case 5:
-			spielwelt.getSpielwelt().setWorld(levels.get(4));
+			spielwelt.getSpielwelt().setWorld(levels.get(4).getWorld());
 			break;
 		}
 
+	}
+
+	public void sendStart(String u) {
+		System.out.println("Userliste Länge: " + user.size());
+		// for (UserLogedIn m : user) {
+		// if(u.equals(user.get))
+		// StartMessage send = new StartMessage(, );
+		// addQueue(send);
+		// }
+
+		for (int i = 0; i < user.size(); i++) {
+			System.out.println(user.get(i).getUser());
+			System.out.println(u);
+			if (u.equals(user.get(i).getUser())) {
+				System.out.println("Send StartMessage");
+				System.out.println(u + user.get(i).getLevelNow());
+				StartMessage send = new StartMessage(u, user.get(i).getLevelNow());
+				addQueue(send);
+			}
+		}
 	}
 
 	private void handlePlayerDead(PlayersMessage msg) {
@@ -411,19 +423,24 @@ public final class ClientEngine {
 
 	}
 
-	public void startup(String user, char[] cs) {
+	public void startLogin(String user, char[] cs) {
 		System.out.println("Send LoginMessage");
 		Login msg = new Login(user, cs);
 		addQueue(msg);
 	}
 
 	public void startNewPlayer(String user, char[] cs) {
-		NewPlayer msg = new NewPlayer(user, cs);
+		NewPlayer msg = new NewPlayer(user, cs, 1);
 		addQueue(msg);
 	}
 
 	private void handleNewPlayer(NewPlayer msg) {
-		System.out.println("New Player Added");
+
+		if (msg.getAdded() == true) {
+			System.out.println("New Player Added, you can login");
+			// JOptionPane machen
+		}
+
 		// addQueue(msg);
 
 	}
@@ -435,18 +452,26 @@ public final class ClientEngine {
 
 	private void handleLogout(LogoutMessage msg) {
 		System.out.println("Logout Message");
-		// addQueue(msg);
+
 	}
 
 	public void handleStart(StartMessage msg) throws IOException {
 		System.out.println("This is a Start message");
+		int levelID = msg.getLevelID();
+		// buildLevel(levelID);
 
 	}
 
-	public void handleLogin(PlayersMessage msg) {
+	public ArrayList<UserLogedIn> handleLogin(Login msg) {
 
-		System.out.println("This is a Login message");
-		user.addAll(msg.getUser());
+		System.out.println("Loginmessage. Liste aktualisieren");
+		user = msg.getList();
+		System.out.println("aktualisiert");
+		System.out.println("Userliste Länge: " + user.size());
+		for (UserLogedIn m : user) {
+			System.out.println("Userliste aktuell: " + m.getUserID() + m.getUser());
+		}
+		return user;
 	}
 
 	public void handleMove(MoveMessage msg) {

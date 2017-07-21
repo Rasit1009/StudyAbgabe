@@ -34,9 +34,9 @@ import pp2017.team10.client.engine.ClientEngine;
 import pp2017.team10.shared.Character;
 import pp2017.team10.shared.ChatMessage;
 import pp2017.team10.shared.ItemUsageMessage;
-import pp2017.team10.shared.Login;
-import pp2017.team10.shared.NewPlayer;
 import pp2017.team10.shared.LevelMessage;
+import pp2017.team10.shared.Login;
+import pp2017.team10.shared.StartMessage;
 
 /**
  *
@@ -60,7 +60,7 @@ public class spielwelt extends javax.swing.JFrame {
 	public JLabel playerOnMinimap = new JLabel();
 	private JLayeredPane jlp = new JLayeredPane();
 	private JPanel minimapPanel;
-	// public ClientEngine ceg = new ClientEngine();
+	public ClientEngine ceg = new ClientEngine();
 	public SendQueue send;
 	public String receiver;
 	public String recipient;
@@ -69,8 +69,7 @@ public class spielwelt extends javax.swing.JFrame {
 	public ArrayList<JLabel> itemList = new ArrayList<JLabel>();
 	private JLayeredPane minimap;
 	public ArrayList<JLabel> playerMiniMapList = new ArrayList<JLabel>();
-	public MainMenuB main;
-
+	public int LevelID;
 	public static spielwelt spiel;
 
 	/**
@@ -85,6 +84,10 @@ public class spielwelt extends javax.swing.JFrame {
 		}
 		return spiel;
 	}
+
+	/**
+	 * Creates new form spielwelt
+	 */
 
 	private ImageIcon getImage(String name) {
 		BufferedImage bi = null;
@@ -251,7 +254,7 @@ public class spielwelt extends javax.swing.JFrame {
 		itemList.remove(itemIDMap);
 	}
 
-	public void setWorld(int[][] map) {
+	public void setWorld(int[][] world) {
 
 		// for (int k = 0; k < 50; k++) {
 		// for (int j = 0; j < 50; j++) {
@@ -276,7 +279,7 @@ public class spielwelt extends javax.swing.JFrame {
 			for (int i = 0; i < 50; i++) {
 				minimapBackground = new JPanel();
 				minimapBackground.setSize(4, 4);
-				switch (map[i][j]) {
+				switch (world[i][j]) {
 				case 2:
 					minimapBackground.setBackground(Color.YELLOW);
 					break;
@@ -299,7 +302,7 @@ public class spielwelt extends javax.swing.JFrame {
 				groundImageLabel = new JLabel();
 				groundImageLabel.setSize(screenWidth / 50, screenWidth / 50);
 				groundImageLabel.setOpaque(false);
-				switch (map[i][j]) {
+				switch (world[i][j]) {
 				// case 0:
 				// groundImageLabel.setIcon(getImage("Ground.png"));
 				// break;
@@ -321,17 +324,8 @@ public class spielwelt extends javax.swing.JFrame {
 				case 7:
 					groundImageLabel.setIcon(getImage("groundwiso.png"));
 					break;
-				case 8:
-					// Column
-					break;
-				case 9:
-					groundImageLabel.setIcon(getImage("keygold.png"));
 				case 100:
 					groundImageLabel.setIcon(getImage("spieler.png"));
-					// groundImageLabel.setIcon(getImage("spieler.png"));
-					break;
-				case 150:
-					groundImageLabel.setIcon(getImage("wachmann.png"));
 					break;
 				}
 
@@ -454,9 +448,6 @@ public class spielwelt extends javax.swing.JFrame {
 		public void keyPressed(KeyEvent e) {
 			int playerX = playerPosX / (screenWidth / 50);
 			int playerY = playerPosY / (screenWidth / 50);
-
-			System.out.println(playerPosX);
-			System.out.println(playerPosY);
 			try {
 				if (e.getKeyCode() == 37 && playerPosX != 0 && --playerX >= 0 && world[playerX][playerY] != 1) {
 					movePlayerMinimap(playerX, playerY);
@@ -516,7 +507,8 @@ public class spielwelt extends javax.swing.JFrame {
 	};
 
 	public spielwelt() throws IOException {
-
+		StartMessage start = new StartMessage("StarteDB", 0);
+		ClientEngine.getEngine().addQueue(start);
 		setVisible(false);
 		new LoginB();
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -597,8 +589,6 @@ public class spielwelt extends javax.swing.JFrame {
 		ImageIcon wallIcon = getImage("wallwiso.png");
 		// ImageIcon wallIcon = getImage("wall4.png");
 		ImageIcon itemIcon = getImage("greenPotion.png");
-		ImageIcon keyIcon = getImage("keygold.png");
-		ImageIcon monsterIcon = getImage("wachmann.png");
 
 		playerOnField.setSize(screenWidth / 50, screenWidth / 50);
 		playerOnField.setIcon(playerIcon);
@@ -943,9 +933,8 @@ public class spielwelt extends javax.swing.JFrame {
 			setChat(chatInput.getText());
 			chatInput.setText("");
 
-			// ChatMessage chat = new ChatMessage(chatInput.getText(), receiver,
-			// recipient);
-			// ceg.addQueue(chat);
+			ChatMessage chat = new ChatMessage(chatInput.getText(), LevelID);
+			ClientEngine.getEngine().addQueue(chat);
 			chatInput.setEnabled(false);
 
 		}

@@ -25,7 +25,7 @@ public class ClientComm {
 	boolean serverruns = true;
 	private Messages to;
 	private Queue<Messages> bSendQueue = new LinkedList<Messages>();
-	private ClientEngine ce = new ClientEngine();
+	private ClientEngine ce;
 	// private ClientEngine ce;
 	public SendfromServer sFs;
 
@@ -61,7 +61,7 @@ public class ClientComm {
 			return false;
 		}
 
-		// ce = ClientEngine.getEngine();
+		ce = ClientEngine.getEngine();
 		// erzeugt Klasse SendeVonServer und startet sie
 		sFs = new SendfromServer(Input, ce);
 		sFs.start();
