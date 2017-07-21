@@ -2,7 +2,7 @@ package pp2017.team10.shared;
 
 import java.util.ArrayList;
 
-public class Level extends Messages {
+public class LevelMessage extends Messages {
 
 	/**
 	 * Author: Felix Schifferdecker, 5585147
@@ -13,34 +13,36 @@ public class Level extends Messages {
 	private ArrayList<UserLogedIn> u;
 	private boolean doorOpen;
 
-
-	public Level(int[][] world, ArrayList<UserLogedIn> u, boolean doorOpen) {
+	public LevelMessage(int[][] world, ArrayList<UserLogedIn> u, boolean doorOpen) {
 		this.world = world;
 		this.u = u;
 		this.doorOpen = doorOpen;
 	}
 
-	public Level(int[][] world, int levelID) {
+	public LevelMessage(int[][] world, int levelID) {
 		this.world = world;
 		this.levelID = levelID;
+	}
+
+	public LevelMessage(int[][] world) {
+		this.world = world;
 	}
 
 	public int[][] getWorld() {
 		return world;
 	}
-	
-	public Level(int[][] world, boolean doorOpen, int levelID) {
+
+	public LevelMessage(int[][] world, boolean doorOpen, int levelID) {
 		this.world = world;
 		this.levelID = levelID;
 		this.doorOpen = doorOpen;
 	}
-	
-	public int getLevelID(){
+
+	public int getLevelID() {
 		return levelID;
 	}
-	
+
 	public boolean getDoorOpen() {
 		return doorOpen;
 	}
-	
 }

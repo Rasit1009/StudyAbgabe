@@ -10,18 +10,18 @@ public class Login extends Messages {
 	private static final long serialVersionUID = -8177275538000046658L;
 
 	private String user;
-	private String pass;
+	private char[] pass;
 
-	public Login(String user, String pass) {
+	public Login(String user, char[] pass) {
 		this.user = user;
 		this.pass = pass;
 	}
-	
+
 	public String getUser() {
 		return user;
 	}
-	
-	public String getPassword() {
+
+	public char[] getPassword() {
 		return pass;
 	}
 

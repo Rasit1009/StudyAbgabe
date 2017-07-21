@@ -35,6 +35,8 @@ import pp2017.team10.shared.Character;
 import pp2017.team10.shared.ChatMessage;
 import pp2017.team10.shared.ItemUsageMessage;
 import pp2017.team10.shared.Login;
+import pp2017.team10.shared.NewPlayer;
+import pp2017.team10.shared.LevelMessage;
 
 /**
  *
@@ -58,7 +60,7 @@ public class spielwelt extends javax.swing.JFrame {
 	public JLabel playerOnMinimap = new JLabel();
 	private JLayeredPane jlp = new JLayeredPane();
 	private JPanel minimapPanel;
-	public ClientEngine ceg = new ClientEngine();
+	// public ClientEngine ceg = new ClientEngine();
 	public SendQueue send;
 	public String receiver;
 	public String recipient;
@@ -67,10 +69,22 @@ public class spielwelt extends javax.swing.JFrame {
 	public ArrayList<JLabel> itemList = new ArrayList<JLabel>();
 	private JLayeredPane minimap;
 	public ArrayList<JLabel> playerMiniMapList = new ArrayList<JLabel>();
+	public MainMenuB main;
+
+	public static spielwelt spiel;
 
 	/**
 	 * Creates new form spielwelt
+	 * 
+	 * @throws IOException
 	 */
+
+	public static synchronized spielwelt getSpielwelt() throws IOException {
+		if (spiel == null) {
+			spiel = new spielwelt();
+		}
+		return spiel;
+	}
 
 	private ImageIcon getImage(String name) {
 		BufferedImage bi = null;
@@ -168,11 +182,7 @@ public class spielwelt extends javax.swing.JFrame {
 
 	public void setItemCount(int itemID, int count) {
 
-	}
-
-	public void setItem(int itemID, int count) {
 		switch (itemID) {
-
 		case 0: {
 			int countBlue = Integer.parseInt(bluePotionCount.getText()) + count;
 			greenPotionCount.setText(Integer.toString(countBlue));
@@ -241,13 +251,14 @@ public class spielwelt extends javax.swing.JFrame {
 		itemList.remove(itemIDMap);
 	}
 
-	public void setWorld(int[][] world) {
-		for (int k = 0; k < 50; k++) {
-			for (int j = 0; j < 50; j++) {
-				System.out.print(world[k][j] + ", ");
-			}
-			System.out.println();
-		}
+	public void setWorld(int[][] map) {
+
+		// for (int k = 0; k < 50; k++) {
+		// for (int j = 0; j < 50; j++) {
+		// System.out.print(map[k][j] + ", ");
+		// }
+		// System.out.println();
+		// }
 
 		minimapPanel = new JPanel();
 		minimapPanel.setSize(200, 200);
@@ -260,15 +271,16 @@ public class spielwelt extends javax.swing.JFrame {
 		minimap.setOpaque(true);
 		minimapPanel.add(minimap);
 		JPanel minimapBackground;
+
 		for (int j = 0; j < 50; j++) {
 			for (int i = 0; i < 50; i++) {
 				minimapBackground = new JPanel();
 				minimapBackground.setSize(4, 4);
-				switch (world[i][j]) {
-				case 0:
+				switch (map[i][j]) {
+				case 2:
 					minimapBackground.setBackground(Color.YELLOW);
 					break;
-				case 1:
+				case 4:
 					minimapBackground.setBackground(Color.black);
 				}
 				minimap.add(minimapBackground, 1);
@@ -280,25 +292,52 @@ public class spielwelt extends javax.swing.JFrame {
 
 		JLabel groundImageLabel = new JLabel();
 
+		System.out.println("geht");
+
 		for (int j = 0; j < 50; j++) {
 			for (int i = 0; i < 50; i++) {
 				groundImageLabel = new JLabel();
 				groundImageLabel.setSize(screenWidth / 50, screenWidth / 50);
 				groundImageLabel.setOpaque(false);
-				switch (world[i][j]) {
-				case 0:
-					groundImageLabel.setIcon(getImage("ground.png"));
-					break;
-				case 1:
-					groundImageLabel.setIcon(getImage("wall.png"));
-					break;
+				switch (map[i][j]) {
+				// case 0:
+				// groundImageLabel.setIcon(getImage("Ground.png"));
+				// break;
+				// case 1:
+				// groundImageLabel.setIcon(getImage("wall.png"));
+				// break;
 				case 2:
-					groundImageLabel.setIcon(getImage("item.png"));
+					groundImageLabel.setIcon(getImage("wallwiso.png"));
+					break;
+				case 3:
+					groundImageLabel.setIcon(getImage("wallwiso.png"));
+					break;
+				case 4:
+					groundImageLabel.setIcon(getImage("groundwiso.png"));
+					break;
+				case 5:
+					groundImageLabel.setIcon(getImage("groundwiso.png"));
+					break;
+				case 7:
+					groundImageLabel.setIcon(getImage("groundwiso.png"));
+					break;
+				case 100:
+					groundImageLabel.setIcon(getImage("spieler.png"));
+					break;
 				}
+
 				jlp.add(groundImageLabel, 1);
 				groundImageLabel.setLocation(i * screenWidth / 50, j * screenWidth / 50);
 			}
+
 		}
+
+		// for (int k = 0; k < 50; k++) {
+		// for (int j = 0; j < 50; j++) {
+		// System.out.print(world[k][j] + ", ");
+		// }
+		// System.out.println();
+		// }
 
 	}
 
@@ -410,18 +449,18 @@ public class spielwelt extends javax.swing.JFrame {
 				if (e.getKeyCode() == 37 && playerPosX != 0 && --playerX >= 0 && world[playerX][playerY] != 1) {
 					movePlayerMinimap(playerX, playerY);
 					// ceg.consistency(world, "left", ++playerX, playerY);
-					ceg.consistency(world, "left", ++playerX, ++playerY);
+					ClientEngine.getEngine().consistency(world, "left", ++playerX, ++playerY);
 				} else if (e.getKeyCode() == 38 && playerPosY != 0 && --playerY >= 0 && world[playerX][playerY] != 1) {
 					movePlayerMinimap(playerX, playerY);
-					ceg.consistency(world, "up", playerX, ++playerY);
+					ClientEngine.getEngine().consistency(world, "up", playerX, ++playerY);
 				} else if (e.getKeyCode() == 39 && playerPosX != screenWidth && ++playerX < 50
 						&& world[playerX][playerY] != 1) {
 					movePlayerMinimap(playerX, playerY);
-					ceg.consistency(world, "right", --playerX, playerY);
+					ClientEngine.getEngine().consistency(world, "right", --playerX, playerY);
 				} else if (e.getKeyCode() == 40 && playerPosY != screenWidth && ++playerY < 50
 						&& world[playerX][playerY] != 1) {
 					movePlayerMinimap(playerX, playerY);
-					ceg.consistency(world, "down", playerX, --playerY);
+					ClientEngine.getEngine().consistency(world, "down", playerX, --playerY);
 				}
 
 			} catch (InterruptedException ex) {
@@ -455,7 +494,7 @@ public class spielwelt extends javax.swing.JFrame {
 			}
 			if (e.getKeyChar() == 'v' || e.getKeyChar() == 'V') { // Item
 																	// aufheben
-				ceg.itemAvailable(playerX, playerY, world);
+				ClientEngine.getEngine().itemAvailable(playerX, playerY, world);
 			}
 		}
 
@@ -466,6 +505,8 @@ public class spielwelt extends javax.swing.JFrame {
 
 	public spielwelt() throws IOException {
 
+		setVisible(false);
+		new MainMenuB();
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
 		int screen = (int) screenSize.getHeight() - 100;
@@ -528,10 +569,8 @@ public class spielwelt extends javax.swing.JFrame {
 		playerOnMinimap.setBackground(Color.red);
 		playerOnMinimap.setLocation(0, 0);
 		playerOnMinimap.setSize(4, 4);
-
 		// playerOnMinimap.setOpaque(true);
 		// minimap.add(playerOnMinimap, 0);
-
 		playerOnMinimap.setOpaque(true);
 		// minimap.add(playerOnMinimap, 0);
 
@@ -539,8 +578,12 @@ public class spielwelt extends javax.swing.JFrame {
 		this.setLocationRelativeTo(null);
 
 		ImageIcon playerIcon = getImage("spieler.png");
-		ImageIcon groundIcon = getImage("green.png");
-		ImageIcon wallIcon = getImage("wall4.png");
+		// ImageIcon groundIcon = getImage("green.png");
+		// ImageIcon wallIcon = getImage("wall4.png");
+		// ImageIcon itemIcon = getImage("greenPotion.png");
+		ImageIcon groundIcon = getImage("groundwiso.png");
+		ImageIcon wallIcon = getImage("wallwiso.png");
+		// ImageIcon wallIcon = getImage("wall4.png");
 		ImageIcon itemIcon = getImage("greenPotion.png");
 
 		playerOnField.setSize(screenWidth / 50, screenWidth / 50);
@@ -562,9 +605,7 @@ public class spielwelt extends javax.swing.JFrame {
 		mainItemPanel.setPreferredSize(itemPanelSize);
 
 		healthBar.setMaximum(100);
-		Login log = new Login("Rasit", "123");
-		ceg.addQueue(log);
-
+		// pw[1] = 'c';
 	}
 
 	@SuppressWarnings("unchecked")
@@ -888,18 +929,19 @@ public class spielwelt extends javax.swing.JFrame {
 			setChat(chatInput.getText());
 			chatInput.setText("");
 
-			ChatMessage chat = new ChatMessage(chatInput.getText());
-			ceg.addQueue(chat);
+			// ChatMessage chat = new ChatMessage(chatInput.getText(), receiver,
+			// recipient);
+			// ceg.addQueue(chat);
 			chatInput.setEnabled(false);
 
 		}
 
 	}
 
-	public ClientEngine returnEngine(ClientEngine ceg) {
-		ceg = this.ceg;
-		return ceg;
-	}
+	// public ClientEngine returnEngine(ClientEngine ceg) {
+	// ceg = this.ceg;
+	// return ceg;
+	// }
 
 	// Variables declaration - do not modify
 	private javax.swing.JButton chatButton;

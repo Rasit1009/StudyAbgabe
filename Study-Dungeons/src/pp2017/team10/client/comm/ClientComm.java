@@ -13,7 +13,7 @@ import pp2017.team10.client.gui.spielwelt;
 
 import java.io.*;
 
-public class ClientComm{
+public class ClientComm {
 	// Attribute
 	private ObjectInputStream Input;
 	private ObjectOutputStream Output;
@@ -26,8 +26,8 @@ public class ClientComm{
 	private Messages to;
 	private Queue<Messages> bSendQueue = new LinkedList<Messages>();
 	private ClientEngine ce = new ClientEngine();
+	// private ClientEngine ce;
 	public SendfromServer sFs;
-
 
 	// Konstruktor der Client erzeugt
 	public ClientComm(String server, int port) {
@@ -61,6 +61,7 @@ public class ClientComm{
 			return false;
 		}
 
+		// ce = ClientEngine.getEngine();
 		// erzeugt Klasse SendeVonServer und startet sie
 		sFs = new SendfromServer(Input, ce);
 		sFs.start();

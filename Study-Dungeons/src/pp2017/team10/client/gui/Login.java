@@ -16,7 +16,10 @@ public class Login extends JFrame implements ActionListener {
 
 	public Login() {
 
-		super("Study Dungeons");
+		super("Login to Study");
+		this.setSize(305, 435);
+		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+//		super("Study Dungeons");
 		this.setSize(300, 350);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
@@ -39,28 +42,39 @@ public class Login extends JFrame implements ActionListener {
 		panel.add(logo);
 
 		user = new JLabel("User:");
+		user.setForeground(Color.WHITE);
+		user.setHorizontalAlignment(SwingConstants.TRAILING);
+		user.setFont(new Font("Tahoma", Font.BOLD, 18));
+		user.setBounds(10, 110, 100, 50);
 		user.setBounds(10, 121, 100, 50);
 		panel.add(user);
 
 		pw = new JLabel("Password:");
+		pw.setForeground(Color.WHITE);
+		pw.setHorizontalAlignment(SwingConstants.TRAILING);
+		pw.setFont(new Font("Tahoma", Font.BOLD, 18));
+		pw.setBounds(10, 157, 100, 50);
 		pw.setBounds(10, 171, 100, 50);
 		panel.add(pw);
 
 		userInput = new JTextField();
-		userInput.setBounds(111, 121, 175, 50);
+		userInput.setBounds(111, 109, 175, 50);
 		panel.add(userInput);
 
 		PWInput = new JPasswordField(25);
-		PWInput.setBounds(111, 171, 175, 50);
+		PWInput.setBounds(111, 160, 175, 50);
 		panel.add(PWInput);
 
+		choice = new JLabel("Choose Fighter:");
+		choice.setForeground(Color.WHITE);
+		choice.setFont(new Font("Tahoma", Font.BOLD, 12));
 		choice = new JLabel("Choose Fighter");
 		choice.setBounds(10, 221, 100, 35);
 		panel.add(choice);
 
-		String[] choiceList = { "Burcu", "Tobuias", "Felix", "Rasit" };
+		String[] choiceList = { "Burcu", "Tobias", "Felix", "Rasit" };
 		choice1 = new JComboBox(choiceList);
-		choice1.setBounds(111, 221, 174, 30);
+		choice1.setBounds(111, 221, 179, 30);
 		panel.add(choice1);
 
 		ok = new JButton("OK");

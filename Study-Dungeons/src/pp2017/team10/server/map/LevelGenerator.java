@@ -176,8 +176,8 @@ public class LevelGenerator {
 		}
 
 		randomMonster(2);
-//		randomItem(2);
-//		door();
+		// randomItem(2);
+		door();
 		printUniversity();
 
 		wiso.setGround(university);
@@ -224,7 +224,7 @@ public class LevelGenerator {
 			}
 		}
 		randomMonster(3);
-		randomItem(2);
+		// randomItem(2);
 		door();
 		printUniversity();
 
@@ -254,29 +254,35 @@ public class LevelGenerator {
 
 		// verschiedene Tiles werden gesetzt
 
-//		for (int i = 5; i < university.length / 3; i++) {
-//			for (int j = 5; j < university.length / 3; j++) {
-//				university[i][j] = new Tiles(true, false);
-//				university[i][j].setIsColumn(true);
-//			}
-//		}
-//
-//		for (int i = 5; i < university.length / 3; i++) {
-//			for (int j = (university.length / 3) + 15; j < university.length - 8; j++) {
-//				university[i][j] = new Tiles(true, false);
-//				university[i][j].setIsColumn(true);
-//			}
-//		}
+		// for (int i = 5; i < university.length / 3; i++) {
+		// for (int j = 5; j < university.length / 3; j++) {
+		// university[i][j] = new Tiles(true, false);
+		// university[i][j].setIsColumn(true);
+		// }
+		// }
+		//
+		// for (int i = 5; i < university.length / 3; i++) {
+		// for (int j = (university.length / 3) + 15; j < university.length - 8;
+		// j++) {
+		// university[i][j] = new Tiles(true, false);
+		// university[i][j].setIsColumn(true);
+		// }
+		// }
 
-//		for (int i = (university.length / 2); i < (university.length) - 15; i++) {
-//			for (int j = 10; j < 40; j++) {
-//				university[i][j] = new Tiles(true, false);
-//				university[i][j].setIsColumn(true);
-//			}
-//		}
+		// for (int i = (university.length / 2); i < (university.length) - 15;
+		// i++) {
+		// for (int j = 10; j < 40; j++) {
+		// university[i][j] = new Tiles(true, false);
+		// university[i][j].setIsColumn(true);
+		// }
+		// }
+
 		randomMonster(3);
-//		randomItem(2);
+		System.out.println("Monster geht");
+		// randomItem(2);
+		System.out.println("Item geht");
 		door();
+		System.out.println("Tür geht");
 		printUniversity();
 
 		library.setGround(university);
@@ -303,8 +309,8 @@ public class LevelGenerator {
 		floodFill(3, 3);
 
 		randomMonster(5);
-//		randomItem(2);
-//		door();
+		// randomItem(2);
+		door();
 		printUniversity();
 
 		physik.setGround(university);
@@ -346,8 +352,8 @@ public class LevelGenerator {
 			}
 		}
 		randomMonster(6);
-//		randomItem(2);
-//		door();
+		// randomItem(2);
+		door();
 		printUniversity();
 		copt.setGround(university);
 		return copt;
@@ -430,42 +436,46 @@ public class LevelGenerator {
 			xCoord = rand.nextInt(university.length);
 			yCoord = rand.nextInt(university.length);
 			if (isOK(xCoord, yCoord) == true) {
-				if (university[xCoord][yCoord].isMonster() == false 
-						&& university[xCoord][yCoord].isItem() == false
+				if (university[xCoord][yCoord].isMonster() == false && university[xCoord][yCoord].isItem() == false
 						&& university[xCoord][yCoord].isWall() == false
 						&& university[xCoord][yCoord].isColumn() == false) {
-//						&& university[xCoord + 1][yCoord].isMonster() == false
-//						&& university[xCoord + 1][yCoord].isItem() == false
-//						&& university[xCoord + 1][yCoord].isWall() == false
-//						&& university[xCoord + 1][yCoord].isColumn() == false
-//						&& university[xCoord - 1][yCoord].isMonster() == false
-//						&& university[xCoord - 1][yCoord].isItem() == false
-//						&& university[xCoord - 1][yCoord].isWall() == false
-//						&& university[xCoord - 1][yCoord].isColumn() == false
-//						&& university[xCoord][yCoord + 1].isMonster() == false
-//						&& university[xCoord][yCoord + 1].isItem() == false
-//						&& university[xCoord][yCoord + 1].isWall() == false
-//						&& university[xCoord][yCoord + 1].isColumn() == false
-//						&& university[xCoord][yCoord - 1].isMonster() == false
-//						&& university[xCoord][yCoord - 1].isItem() == false
-//						&& university[xCoord][yCoord - 1].isWall() == false
-//						&& university[xCoord][yCoord - 1].isColumn() == false
-//						&& university[xCoord - 1][yCoord + 1].isMonster() == false
-//						&& university[xCoord - 1][yCoord + 1].isItem() == false
-//						&& university[xCoord - 1][yCoord + 1].isWall() == false
-//						&& university[xCoord - 1][yCoord + 1].isColumn() == false
-//						&& university[xCoord + 1][yCoord + 1].isMonster() == false
-//						&& university[xCoord + 1][yCoord + 1].isItem() == false
-//						&& university[xCoord + 1][yCoord + 1].isWall() == false
-//						&& university[xCoord + 1][yCoord + 1].isColumn() == false
-//						&& university[xCoord + 1][yCoord - 1].isMonster() == false
-//						&& university[xCoord + 1][yCoord - 1].isItem() == false
-//						&& university[xCoord + 1][yCoord - 1].isWall() == false
-//						&& university[xCoord + 1][yCoord - 1].isColumn() == false
-//						&& university[xCoord - 1][yCoord - 1].isMonster() == false
-//						&& university[xCoord - 1][yCoord - 1].isItem() == false
-//						&& university[xCoord - 1][yCoord + 1].isWall() == false
-//						&& university[xCoord - 1][yCoord - 1].isColumn() == false) {
+					// && university[xCoord + 1][yCoord].isMonster() == false
+					// && university[xCoord + 1][yCoord].isItem() == false
+					// && university[xCoord + 1][yCoord].isWall() == false
+					// && university[xCoord + 1][yCoord].isColumn() == false
+					// && university[xCoord - 1][yCoord].isMonster() == false
+					// && university[xCoord - 1][yCoord].isItem() == false
+					// && university[xCoord - 1][yCoord].isWall() == false
+					// && university[xCoord - 1][yCoord].isColumn() == false
+					// && university[xCoord][yCoord + 1].isMonster() == false
+					// && university[xCoord][yCoord + 1].isItem() == false
+					// && university[xCoord][yCoord + 1].isWall() == false
+					// && university[xCoord][yCoord + 1].isColumn() == false
+					// && university[xCoord][yCoord - 1].isMonster() == false
+					// && university[xCoord][yCoord - 1].isItem() == false
+					// && university[xCoord][yCoord - 1].isWall() == false
+					// && university[xCoord][yCoord - 1].isColumn() == false
+					// && university[xCoord - 1][yCoord + 1].isMonster() ==
+					// false
+					// && university[xCoord - 1][yCoord + 1].isItem() == false
+					// && university[xCoord - 1][yCoord + 1].isWall() == false
+					// && university[xCoord - 1][yCoord + 1].isColumn() == false
+					// && university[xCoord + 1][yCoord + 1].isMonster() ==
+					// false
+					// && university[xCoord + 1][yCoord + 1].isItem() == false
+					// && university[xCoord + 1][yCoord + 1].isWall() == false
+					// && university[xCoord + 1][yCoord + 1].isColumn() == false
+					// && university[xCoord + 1][yCoord - 1].isMonster() ==
+					// false
+					// && university[xCoord + 1][yCoord - 1].isItem() == false
+					// && university[xCoord + 1][yCoord - 1].isWall() == false
+					// && university[xCoord + 1][yCoord - 1].isColumn() == false
+					// && university[xCoord - 1][yCoord - 1].isMonster() ==
+					// false
+					// && university[xCoord - 1][yCoord - 1].isItem() == false
+					// && university[xCoord - 1][yCoord + 1].isWall() == false
+					// && university[xCoord - 1][yCoord - 1].isColumn() ==
+					// false) {
 					university[xCoord][yCoord].setIsFloor(true);
 					university[xCoord][yCoord].setIsMonster(true);
 					university[xCoord][yCoord].setIsStone(true);
@@ -521,58 +531,61 @@ public class LevelGenerator {
 	}
 
 	public void printUniversity() {
-		
-		 for (int i = 0; i < university.length - 1; i++) {
-		 for (int j = 0; j < university[j].length - 1; j++) {
-		 if (university[i][j].isWall()) {
-		 System.out.print("X");
-		 } else if (university[i][j].isItem()) {
-		 System.out.print("<");
-		 } else if (university[i][j].isMonster()) {
-		 System.out.print("M");
-		 } else if (university[i][j].isPlayer()) {
-		 System.out.print("P");
-		 } else if (university[i][j].isDoor()) {
-		 System.out.print("D");
-		 } else if (university[i][j].isExit()) {
-		 System.out.print("@");
-		 } else if (university[i][j].isFloor()) {
-		 System.out.print(".");
-		 } else if (university[i][j].isStone()) {
-		 System.out.print("+");
-		 } else if (university[i][j].isMarble()) {
-		 System.out.print("~");
-		 } else if (university[i][j].isEntrance()) {
-		 System.out.print("E");
-		 } else if (university[i][j].isColumn()) {
-		 System.out.print("F");
-		 } else if (university[i][j].isKey()) {
-		 System.out.print("K");
-		 } else {
-		 System.out.print(" ");
-		 }
-		 }
-		 System.out.println();
-		 }
+
+		// for (int i = 0; i < university.length - 1; i++) {
+		// for (int j = 0; j < university[j].length - 1; j++) {
+		// if (university[i][j].isWall()) {
+		// System.out.print("X");
+		// } else if (university[i][j].isItem()) {
+		// System.out.print("<");
+		// } else if (university[i][j].isMonster()) {
+		// System.out.print("M");
+		// } else if (university[i][j].isPlayer()) {
+		// System.out.print("P");
+		// } else if (university[i][j].isDoor()) {
+		// System.out.print("D");
+		// } else if (university[i][j].isExit()) {
+		// System.out.print("@");
+		// } else if (university[i][j].isFloor()) {
+		// System.out.print(".");
+		// } else if (university[i][j].isStone()) {
+		// System.out.print("+");
+		// } else if (university[i][j].isMarble()) {
+		// System.out.print("~");
+		// } else if (university[i][j].isEntrance()) {
+		// System.out.print("E");
+		// } else if (university[i][j].isColumn()) {
+		// System.out.print("F");
+		// } else if (university[i][j].isKey()) {
+		// System.out.print("K");
+		// } else {
+		// System.out.print(" ");
+		// }
+		// }
+		// System.out.println();
+		// }
 	}
-	
-	public Map getLevel(int i){
+
+	public Map getLevel(int i) {
 		System.out.println(i);
-		switch (i){
+		switch (i) {
 		case 1: {
 			map = buildWiso();
-			break;}
+			break;
+		}
 		case 2: {
 			map = buildPhilo();
-			break;}
+			break;
+		}
 		case 3: {
 			map = buildLibrary();
-			System.out.println("ich bin die "+ map.levelID);
-			break;}
-		case 4: 
+			System.out.println("ich bin die " + map.levelID);
+			break;
+		}
+		case 4:
 			map = buildPhysik();
 			break;
-		case 5: 
+		case 5:
 			map = buildCopt();
 			break;
 		}

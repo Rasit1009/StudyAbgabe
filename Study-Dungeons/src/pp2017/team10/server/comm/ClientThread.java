@@ -57,7 +57,7 @@ public class ClientThread extends Thread {
 			try {
 				to = (Messages) sInput.readObject();
 				getQueueServer.add(to);
-				 System.out.println("EmpfangsschlangeServer wird befüllt"+ to);
+				System.out.println("EmpfangsschlangeServer wird befüllt" + to);
 			} catch (IOException e) {
 				System.out.println("Fehler ct 3");
 				break;

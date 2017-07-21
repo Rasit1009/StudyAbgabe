@@ -1,5 +1,7 @@
 package pp2017.team10.shared;
 
+import java.io.Serializable;
+
 /**
  * Author: Felix Schifferdecker, 5585147
  */
@@ -8,7 +10,11 @@ package pp2017.team10.shared;
  * und Items und den jeweiligen Get- und Set-Methoden
  */
 
-public class UserLogedIn {
+public class UserLogedIn extends Messages implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1294154414794374409L;
 	private int health;
 	private int[] items;
 	private String user;
@@ -18,9 +24,13 @@ public class UserLogedIn {
 	private int userPosX;
 	private int userPosY;
 	private int damage;
+	private int levelDone;
+	private int levelNow;
+	private UserLogedIn userlist;
 
 	public UserLogedIn(int health, int[] items, String user, int score, boolean gotKey, int userID, int userPosX,
-		int userPosY, int damage) {
+			int userPosY, int damage, int levelDone, int levelNow) {
+
 		this.health = health;
 		this.items = items;
 		this.user = user;
@@ -30,6 +40,24 @@ public class UserLogedIn {
 		this.userPosX = userPosX;
 		this.userPosY = userPosY;
 		this.damage = damage;
+		this.levelDone = levelDone;
+		this.levelNow = levelNow;
+	}
+
+	public void setLevelNow(int levelNow) {
+		this.levelNow = levelNow;
+	}
+
+	public int getLevelNow() {
+		return levelNow;
+	}
+
+	public void setLevelDone(int levelDone) {
+		this.levelDone = levelDone;
+	}
+
+	public int getLevelDone() {
+		return levelDone;
 	}
 
 	public int getUserID() {
@@ -86,6 +114,10 @@ public class UserLogedIn {
 
 	public void setUserPosY(int userPosY) {
 		this.userPosY = userPosY;
+	}
+
+	public UserLogedIn getUserLogedIn() {
+		return userlist;
 	}
 
 }

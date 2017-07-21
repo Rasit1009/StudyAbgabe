@@ -17,13 +17,15 @@ public class Password {
 
 	// Funktion zum hashen (teilweise aus dem Internet �bernommen). Gibt das
 	// gehashte Passwort zur�ck
-	public String hashing(String password) {
-		password = password + salt;
+	public String hashing(char[] password) {
+		String passwordV = String.valueOf(password); // char Array wird in
+														// String gespeichert
+		passwordV = passwordV + salt;
 		MessageDigest m;
 		try {
 			m = MessageDigest.getInstance("MD5");
 			m.reset();
-			m.update(password.getBytes());
+			m.update(passwordV.getBytes());
 			byte[] digest = m.digest();
 			BigInteger bigInt = new BigInteger(1, digest);
 			String hashtext = bigInt.toString(16);

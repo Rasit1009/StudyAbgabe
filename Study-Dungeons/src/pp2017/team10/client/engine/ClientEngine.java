@@ -2,7 +2,6 @@ package pp2017.team10.client.engine;
 
 import pp2017.team10.shared.Character;
 import pp2017.team10.shared.ChatMessage;
-import pp2017.team10.shared.Cheat;
 
 import pp2017.team10.shared.DoorUsageMessage;
 import pp2017.team10.shared.ItemMessage;
@@ -11,7 +10,7 @@ import pp2017.team10.shared.ItemUsageMessage;
 import pp2017.team10.shared.DoorUsageMessage;
 import pp2017.team10.shared.ItemMessage;
 import pp2017.team10.shared.ItemUsageMessage;
-import pp2017.team10.shared.Level;
+import pp2017.team10.shared.LevelMessage;
 import pp2017.team10.shared.Login;
 import pp2017.team10.shared.LogoutMessage;
 import pp2017.team10.shared.Messages;
@@ -22,7 +21,7 @@ import pp2017.team10.shared.NewPlayer;
 import pp2017.team10.shared.PlayerAttackMessage;
 import pp2017.team10.shared.GameOverMessage;
 import pp2017.team10.shared.StartMessage;
-
+import pp2017.team10.shared.UserLogedIn;
 import pp2017.team10.shared.PlayerAttackMessage;
 import pp2017.team10.shared.PlayersMessage;
 import pp2017.team10.shared.StartMessage;
@@ -35,6 +34,7 @@ import java.util.Queue;
 
 import pp2017.team10.client.comm.ClientComm;
 import pp2017.team10.client.comm.SendQueue;
+import pp2017.team10.client.gui.MainMenuB;
 import pp2017.team10.client.gui.spielwelt;
 
 /**
@@ -47,7 +47,7 @@ import pp2017.team10.client.gui.spielwelt;
  *
  */
 
-public class ClientEngine {
+public final class ClientEngine {
 
 	public Queue<Messages> bSendQueue = new LinkedList<Messages>();
 	public int posx;
@@ -59,6 +59,22 @@ public class ClientEngine {
 	public int[][] map;
 	public SendQueue send;
 	public ArrayList<int[][]> levels = new ArrayList();
+	public ArrayList<UserLogedIn> user = new ArrayList();
+	public UserLogedIn use;
+	public int count = 1;
+
+	private static ClientEngine ce = new ClientEngine();
+
+	public ClientEngine() {
+
+	}
+
+	public static synchronized ClientEngine getEngine() {
+		if (ce == null) {
+			ce = new ClientEngine();
+		}
+		return ce;
+	}
 
 	public void getCharInfo() {
 
@@ -176,7 +192,7 @@ public class ClientEngine {
 		}
 
 		MoveMessage moveMsg = new MoveMessage(posx, posy, direction);
-		handleMove(moveMsg);
+		bSendQueue.offer(moveMsg);
 	}
 
 	/*
@@ -255,9 +271,6 @@ public class ClientEngine {
 				if (m instanceof ChatMessage) {
 					System.out.println("This is a ChatMessage");
 					handleChat((ChatMessage) m);
-				} else if (m instanceof Cheat) {
-					System.out.println("This is a CheatMessage");
-					handleCheat((Cheat) m);
 				} else if (m instanceof DoorUsageMessage) {
 					System.out.println("This is a DoorUsageMessage");
 					handleDoor((DoorUsageMessage) m);
@@ -266,7 +279,7 @@ public class ClientEngine {
 					handleItem((ItemUsageMessage) m);
 				} else if (m instanceof Login) {
 					System.out.println("This is a LoginMessage");
-					handleLogin((Login) m);
+					// handleLogin((Login) m);
 				} else if (m instanceof MoveMessage) {
 					System.out.println("This is a MoveMessage");
 					handleMove((MoveMessage) m);
@@ -284,15 +297,16 @@ public class ClientEngine {
 					handleNewPlayer((NewPlayer) m);
 				} else if (m instanceof GameOverMessage) {
 					System.out.println("This is a PlayerDeadMessage");
-
 					handlePlayerDead((GameOverMessage) m);
 					// handlePlayerDead((PlayerDead) m);
-				} else if (m instanceof Level) {
+				} else if (m instanceof LevelMessage) {
 					System.out.println("This is a LevelMessage");
-					handleLevel((Level) m);
+					handleLevel((LevelMessage) m);
 				} else if (m instanceof StartMessage) {
 					System.out.println("This is a StartMessage");
 					handleStart((StartMessage) m);
+				} else if (m instanceof PlayersMessage) {
+					handlePlayersMessage((PlayersMessage) m);
 				}
 			}
 		} catch (Exception e) {
@@ -300,37 +314,83 @@ public class ClientEngine {
 		}
 	}
 
+	private void handlePlayersMessage(PlayersMessage msg) throws IOException {
+		System.out.println("this is a PlayersMessage");
+
+		for (int i = 0; i <= user.size(); i++) {
+			if (user.get(i).getHealth() != msg.getUser().get(i).getHealth()) {
+				spielwelt.getSpielwelt().setHealth(msg.getUser().get(i).getHealth());
+			} else if ((user.get(i).getUserPosX() != msg.getUser().get(i).getUserPosX()
+					|| user.get(i).getUserPosY() != msg.getUser().get(i).getUserPosY())) {
+				spielwelt.getSpielwelt().movePlayer(i, msg.getUser().get(i).getUserPosX(),
+						msg.getUser().get(i).getUserPosY());
+			} else if (user.get(i).getItems() != msg.getUser().get(i).getItems()) {
+				// spielwelt.getSpielwelt().setItemCount(msg.getUser().get(i).get,
+				// count);
+			}
+		}
+		// level = user.get(i).getLevelNow();
+		// System.out.println("start level" + level);
+		// i++;
+		// buildLevel(level);
+	}
+
+	public void setUser(PlayersMessage msg) {
+
+		// userlist = ((PlayersMessage)msg).getUser();
+		// user = new UserLogedIn();
+
+	}
+
 	private void handlePlayerDead(GameOverMessage msg) {
 
 	}
 
-	private void handleLevel(Level msg) {
+	private void handleLevel(LevelMessage msg) {
 		int[][] world;
 		int levelID;
+
 		world = msg.getWorld();
 		levelID = msg.getLevelID();
+		System.out.println("das momentane Level ist Level" + levelID);
 		levels.add(world);
-		System.out.println("LevelMessage empfangen");
 
+		// levels.add(world, levelID);
+		System.out.println("LevelMessage empfangen");
+		++count;
+		if (count == 5) {
+			try {
+				buildLevel(1);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
-	public void buildLevel(int levelID) {
+	public void buildLevel(int levelID) throws IOException {
 
+		int[][] world;
+		int length;
 		switch (levelID) {
 		case 1:
-			CE_Main.spiel.setWorld(levels.get(0));
+			System.out.println("hier bin ich");
+			length = levels.size();
+			System.out.println("Anzahl der Elemente: " + length);
+			// spielwelt.getSpielwelt().setWorld(levels.get(levelID).getWorld());
+			spielwelt.getSpielwelt().setWorld(levels.get(0));
 			break;
 		case 2:
-			CE_Main.spiel.setWorld(levels.get(1));
+			spielwelt.getSpielwelt().setWorld(levels.get(1));
 			break;
 		case 3:
-			CE_Main.spiel.setWorld(levels.get(2));
+			spielwelt.getSpielwelt().setWorld(levels.get(2));
 			break;
 		case 4:
-			CE_Main.spiel.setWorld(levels.get(3));
+			spielwelt.getSpielwelt().setWorld(levels.get(3));
 			break;
 		case 5:
-			CE_Main.spiel.setWorld(levels.get(4));
+			spielwelt.getSpielwelt().setWorld(levels.get(4));
 			break;
 		}
 
@@ -342,64 +402,73 @@ public class ClientEngine {
 
 	}
 
-	private void handleNewPlayer(NewPlayer msg) {
-		System.out.println("New Player Message");
+	public void startup(String user, char[] cs) {
+		System.out.println("Send LoginMessage");
+		Login msg = new Login(user, cs);
 		addQueue(msg);
+	}
+
+	public void startNewPlayer(String user, char[] cs) {
+		NewPlayer msg = new NewPlayer(user, cs);
+		addQueue(msg);
+	}
+
+	private void handleNewPlayer(NewPlayer msg) {
+		System.out.println("New Player Added");
+		// addQueue(msg);
 
 	}
 
 	private void handleMonsterAttack(MonsterAttack msg) {
 		System.out.println("Monster Attack Message");
-		addQueue(msg);
 
 	}
 
 	private void handleLogout(LogoutMessage msg) {
 		System.out.println("Logout Message");
-		addQueue(msg);
+		// addQueue(msg);
 	}
 
-	public void handleStart(StartMessage msg) {
+	public void handleStart(StartMessage msg) throws IOException {
 		System.out.println("This is a Start message");
-		buildLevel(msg.getLevelID());
 
 	}
 
-	public void handleLogin(Login msg) {
+	public void handleLogin(PlayersMessage msg) {
 
 		System.out.println("This is a Login message");
-		addQueue((Messages) msg);
+		user.addAll(msg.getUser());
 	}
 
 	public void handleMove(MoveMessage msg) {
 
 		System.out.println("This is a Move message");
-		addQueue((Messages) msg);
+		// spielwelt.getSpielwelt().movePlayer(msg.playerID, posXNeu, posYNeu);
 	}
 
 	public void handleItem(ItemUsageMessage msg) {
 
 		System.out.println("This is a Item message");
-		addQueue(msg);
+		// addQueue(msg);
 	}
 
 	public void handleDoor(DoorUsageMessage msg) {
 
 		System.out.println("This is a Door message");
-		addQueue((Messages) msg);
+		// addQueue((Messages) msg);
 
 	}
 
 	public void handlePlayerAttack(PlayerAttackMessage msg) {
 
 		System.out.println("This is a Attack message");
-		addQueue(msg);
+		// addQueue(msg);
 	}
 
 	public void handleChat(Messages msg) {
 
 		System.out.println("This is a Chat Message");
-		addQueue(msg);
+		// addQueue(msg);
 	}
 
 	/*

@@ -5,12 +5,18 @@ package pp2017.team10.server.engine;
  */
 //Klasse um den User zu definieren
 public class User {
-	public String user;
-	public String password;
+	private String user;
+	private String password;
+	private int levelDone;
 	
-	public User(String username, String pw){
+	public User(String username, String pw, int levelDone){
 		this.user = username;
 		this.password = pw;
+		this.levelDone = levelDone;
+	}
+	
+	public int getLevelDone() {
+		return levelDone;
 	}
 	
 	public String getUser(){

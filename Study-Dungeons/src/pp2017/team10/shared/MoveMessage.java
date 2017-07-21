@@ -29,5 +29,7 @@ public class MoveMessage extends Messages {
 	public int getPosY() {
 		return posy;
 	}
+	
+	
 
 }

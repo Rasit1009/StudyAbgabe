@@ -9,10 +9,10 @@ public class Testarea {
 		// TODO Auto-generated method stub
 
 		Database db = new Database();
-		db.addUser("halle", "vespaPX90");
+		db.addUser("halle", "vespaPX90", 0);
 		for (User u : db.userdata) {
-			System.out.println(u.user);
-			System.out.println(u.password);
+//			System.out.println(u.user);
+//			System.out.println(u.password);
 		}
 
 	}

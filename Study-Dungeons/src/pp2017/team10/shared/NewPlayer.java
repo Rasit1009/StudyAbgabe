@@ -1,17 +1,24 @@
 package pp2017.team10.shared;
 
+import java.io.Serializable;
+
 import pp2017.team10.shared.Messages;
 
-public class NewPlayer extends Messages {
+public class NewPlayer extends Messages implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4876875526789291303L;
 	/**
 	 * Author: Felix Schifferdecker, 5585147
 	 */
-	private static final long serialVersionUID = 1L;
+
 	private String user;
-	private String pw;
+	private char[] pw;
 	private boolean added;
 
-	public NewPlayer(String name, String password) {
+
+	public NewPlayer(String name, char[] password) {
 		user = name;
 		pw = password;
 	}
@@ -20,7 +27,7 @@ public class NewPlayer extends Messages {
 		return user;
 	}
 
-	public String getPw() {
+	public char[] getPw() {
 		return pw;
 	}
 
@@ -28,7 +35,7 @@ public class NewPlayer extends Messages {
 		this.user = name;
 		this.added = added;
 	}
-	
+
 	public boolean getAdded() {
 		return added;
 	}

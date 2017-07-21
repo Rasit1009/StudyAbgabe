@@ -29,7 +29,7 @@ public class SendQueue extends Thread {
 		System.out.println(sendQueue);
 		while (lauf) {
 			if (sendQueue.isEmpty()) {
-//				 System.out.println("SendeSchlange leer");
+				// System.out.println("SendeSchlange leer");
 				try {
 					sleep(0);
 				} catch (Exception e) {
@@ -39,7 +39,6 @@ public class SendQueue extends Thread {
 			if (!sendQueue.isEmpty()) {
 				System.out.println("wurde gefüllt");
 				while (!sendQueue.isEmpty()) {
-
 					ct.sendTo(ce.deleteQueue());
 				}
 				// lauf=false;
