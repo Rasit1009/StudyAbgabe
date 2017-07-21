@@ -354,7 +354,16 @@ public final class ClientEngine {
 		levelID = msg.getLevelID();
 		System.out.println("das momentane Level ist Level" + levelID);
 		levels.add(world);
-
+		for(int[][] m : levels) {
+			for(int i = 0; i < 50; i++) {
+				for(int j = 0; j < 50; j++) {
+					System.out.print(m[i][j]);
+				}
+				System.out.println();
+				
+			}
+			System.out.println();	
+		}
 		// levels.add(world, levelID);
 		System.out.println("LevelMessage empfangen");
 		++count;

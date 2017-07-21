@@ -5,12 +5,17 @@ public class ItemList {
 	private int posX;
 	private int posY;
 	private int itemID;
+	private int level;
 	
-	public ItemList(int indexItem, int posX, int posY, int itemID){
+	public ItemList(int indexItem, int posX, int posY, int itemID, int level){
 		this.indexItem = indexItem;
 		this.posX = posX;
 		this.posY = posY;
 		this.itemID = itemID;
+		this.level = level;
+	}
+	public int getLevel() {
+		return level;
 	}
 	
 	public int getItemID() {

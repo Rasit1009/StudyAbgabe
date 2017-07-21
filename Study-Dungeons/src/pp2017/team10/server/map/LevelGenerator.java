@@ -178,7 +178,7 @@ public class LevelGenerator {
 		randomMonster(2);
 		// randomItem(2);
 		door();
-		printUniversity();
+//		printUniversity();
 
 		wiso.setGround(university);
 		return wiso;
@@ -226,7 +226,7 @@ public class LevelGenerator {
 		randomMonster(3);
 		// randomItem(2);
 		door();
-		printUniversity();
+//		printUniversity();
 
 		philo.setGround(university);
 		return philo;
@@ -283,7 +283,7 @@ public class LevelGenerator {
 		System.out.println("Item geht");
 		door();
 		System.out.println("Tür geht");
-		printUniversity();
+//		printUniversity();
 
 		library.setGround(university);
 
@@ -311,7 +311,7 @@ public class LevelGenerator {
 		randomMonster(5);
 		// randomItem(2);
 		door();
-		printUniversity();
+//		printUniversity();
 
 		physik.setGround(university);
 
@@ -354,7 +354,7 @@ public class LevelGenerator {
 		randomMonster(6);
 		// randomItem(2);
 		door();
-		printUniversity();
+//		printUniversity();
 		copt.setGround(university);
 		return copt;
 	}
@@ -530,40 +530,40 @@ public class LevelGenerator {
 
 	}
 
-	public void printUniversity() {
+	public void printUniversity(Tiles[][] university) {
 
-		// for (int i = 0; i < university.length - 1; i++) {
-		// for (int j = 0; j < university[j].length - 1; j++) {
-		// if (university[i][j].isWall()) {
-		// System.out.print("X");
-		// } else if (university[i][j].isItem()) {
-		// System.out.print("<");
-		// } else if (university[i][j].isMonster()) {
-		// System.out.print("M");
-		// } else if (university[i][j].isPlayer()) {
-		// System.out.print("P");
-		// } else if (university[i][j].isDoor()) {
-		// System.out.print("D");
-		// } else if (university[i][j].isExit()) {
-		// System.out.print("@");
-		// } else if (university[i][j].isFloor()) {
-		// System.out.print(".");
-		// } else if (university[i][j].isStone()) {
-		// System.out.print("+");
-		// } else if (university[i][j].isMarble()) {
-		// System.out.print("~");
-		// } else if (university[i][j].isEntrance()) {
-		// System.out.print("E");
-		// } else if (university[i][j].isColumn()) {
-		// System.out.print("F");
-		// } else if (university[i][j].isKey()) {
-		// System.out.print("K");
-		// } else {
-		// System.out.print(" ");
-		// }
-		// }
-		// System.out.println();
-		// }
+		 for (int i = 0; i < university.length - 1; i++) {
+		 for (int j = 0; j < university[j].length - 1; j++) {
+		 if (university[i][j].isWall()) {
+		 System.out.print("X");
+		 } else if (university[i][j].isItem()) {
+		 System.out.print("<");
+		 } else if (university[i][j].isMonster()) {
+		 System.out.print("M");
+		 } else if (university[i][j].isPlayer()) {
+		 System.out.print("P");
+		 } else if (university[i][j].isDoor()) {
+		 System.out.print("D");
+		 } else if (university[i][j].isExit()) {
+		 System.out.print("@");
+		 } else if (university[i][j].isFloor()) {
+		 System.out.print(".");
+		 } else if (university[i][j].isStone()) {
+		 System.out.print("+");
+		 } else if (university[i][j].isMarble()) {
+		 System.out.print("~");
+		 } else if (university[i][j].isEntrance()) {
+		 System.out.print("E");
+		 } else if (university[i][j].isColumn()) {
+		 System.out.print("F");
+		 } else if (university[i][j].isKey()) {
+		 System.out.print("K");
+		 } else {
+		 System.out.print(" ");
+		 }
+		 }
+		 System.out.println();
+		 }
 	}
 
 	public Map getLevel(int i) {
