@@ -9,15 +9,19 @@ public class ChatMessage extends Messages {
 	 */
 	private static final long serialVersionUID = -9207628058769370829L;
 	private String content;
-	private String user; 
+	private int currentLevel;
 
-	public ChatMessage(String content) {
+	public ChatMessage(String content, int currentLevel) {
 		this.content = content;
+		this.currentLevel = currentLevel;
 	}
-	
 
 	public String getContent() {
 		return content;
+	}
+	
+	public int getCurrentLevel() {
+		return currentLevel;
 	}
 	
 }

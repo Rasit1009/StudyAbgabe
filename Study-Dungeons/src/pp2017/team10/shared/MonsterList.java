@@ -8,14 +8,16 @@ public class MonsterList {
 	private int maxHealth;
 	private int health;
 	private boolean key;
+	public int damage;
 	
-	public MonsterList(int monsterID, int posX, int posY, int maxHealth, int health, boolean key) {
+	public MonsterList(int monsterID, int posX, int posY, int maxHealth, int health, boolean key, int damage) {
 		this.posX = posX;
 		this.posY = posY;
 		this.monsterID = monsterID;
 		this.maxHealth = maxHealth;
 		this.health = health;
 		this.key = key;
+		this.damage = damage;
 	}
 	
 	public void setHealth(int health) {
@@ -48,6 +50,10 @@ public class MonsterList {
 	
 	public int getMonsterID() {
 		return monsterID;
+	}
+	
+	public int getDamage() {
+		return damage;
 	}
 	
 	public boolean getKey() {
