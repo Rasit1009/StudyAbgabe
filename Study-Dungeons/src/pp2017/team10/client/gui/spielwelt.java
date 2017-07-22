@@ -296,36 +296,68 @@ public class spielwelt extends javax.swing.JFrame {
 		JLabel groundImageLabel = new JLabel();
 
 		System.out.println("geht");
+		
+		ImageIcon wallwiso = getImage("wallwiso.png");
+		ImageIcon wallbib = getImage("wallbib.png");
+		ImageIcon wallwcopt = getImage("wallcopt.png");
+		ImageIcon wallphilo = getImage("wallphilo.png");
+		ImageIcon wallphysik = getImage("wallphysik.png");
+		
+		ImageIcon groundwiso= getImage("groundwiso.png");
+		ImageIcon groundbib= getImage("groundbib.png");
+		ImageIcon groundcopt= getImage("groundcopt.png");
+		ImageIcon groundphilo= getImage("groundpho.png");
+		ImageIcon groundphysik= getImage("groundphysik.png");
+		ImageIcon keygold= getImage("keygold.png");
+		
+		ImageIcon player1= getImage("spieler.png");
+		ImageIcon player2= getImage("player2.png");
+		ImageIcon player3= getImage("player3.png");
+		ImageIcon player4= getImage("player4.png");
+		
+		ImageIcon stone= getImage("stone.png");
+		ImageIcon doorclose = getImage("doorclose.png");
+		ImageIcon dooropen = getImage("dooropen.png");
+		
 
 		for (int j = 0; j < 50; j++) {
 			for (int i = 0; i < 50; i++) {
 				groundImageLabel = new JLabel();
 				groundImageLabel.setSize(screenWidth / 50, screenWidth / 50);
 				groundImageLabel.setOpaque(false);
+				
 				switch (world[i][j]) {
 				// case 0:
 				// groundImageLabel.setIcon(getImage("Ground.png"));
 				// break;
-				// case 1:
-				// groundImageLabel.setIcon(getImage("wall.png"));
-				// break;
+				 case 1:
+				 groundImageLabel.setIcon(dooropen);
+				 break;
 				case 2:
-					groundImageLabel.setIcon(getImage("wallwiso.png"));
+					groundImageLabel.setIcon(wallwiso);
 					break;
-				case 3:
-					groundImageLabel.setIcon(getImage("wallwiso.png"));
-					break;
+//				case 3:   Marble?
+//					groundImageLabel.setIcon(getImage("wallwiso.png"));
+//					break;
 				case 4:
-					groundImageLabel.setIcon(getImage("groundwiso.png"));
+					groundImageLabel.setIcon(stone);
 					break;
 				case 5:
-					groundImageLabel.setIcon(getImage("groundwiso.png"));
+					groundImageLabel.setIcon(groundwiso);
 					break;
+				case 6:
+					groundImageLabel.setIcon(doorclose);
 				case 7:
-					groundImageLabel.setIcon(getImage("groundwiso.png"));
+					groundImageLabel.setIcon(dooropen);
+					break;
+//				case 8:    column?
+//					groundImageLabel.setIcon("column");
+//					break;
+				case 9:
+					groundImageLabel.setIcon(keygold);
 					break;
 				case 100:
-					groundImageLabel.setIcon(getImage("spieler.png"));
+					groundImageLabel.setIcon(player1);
 					break;
 				}
 
